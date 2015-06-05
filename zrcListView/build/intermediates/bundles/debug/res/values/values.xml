@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ListView"><attr name="android:entries"/><attr name="android:divider"/><attr name="android:dividerHeight"/><attr name="android:headerDividersEnabled"/><attr name="android:footerDividersEnabled"/><attr name="android:overScrollHeader"/><attr name="android:overScrollFooter"/></declare-styleable>
+    <declare-styleable name="ZrcAbsListView"><attr name="android:listSelector"/><attr name="android:drawSelectorOnTop"/><attr name="android:stackFromBottom"/><attr name="android:scrollingCache"/><attr name="android:transcriptMode"/><attr name="android:cacheColorHint"/><attr name="android:smoothScrollbar"/><attr name="android:choiceMode"/></declare-styleable>
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/E:/workspace/Quantum/ninjaCropLib/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="GREEN">#379D1D</color>
+    <color name="G_black_light_5">#ffcccccc</color>
+    <color name="app_bg">#eeeeee</color>
+    <color name="black">#13101A</color>
+    <color name="fuxk_base_divide_line_color">#dcdcdc</color>
+    <color name="fuxk_settle_black_mark">#1A000000</color>
+    <color name="gray">#ffdddddd</color>
+    <color name="orange">#FF7502</color>
+    <color name="red">#A30913</color>
+    <color name="red_bg">#B90B0E</color>
+    <color name="transparent">#00000000</color>
+    <color name="trasparent_black">#90000000</color>
+    <color name="trasparent_black1">#aa000000</color>
+    <color name="trasparent_black2">#dd000000</color>
+    <color name="white">#ffffffff</color>
+    <color name="yellow">#FAC601</color>
+    <!-- From: file:/E:/workspace/Quantum/ninjaCropLib/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="action_settings">Settings</string>
+    <string name="app_name">Ninja Learn Canvas</string>
+    <string name="btn_crop">确定</string>
+    <string name="btn_rotate_left">Rotate left</string>
+    <string name="btn_rotate_right">Rotate right</string>
+    <string name="txt_crop_image_title">Adjust your image!</string>
+    <!-- From: file:/E:/workspace/Quantum/ninjaCropLib/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="AppBaseTheme" parent="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+</resources>

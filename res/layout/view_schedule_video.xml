@@ -1,0 +1,106 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="260dp"
+    android:background="@color/transparent" >
+    
+    <RelativeLayout
+        android:id="@+id/rl_pick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@color/transparent" >
+
+        <EditText
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="5dp"
+            android:hint="请输入您要发起的话题"
+            android:id="@+id/et_name_topic"
+            android:background="@drawable/otherinfo_items_bg"
+            />
+        <ImageView
+            android:id="@+id/im_up_couver"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_up_cover"
+            android:layout_below="@id/et_name_topic"
+            />
+         <TextView
+            android:id="@+id/choose_image"
+             android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/im_up_couver"
+            android:text="上传封面"
+            android:textColor="@color/G_black_light_5"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_below="@id/et_name_topic"
+             /> -->
+
+
+    </RelativeLayout>
+
+     <TextView 
+         android:layout_above="@id/rl_pick"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="15dp"
+         android:layout_marginRight="15dp"
+         android:gravity="center"
+         android:text="直播"
+         android:textSize="20sp"
+         android:background="@color/white"
+         android:padding="9dp"
+         />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_below="@id/rl_pick"
+        android:layout_marginTop="30dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_now"
+
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/bg_textview_green_btn"
+            android:text="现在直播"
+            android:paddingRight="20dp"
+            android:textSize="20sp"
+            android:padding="9dp"
+            />
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="2dp"
+            android:visibility="invisible"
+            />
+        <TextView
+            android:id="@+id/tv_schedule"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/bg_textview_btn"
+            android:text="预 约 直 播"
+            android:textSize="20sp"
+            android:padding="9dp"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

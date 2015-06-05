@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+         <item android:state_pressed="true" android:color="@color/gray"></item>  <!-- 点击后的字体颜色 -->
+         <item android:color="@color/white"></item>    <!-- 默认字体颜色 -->
+     </selector>
+<!-- From: file:/E:/workspace/Quantum/res/drawable/textselector.xml -->

@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_settings"/>
+
+</menu><!-- From: file:/E:/workspace/Quantum/imageLib/src/main/res/menu/activity_main.xml --><!-- From: file:/E:/workspace/Quantum/imageLib/build/intermediates/bundles/debug/res/menu/activity_main.xml -->

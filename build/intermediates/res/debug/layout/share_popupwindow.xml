@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="@color/trasparent_black"
+    android:orientation="vertical"
+    >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:background="@drawable/share_background"
+    android:layout_alignParentBottom="true"
+   >
+
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="120dp"
+    android:id="@+id/button_layout"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    >
+
+<LinearLayout
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/sina_share_icon"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sina" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="微博"
+        android:textSize="18sp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/white"
+        />
+
+</LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/weichat_friends_share_icon"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/weichat_friends" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="微信好友"
+            android:textSize="18sp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/weichat_circle_share_icon"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/weichat_circle" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="朋友圈"
+            android:textSize="18sp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            />
+
+    </LinearLayout>
+</LinearLayout>
+
+    <TextView
+        android:id="@+id/share_cancle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:text="取  消"
+        android:textSize="25sp"
+        android:layout_marginBottom="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+</RelativeLayout>
+</RelativeLayout>
+<!-- From: file:/E:/workspace/Quantum/res/layout/share_popupwindow.xml -->

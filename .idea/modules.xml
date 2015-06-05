@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/PlDemo/PlDemo.iml" filepath="$PROJECT_DIR$/PlDemo/PlDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Quantum.iml" filepath="$PROJECT_DIR$/Quantum.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/circleimageview/circleimageview.iml" filepath="$PROJECT_DIR$/circleimageview/circleimageview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cropper/cropper.iml" filepath="$PROJECT_DIR$/cropper/cropper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/multi-image-selector/multi-image-selector.iml" filepath="$PROJECT_DIR$/multi-image-selector/multi-image-selector.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ninjaCropLib/ninjaCropLib.iml" filepath="$PROJECT_DIR$/ninjaCropLib/ninjaCropLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zrcListView/zrcListView.iml" filepath="$PROJECT_DIR$/zrcListView/zrcListView.iml" />
+    </modules>
+  </component>
+</project>

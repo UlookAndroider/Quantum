@@ -1,0 +1,13 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="40dip"
+    android:layout_height="40dip"
+    android:padding="5dp">
+    <ImageView
+        android:id="@+id/im_recyle_head"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/headtest"
+        />
+    </LinearLayout>
+

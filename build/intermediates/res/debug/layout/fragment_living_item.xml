@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:padding="5dp"
+    android:layout_height="200dp">
+
+    <LinearLayout
+        android:id="@+id/lv_linearLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/video_pic"
+                android:layout_width="fill_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/background_info" />
+ 
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_alignParentBottom="true"
+        >
+        <TextView
+            android:id="@+id/theme_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="鸡尾酒沙龙"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/white"
+            />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            >
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/living_head"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/a"
+                app:border_width="1dp"
+                app:border_color="@color/red_bg"/>
+
+            <TextView
+                android:id="@+id/living_concerned_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="125"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                />
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/follow_head"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/living_concerned_count"
+                />
+            <!--<TextView-->
+            <!--android:id="@+id/tv_living_time"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="19:50"-->
+                <!--android:padding="1dp"-->
+                <!--android:textSize="19sp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:layout_alignParentRight="true"-->
+                <!--android:background="@color/red"-->
+            <!--/>-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="15/23"-->
+                <!--android:textSize="17sp"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:paddingRight="10dp"-->
+                <!--android:layout_toLeftOf="@+id/tv_living_time"-->
+                <!--android:layout_toStartOf="@+id/tv_living_time"-->
+                 <!--/>-->
+            <TextView
+                android:id="@+id/video_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="哦哦哦诗人"
+                android:layout_toRightOf="@+id/living_head"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:layout_centerVertical="true"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/icon_living"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="8dp"
+        android:src="@drawable/icon_living_middle"
+        />
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="140dp">-->
+        <!--<ImageView-->
+            <!--android:id="@+id/icon_ulook"-->
+            <!--android:layout_width="90dp"-->
+            <!--android:layout_height="90dp"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:src="@drawable/unsubscribe_middle"-->
+            <!--/>-->
+    <!--</RelativeLayout>-->
+</RelativeLayout>
+<!-- From: file:/E:/workspace/Quantum/res/layout/fragment_living_item.xml -->

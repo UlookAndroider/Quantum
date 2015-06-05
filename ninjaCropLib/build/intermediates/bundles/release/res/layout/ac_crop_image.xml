@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+android:orientation="vertical"
+    >
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_weight="1.2"
+        android:layout_height="0dp" />
+    <gdg.ninja.croplib.utils.CropView
+        android:id="@+id/img_quest_hint"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:scaleType="centerCrop"
+        android:background="@color/white"
+         />
+
+    <LinearLayout
+        android:background="@color/white"
+        android:id="@+id/layout"
+        android:layout_width="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btn_left_navi"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:text="@string/btn_rotate_left" />
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/btn_right_navi"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/btn_rotate_right" />
+            <TextView
+                android:id="@+id/btn_create"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:padding="15dp"
+                android:textSize="18sp"
+                android:textColor="@color/red_bg"
+                android:layout_marginRight="18dp"
+                android:text="@string/btn_crop" />
+            <TextView
+                android:id="@+id/btn_cancle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:padding="15dp"
+                android:textSize="18sp"
+                android:textColor="@color/red_bg"
+                android:layout_marginLeft="18dp"
+                android:text="取消" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
+<!-- From: file:/E:/workspace/Quantum/ninjaCropLib/src/main/res/layout/ac_crop_image.xml -->

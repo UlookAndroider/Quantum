@@ -1,0 +1,211 @@
+<tv.liangzi.quantum.activity.KeyboardLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:id="@+id/rl_root"
+    android:orientation="vertical" >
+
+
+        <RelativeLayout
+            android:id="@+id/video_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal" >
+
+            <!--<tv.liangzi.quantum.view.VideoView-->
+                <!--android:id="@+id/videoview"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="fill_parent"-->
+                <!--android:background="@color/transparent"-->
+                <!--/>-->
+            <com.pili.pldroid.player.widget.VideoView
+                android:id="@+id/videoview"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center" />
+             <ImageView
+                android:id="@+id/video_cover_default"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scaleType="fitXY" />
+
+        </RelativeLayout>
+          <RelativeLayout 
+        android:id="@+id/rl_live_on"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        
+        >
+              <LinearLayout
+                  android:layout_width="wrap_content"
+                  android:layout_alignParentRight="true"
+                  android:layout_marginTop="15dp"
+                  android:gravity="center_vertical"
+                  android:layout_height="wrap_content"
+                  android:background="@drawable/bg_textview_btn"
+                  android:id="@+id/linearLayout">
+                  <ImageView
+                      android:id="@+id/im_follow_head"
+                      android:layout_width="30dp"
+                      android:layout_height="30dp"
+                      android:background="@drawable/follow_head"
+                      android:layout_toLeftOf="@+id/follow_count"
+                      />
+                  <TextView
+                      android:id="@+id/follow_count"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="20sp"
+                      android:paddingRight="10dp"
+                      android:textColor="@color/white"
+                      android:text="125"
+                      />
+
+              </LinearLayout>
+
+
+              <TextView
+              android:layout_width="35dp"
+              android:layout_height="35dp"
+                  android:textSize="30sp"
+              android:textColor="@color/white"
+              android:text="x"
+                  android:layout_below="@+id/linearLayout"
+                  android:layout_alignRight="@+id/linearLayout"
+                  android:layout_alignEnd="@+id/linearLayout" />
+           <LinearLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:gravity="center_vertical"
+               android:layout_marginTop="8dp"
+               android:layout_marginLeft="8dp"
+               android:background="@drawable/bg_textview_btn"
+               android:id="@+id/linearLayout2">
+               <ImageView
+                   android:id="@+id/im_live_head"
+                   android:layout_width="40dp"
+                   android:layout_height="40dp"
+                   android:src="@drawable/headtest"
+                   />
+               <TextView
+                   android:id="@+id/tv_live_id"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="10dp"
+                   android:text="布莱德雷"
+                   android:textSize="14sp"
+                   android:textColor="@color/white"
+                   android:textStyle="bold"
+                   />
+           </LinearLayout>
+         <ImageView
+            android:id="@+id/tv_live_follow"
+            android:layout_width="100dp"
+             android:layout_marginLeft="8dp"
+             android:layout_marginTop="3dp"
+            android:layout_height="wrap_content"
+             android:background="@drawable/follow"
+            android:gravity="center"
+             android:layout_below="@+id/linearLayout2"
+
+              />
+    </RelativeLayout>
+  <android.support.v7.widget.RecyclerView
+      android:visibility="gone"
+      android:id="@+id/recyclerView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/rl_live_on"
+      android:scrollbars="horizontal" />
+  
+            <LinearLayout
+
+                android:id="@+id/linearLayout1"
+                android:layout_width="fill_parent"
+                android:layout_height="240dip"
+                android:layout_alignParentBottom="true"
+                android:background="@color/transparent"
+                android:orientation="vertical" >
+
+               
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_disscuss"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/bg_textview_btn" >
+
+                <ImageButton
+                    android:visibility="gone"
+                    android:id="@+id/ibtn_disscuss"
+                    style="@style/EditText.Normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/btn_disscuss"
+                    android:inputType="textPhonetic"
+                    android:padding="5dp"
+                    android:singleLine="true" >
+                  
+                </ImageButton>
+ <ImageView
+                      android:id="@+id/im_live_share"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_alignParentRight="true"
+                      android:padding="5dp"
+                      android:src="@drawable/icon_live_share" />
+ 
+                  <ImageView
+                      android:id="@+id/im_live_love"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_alignBottom="@+id/et_disscuss"
+                      android:layout_toLeftOf="@id/im_live_share"
+                      android:gravity="center"
+                      android:padding="5dp"
+                      android:src="@drawable/btn_love_pressed" />
+
+
+                <EditText
+                    android:id="@+id/et_remove_disscuss"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="center"
+                    android:hint="我有重要意见要发表..."
+                    android:textColorHint="@color/white"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/im_live_love"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/edittext_bg"
+                    android:inputType="textPhonetic"
+                    android:imeOptions="actionSend"
+                    android:maxLength="64" />
+                
+
+            </RelativeLayout>
+
+              <ListView
+                  android:id="@+id/lv_live_listview"
+                  android:layout_width="fill_parent"
+                  android:layout_height="200dip"
+                  android:layout_above="@id/rl_disscuss"
+                  android:cacheColorHint="@android:color/transparent"
+                  android:divider="@android:color/transparent"
+                  android:isScrollContainer="false"
+                  android:dividerHeight="2dp"
+                  android:listSelector="@android:color/transparent"
+                  android:paddingLeft="5dp"
+                  android:scrollbars="none" />
+            
+    
+</tv.liangzi.quantum.activity.KeyboardLayout>
+<!-- From: file:/E:/workspace/Quantum/res/layout/activity_showlive.xml -->

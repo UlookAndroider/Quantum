@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+     >
+
+            <TextView
+                android:id="@+id/tv_userinfo_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:gravity="center"
+                android:textSize="25sp"
+                android:text="我 的 现 场"
+               />
+ 
+
+</LinearLayout><!-- From: file:/E:/workspace/Quantum/res/layout/activity_userinfo_title_item.xml -->

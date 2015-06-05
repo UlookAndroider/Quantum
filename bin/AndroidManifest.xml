@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="tv.liangzi.quantum">
+
+    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="21"/>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.autofocus"/>
+<uses-permission android:name="android.permission.ACCESSFINELOCATION"/>
+<uses-permission android:name="android.permission.ACCESSCOARSELOCATION"/>
+    <!--
+     To retrieve OAuth 2.0 tokens or invalidate tokens to disconnect a user. This disconnect
+     option is required to comply with the Google+ Sign-In developer policies
+    -->
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/> <!-- To retrieve the account name (email) as part of sign-in: -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/> <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.READ_PROFILE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+
+
+    <application android:allowBackup="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:name=".config.MyAapplication" android:theme="@style/AppTheme">
+
+        <!-- 首页导航页 -->
+       <activity android:configChanges="orientation|keyboardHidden|screenSize" android:label="@string/app_name" android:name=".activity.MainActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Light.NoTitleBar" android:windowSoftInputMode="adjustPan|stateHidden">
+
+        </activity>
+        <activity android:configChanges="orientation|keyboardHidden|screenSize" android:name=".activity.UserInfoActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Light.NoTitleBar">
+        </activity>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name=".activity.videoInfoPageActivity" android:theme="@android:style/Theme.Light.NoTitleBar">
+        </activity>
+        <activity android:configChanges="orientation|keyboardHidden|screenSize" android:name=".activity.TimePickerActivity" android:screenOrientation="portrait" android:theme="@style/Theme.DialogActivity">
+        </activity>
+
+        <!-- 反馈意见 -->
+        <activity android:configChanges="orientation|keyboardHidden|screenSize" android:name=".activity.ShowLiveActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Light.NoTitleBar" android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
+        </activity>
+        <activity android:label="@string/title_activity_schedule" android:name=".activity.ScheduleActivity">
+        </activity>
+        <activity android:configChanges="orientation|keyboardHidden|screenSize" android:name=".activity.StartLiveActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Light.NoTitleBar" android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
+        </activity>
+        <activity android:name=".activity.LoginActivity" android:windowSoftInputMode="adjustResize|stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+
+    <meta-data android:name="UMENG_APPKEY" android:value="5546ffde67e58eb4d200233e"/>
+<activity android:configChanges="orientation|keyboard" android:launchMode="singleTask" android:name="com.umeng.socialize.view.ShareActivity" android:noHistory="true" android:theme="@style/Theme.UMDialog" android:windowSoftInputMode="stateVisible|adjustResize"/>
+<activity android:configChanges="keyboardHidden|orientation|screenSize" android:exported="true" android:name=".wxapi.WXEntryActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+<activity android:configChanges="orientation|keyboard" android:name="com.umeng.socialize.view.CommentActivity" android:theme="@style/Theme.UMDefault"/>
+<activity android:configChanges="orientation|keyboard" android:name="com.umeng.socialize.view.CommentDetail" android:noHistory="true" android:theme="@style/Theme.UMDefault"/>
+<activity android:configChanges="orientation|keyboard" android:name="com.umeng.socialize.view.CommentDetailNoMap" android:noHistory="true" android:theme="@style/Theme.UMDefault"/>
+</application>
+
+<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+</manifest>

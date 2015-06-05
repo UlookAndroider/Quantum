@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="black">#13101A</color>
+    <color name="app_bg">#eeeeee</color>
+    <color name="white">#ffffffff</color>
+
+
+    <!-- 透明色 -->
+    <color name="fuxk_settle_black_mark">#1A000000</color>
+    <color name="trasparent_black">#90000000</color>
+    <color name="trasparent_black1">#aa000000</color>
+    <color name="trasparent_black2">#dd000000</color>
+    <!-- 分割线 -->
+    <color name="fuxk_base_divide_line_color">#dcdcdc</color>
+     <color name="G_black_light_5">#ffcccccc</color>
+     <color name="red">#A30913</color>
+    <color name="red_bg">#B90B0E</color>
+
+    
+     <color name="transparent">#00000000</color>
+     <color name="orange">#FF7502</color>
+     <color name="yellow">#FAC601</color>
+    <color name="GREEN">#379D1D</color>
+    <color name="gray">#ffdddddd</color>
+
+</resources>

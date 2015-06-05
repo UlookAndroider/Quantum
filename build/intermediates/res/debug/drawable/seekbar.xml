@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/background" android:drawable="@drawable/bg_line" />
+	<item android:id="@android:id/progress"
+	android:drawable="@drawable/video_line02" />
+	<item android:id="@android:id/secondaryProgress"
+        android:drawable="@drawable/bar_dn"  />
+	
+</layer-list><!-- From: file:/E:/workspace/Quantum/res/drawable/seekbar.xml -->

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:padding="8dp"
+
+    >
+    
+    <ImageView 
+        android:layout_centerVertical="true"
+        android:id="@+id/im_head"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_margin="5dp"
+        android:src="@drawable/defult_head"
+        android:layout_alignParentLeft="true"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_toRightOf="@id/im_head"
+        >
+        <TextView
+            android:id="@+id/tv_nikename"
+            android:gravity="bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="6"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="风扇不摇头"
+            />
+        <TextView
+            android:id="@+id/tv_info"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:gravity="top"
+            android:textColor="@color/gray_place_info"
+            android:text="北京 东城区"
+            />
+    </LinearLayout>
+
+    
+    <ImageView
+        android:layout_centerVertical="true"
+        android:id="@+id/im_people_add"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_concerned" 
+        android:gravity="center_vertical"
+        android:layout_marginRight="8dp"
+        android:layout_alignParentRight="true"
+        />
+   
+    <TextView
+         android:layout_centerVertical="true"
+         android:layout_toLeftOf="@id/im_people_add"
+        android:id="@+id/tv_concerned_num"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+		android:layout_height="match_parent"
+		android:gravity="center_vertical"
+		android:paddingRight="5dp"
+  		android:textSize="16sp"
+  		android:text="127855"
+        />
+ <ImageView 
+     android:layout_centerVertical="true"
+        android:id="@+id/im_people_love"
+        android:layout_width="wrap_content"
+        android:src="@drawable/ic_videoinfo_love"
+     android:visibility="gone"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@id/tv_concerned_num"
+        />
+    
+
+</RelativeLayout>
+<!-- From: file:/E:/workspace/Quantum/res/layout/fragment_people_item.xml -->

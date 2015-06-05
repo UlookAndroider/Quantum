@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Ninja Learn Canvas</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Crop image activity -->
+    <string name="txt_crop_image_title">Adjust your image!</string>
+    <string name="btn_crop">确定</string>
+    <string name="btn_rotate_left">Rotate left</string>
+    <string name="btn_rotate_right">Rotate right</string>
+
+</resources>
