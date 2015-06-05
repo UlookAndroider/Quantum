@@ -55,9 +55,9 @@ import tv.liangzi.quantum.widget.time.PickerView.onSelectListener;
 
 
 /**
- * 更多详解见博客http://blog.csdn.net/zhongkejingwang/article/details/38513301
+ * https://github.com/invinjun/live
  * 
- * @author chenjing
+ * @author invinjun
  * 
  */
 public class TimePickerActivity extends Activity implements OnClickListener
@@ -98,7 +98,6 @@ public class TimePickerActivity extends Activity implements OnClickListener
 	private boolean living=false;
 	private boolean EmptyPic=false;
 	private TextView chooseImage;
-//预览封面样式
 	private RelativeLayout preview;
 	private String photo;
 	private ImageView liveIcon;
@@ -107,7 +106,6 @@ public class TimePickerActivity extends Activity implements OnClickListener
 	private String accessToken;
 	private String userId;
 	private String state="0";
-	//图片输出文件夹
 	private String filePath = Environment.getExternalStorageDirectory()+ File.separator+"Ulooktemp";
 	public Handler mHandler=new Handler(){
 
@@ -325,8 +323,6 @@ public class TimePickerActivity extends Activity implements OnClickListener
 					return;
 				}
 				Calendar ca = Calendar.getInstance();
-				int month = ca.get(Calendar.MONTH);
-				int day = ca.get(Calendar.DAY_OF_MONTH);
 				int hour = ca.get(Calendar.HOUR_OF_DAY);
 				int min = ca.get(Calendar.MINUTE);
 				if (selectDateText.equals(getNowTime())) {
