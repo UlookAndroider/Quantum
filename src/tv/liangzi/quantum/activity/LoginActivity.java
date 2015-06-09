@@ -288,7 +288,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			public void onSuccess() {
 				runOnUiThread(new Runnable() {
 					public void run() {
-						EMGroupManager.getInstance().loadAllGroups();
+//						EMGroupManager.getInstance().loadAllGroups();
 						EMChatManager.getInstance().loadAllConversations();
 						app.setEMuserId(userName);
 						Log.d("main", "登陆聊天服务器成功！");

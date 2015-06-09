@@ -31,7 +31,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tv.liangzi.quantum.R;
+import tv.liangzi.quantum.activity.ChatActivity;
 import tv.liangzi.quantum.activity.ShowLiveActivity;
+import tv.liangzi.quantum.activity.StartLiveActivity;
 import tv.liangzi.quantum.activity.TimePickerActivity;
 import tv.liangzi.quantum.activity.UserInfoActivity;
 import tv.liangzi.quantum.adapter.LiveAdapter;
@@ -256,15 +258,19 @@ public class LiveFragment extends BaseFragment implements
 //				liveThread.start();
 //			}
 //		});
-      mAdapter=new LiveAdapter(getActivity(), mLiveVideos);
+        mAdapter=new LiveAdapter(getActivity(), mLiveVideos);
 		mAdapter.setButtonOnClickListener(this);
-      mListView.setAdapter(mAdapter);
+        mListView.setAdapter(mAdapter);
 
       mListView.setOnItemClickListener(new ZrcListView.OnItemClickListener() {
 		  @Override
 		  public void onItemClick(ZrcListView parent, View view, int position, long id) {
 			  Intent intent=new Intent(getActivity(),ShowLiveActivity.class);
 			  intent.putExtra("roomId",mReaddVideos.get(position).getChatroomId());
+			  intent.putExtra("rtmpUrl",mReaddVideos.get(position).getRtmpPlayUrl());
+			  intent.putExtra("userid",mReaddVideos.get(position).getUserId());
+			  intent.putExtra("nikeName",mReaddVideos.get(position).getNickName());
+			  intent.putExtra("shareUrl",mReaddVideos.get(position).getShareUrl());
 			  startActivity(intent);
 		  }
 	  });

@@ -1,15 +1,28 @@
 package tv.liangzi.quantum.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.easemob.EMCallBack;
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMConversation;
+import com.easemob.chat.EMMessage;
+import com.easemob.chat.MessageBody;
+import com.easemob.chat.TextMessageBody;
+import com.easemob.exceptions.EaseMobException;
+import com.easemob.util.EMLog;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -23,22 +36,71 @@ import java.util.LinkedList;
 import java.util.List;
 
 import tv.liangzi.quantum.R;
-
+import tv.liangzi.quantum.activity.ShowLiveActivity;
 
 
 public class ShowLiveActivityAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private ViewHolder holder;
+	private EMConversation conversation;
+	EMMessage[] messages = null;
+
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
 	DisplayImageOptions options;		// DisplayImageOptions是用于设置图片显示的类
 	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 	private List<String> mList;
-	public ShowLiveActivityAdapter(Context context,List<String> list){
+	private static final int HANDLER_MESSAGE_REFRESH_LIST = 0;
+	private static final int HANDLER_MESSAGE_SELECT_LAST = 1;
+	private static final int HANDLER_MESSAGE_SEEK_TO = 2;
+	private Activity activity;
+	private Context mContext;
+	public ShowLiveActivityAdapter(Context context,String roomId){
+		mContext=context;
+		activity = (Activity) context;
 		inflater=LayoutInflater.from(context);
 		imageLoader.init(ImageLoaderConfiguration.createDefault(context));
-		mList=list;
+		this.conversation = EMChatManager.getInstance().getConversation(roomId);
 		initImageLoaderOptions();
 	}
+	Handler handler = new Handler() {
+		private void refreshList() {
+			// UI线程不能直接使用conversation.getAllMessages()
+			// 否则在UI刷新过程中，如果收到新的消息，会导致并发问题
+			messages = (EMMessage[]) conversation.getAllMessages().toArray(new EMMessage[conversation.getAllMessages().size()]);
+			for (int i = 0; i < messages.length; i++) {
+				// getMessage will set message as read status
+				conversation.getMessage(i);
+			}
+			notifyDataSetChanged();
+		}
+
+		@Override
+		public void handleMessage(android.os.Message message) {
+			switch (message.what) {
+				case HANDLER_MESSAGE_REFRESH_LIST:
+					refreshList();
+					break;
+				case HANDLER_MESSAGE_SELECT_LAST:
+					if (activity instanceof ShowLiveActivity) {
+						ListView listView = ((ShowLiveActivity)activity).getListView();
+						if (messages.length > 0) {
+							listView.setSelection(messages.length - 1);
+						}
+					}
+					break;
+				case HANDLER_MESSAGE_SEEK_TO:
+					int position = message.arg1;
+					if (activity instanceof ShowLiveActivity) {
+						ListView listView = ((ShowLiveActivity)activity).getListView();
+						listView.setSelection(position);
+					}
+					break;
+				default:
+					break;
+			}
+		}
+	};
+
 	/**
 	 * 初始化缓存设置
 	 */
@@ -69,6 +131,7 @@ public class ShowLiveActivityAdapter extends BaseAdapter {
 
 	}
 
+
 	/**
 	 * 图片加载第一次显示监听器
 	 * @author Administrator
@@ -92,17 +155,38 @@ public class ShowLiveActivityAdapter extends BaseAdapter {
 			}
 		}
 	}
+
+	/**
+	 * 刷新页面, 选择最后一个
+	 */
+	public void refreshSelectLast() {
+		handler.sendMessage(handler.obtainMessage(HANDLER_MESSAGE_REFRESH_LIST));
+		handler.sendMessage(handler.obtainMessage(HANDLER_MESSAGE_SELECT_LAST));
+	}
+	/**
+	 * 刷新页面
+	 */
+	public void refresh() {
+		if (handler.hasMessages(HANDLER_MESSAGE_REFRESH_LIST)) {
+			return;
+		}
+		android.os.Message msg = handler.obtainMessage(HANDLER_MESSAGE_REFRESH_LIST);
+		handler.sendMessage(msg);
+	}
+
+	public EMMessage getItem(int position) {
+		if (messages != null && position < messages.length) {
+			return messages[position];
+		}
+		return null;
+	}
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 10;
+		return messages == null ? 0 : messages.length;
 	}
 
-	@Override
-	public Object getItem(int arg0) {
-		// TODO Auto-generated method stub
-		return arg0;
-	}
+
 
 	@Override
 	public long getItemId(int arg0) {
@@ -112,6 +196,7 @@ public class ShowLiveActivityAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position,  View convertView, ViewGroup parent) {
+		EMMessage message = getItem(position);
 		// TODO Auto-generated method stub
 		if (convertView==null) {
 			convertView =inflater.inflate(R.layout.activity_showlive_item,null);
@@ -128,7 +213,16 @@ public class ShowLiveActivityAdapter extends BaseAdapter {
 //			 holder.videoPlay.setVisibility(View.GONE);
 		}
 //		imageLoader.displayImage(mList.get(position), holder.imageView, options, animateFirstListener);
-//		holder.textViewContent.setText("不错哦 很好 可以。。。。");
+		String content = null;
+		try {
+			 content=message.getStringAttribute("content");
+			String photo=message.getStringAttribute("photo");
+			String nickName=message.getStringAttribute("nickName");
+		} catch (EaseMobException e) {
+			e.printStackTrace();
+		}
+		TextMessageBody body= (TextMessageBody) message.getBody();
+		holder.textViewContent.setText(body.getMessage());
 		return convertView;
 	}
 	 static class ViewHolder{
@@ -137,5 +231,20 @@ public class ShowLiveActivityAdapter extends BaseAdapter {
 		TextView textViewContent;
 		
 	}
+	/**
+	 * 显示用户头像
+	 * @param message
+	 * @param imageView
+	 */
+	private void setUserAvatar(EMMessage message, ImageView imageView){
+		if(message.direct == EMMessage.Direct.SEND){
+			//显示自己头像
+//			UserUtils.setUserAvatar(mContext, EMChatManager.getInstance().getCurrentUser(), imageView);
+		}else{
+//			UserUtils.setUserAvatar(mContext, message.getFrom(), imageView);
+		}
+	}
+
+
 }
 

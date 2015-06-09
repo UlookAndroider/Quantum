@@ -6,6 +6,12 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.easemob.EMEventListener;
+import com.easemob.EMNotifierEvent;
+import com.easemob.chat.EMChat;
+import com.easemob.chat.EMChatManager;
 
 import tv.liangzi.quantum.R;
 import tv.liangzi.quantum.fragment.ExploreFragment;
@@ -23,7 +29,7 @@ import tv.liangzi.quantum.view.MyTabWidget.OnTabSelectedListener;
  * 
  */
 public class MainActivity extends FragmentActivity implements
-		OnTabSelectedListener {
+		OnTabSelectedListener ,EMEventListener{
 
 	private static final String TAG = "MainActivity";
 	private MyTabWidget mTabWidget;
@@ -43,6 +49,7 @@ public class MainActivity extends FragmentActivity implements
 		 Log.e(TAG, "onResum() is  " + mIndex);
 		init();
 		initEvents();
+		EMChat.getInstance().setAppInited();
 	}
 
 	private void init() {
@@ -52,6 +59,16 @@ public class MainActivity extends FragmentActivity implements
 
 	private void initEvents() {
 		mTabWidget.setOnTabSelectedListener(this);
+		EMChatManager.getInstance().registerEventListener(
+				new EMEventListener() {
+					@Override
+					public void onEvent(EMNotifierEvent emNotifierEvent) {
+						Log.e("ManinActivity", "xiaoxi新消息接收");
+					}
+				},
+				new EMNotifierEvent.Event[]{EMNotifierEvent.Event.EventNewMessage, EMNotifierEvent.Event.EventOfflineMessage,
+						EMNotifierEvent.Event.EventDeliveryAck, EMNotifierEvent.Event.EventReadAck});
+		EMChat.getInstance().setAppInited();
 	}
 
 	@Override
@@ -140,4 +157,9 @@ public class MainActivity extends FragmentActivity implements
 		mIndex = savedInstanceState.getInt("index");
 	}
 
+
+	@Override
+	public void onEvent(EMNotifierEvent emNotifierEvent) {
+
+	}
 }

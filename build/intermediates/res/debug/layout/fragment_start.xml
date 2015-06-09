@@ -17,7 +17,7 @@
     <RelativeLayout
         android:id="@+id/rl_send_schedule"
         android:layout_width="match_parent"
-        android:layout_height="370dp"
+        android:layout_height="320dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/start_background" >
 
@@ -83,7 +83,7 @@
             <TextView
                 android:id="@+id/tv_now"
                 android:layout_width="wrap_content"
-                android:layout_height="64dp"
+                android:layout_height="54dp"
                 android:gravity="center"
                 android:layout_marginRight="15dp"
                 android:layout_marginLeft="15dp"
@@ -97,7 +97,7 @@
             <TextView
                 android:id="@+id/tv_schedule"
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
+                android:layout_height="54dp"
                 android:gravity="center"
                 android:layout_marginRight="15dp"
                 android:layout_marginLeft="15dp"

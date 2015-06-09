@@ -2,6 +2,97 @@
 <items version="2" >
 
     <item
+        jar="D:\adt-bundle-windows-x86_64-20140321\sdk\extras\android\m2repository\com\android\support\support-annotations\22.1.1\support-annotations-22.1.1.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
+        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\support-annotations-22.1.1-18d070afe0760abab2fbe94782e871b39d99e336.jar" />
+    </item>
+    <item
+        jar="E:\workspace\Quantum\libs\pldroid-player-1.0.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="2ff1297443eb686b28e567ab27808b405654d6e4">
+        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\pldroid-player-1.0.0-b8bb41ece5c4a974ced3852b3b2343490969cb3e.jar" />
+    </item>
+    <item
+        jar="E:\workspace\Quantum\build\intermediates\exploded-aar\Quantum\zrcListView\0.4-SNAPSHOT\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="d4ee2fc7e361ebbb872e9ec7e4098906b6c8fca9">
+        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\classes-a2daa73f0992623d4a9c1154810ea9c4833dd89b.jar" />
+    </item>
+    <item
+        jar="E:\workspace\Quantum\libs\okhttp-2.3.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="2e7bc7033dc2c8423e661224171b3133fb155b28">
+        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\okhttp-2.3.0-592b583abb88ee16dc67e5ab33f0734aaf7ce274.jar" />
+    </item>
+    <item
+        jar="E:\workspace\Quantum\build\intermediates\exploded-aar\com.edmodo\cropper\1.0.1\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="a3e6e9d6c4dcfc3024dc468bfc0da8a4afbe61c3">
+        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\classes-aaecfe8b97b4ef8ebe035699382a8d041690ad03.jar" />
+    </item>
+    <item
+        jar="E:\workspace\Quantum\libs\android-support-v7-recyclerview.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="12b40458075441c1a66d3fe16e72217ee7472a47">
+        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\android-support-v7-recyclerview-f3d807bd1e4f8eb40ba4d03f0c29ad338f857fc2.jar" />
+    </item>
+    <item
+        jar="E:\workspace\Quantum\libs\SocialSDK_comment.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="189be2ef1ef73018338442dfecfae6c11f4a3ac5">
+        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\SocialSDK_comment-9b7aa30a2e52e98d49d8b940f13277b7ee9be415.jar" />
+    </item>
+    <item
+        jar="E:\workspace\Quantum\build\intermediates\exploded-aar\Quantum\circleimageview\0.4-SNAPSHOT\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="1bdf6ad39fc2966362a1d8089037f911fc6ccecf">
+        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\classes-52eb98186d7da9440a94e8ee3ba7a3036fd4fa29.jar" />
+    </item>
+    <item
+        jar="E:\workspace\Quantum\libs\SocialSDK_Sina.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="fd07c18d274be387922d55964e04cb418133c80f">
+        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\SocialSDK_Sina-c1f0c44ca8c1b502b75b7bddb36f5396f6905822.jar" />
+    </item>
+    <item
+        jar="E:\workspace\Quantum\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.1.1\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
+        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\classes-493c391e1c7e519c03405c4d045fc94b8bb1d6df.jar" />
+    </item>
+    <item
+        jar="E:\workspace\Quantum\libs\SocialSDK_WeiXin_1.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="d7c2f29c05b35e8c8713be2b81c41cf18f98b64a">
+        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\SocialSDK_WeiXin_1-a95c39a518e370dd0aa220fe8d4c0b3ddd731ebb.jar" />
+    </item>
+    <item
+        jar="E:\workspace\Quantum\build\intermediates\exploded-aar\Quantum\multi-image-selector\0.4-SNAPSHOT\libs\picasso-2.5.2.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\picasso-2.5.2-1f82c40e22ea61398f89410bfd728f176ff6508e.jar" />
+    </item>
+    <item
+        jar="E:\workspace\Quantum\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\libs\internal_impl-22.1.1.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
+        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\internal_impl-22.1.1-982583e8d69648a3d1534d64766d4b7230dd9fb0.jar" />
+    </item>
+    <item
         jar="E:\workspace\Quantum\libs\SocialSDK_WeiXin_2.jar"
         jumboMode="false"
         revision="19.1.0"
@@ -26,64 +117,8 @@
         jar="E:\workspace\Quantum\build\intermediates\exploded-aar\Quantum\multi-image-selector\0.4-SNAPSHOT\classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="8b3ecd0b446f6a512db76b5fde32446424e2585e">
+        sha1="c3b6d2b074ffd1b86117e421f02c0c649158bb80">
         <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\classes-f7acb44019a50ba606123287a49c43f84dbe93f9.jar" />
-    </item>
-    <item
-        jar="D:\adt-bundle-windows-x86_64-20140321\sdk\extras\android\m2repository\com\android\support\support-annotations\22.1.1\support-annotations-22.1.1.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
-        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\support-annotations-22.1.1-18d070afe0760abab2fbe94782e871b39d99e336.jar" />
-    </item>
-    <item
-        jar="E:\workspace\Quantum\libs\pldroid-player-1.0.0.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="2ff1297443eb686b28e567ab27808b405654d6e4">
-        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\pldroid-player-1.0.0-b8bb41ece5c4a974ced3852b3b2343490969cb3e.jar" />
-    </item>
-    <item
-        jar="D:\adt-bundle-windows-x86_64-20140321\sdk\extras\android\m2repository\com\android\support\support-annotations\22.0.0\support-annotations-22.0.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
-        <dex dex="E:\workspace\Quantum\PlDemo\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-328c66eb199a1a21dfcec88859b09893d07e0aaa.jar" />
-    </item>
-    <item
-        jar="E:\workspace\Quantum\build\intermediates\exploded-aar\Quantum\zrcListView\0.4-SNAPSHOT\classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="6570a784e60b59b65c303a54a9ed48f1e62ce504">
-        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\classes-a2daa73f0992623d4a9c1154810ea9c4833dd89b.jar" />
-    </item>
-    <item
-        jar="E:\workspace\Quantum\PlDemo\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
-        <dex dex="E:\workspace\Quantum\PlDemo\build\intermediates\pre-dexed\debug\classes-bb520db59aa6d41f04fa3541f9e259870e5f5bda.jar" />
-    </item>
-    <item
-        jar="E:\workspace\Quantum\libs\okhttp-2.3.0.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="2e7bc7033dc2c8423e661224171b3133fb155b28">
-        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\okhttp-2.3.0-592b583abb88ee16dc67e5ab33f0734aaf7ce274.jar" />
-    </item>
-    <item
-        jar="E:\workspace\Quantum\libs\android-support-v7-recyclerview.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="12b40458075441c1a66d3fe16e72217ee7472a47">
-        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\android-support-v7-recyclerview-f3d807bd1e4f8eb40ba4d03f0c29ad338f857fc2.jar" />
-    </item>
-    <item
-        jar="E:\workspace\Quantum\build\intermediates\exploded-aar\com.edmodo\cropper\1.0.1\classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="65c40420254eb3e81ee2d03da75300d3c1d993c4">
-        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\classes-aaecfe8b97b4ef8ebe035699382a8d041690ad03.jar" />
     </item>
     <item
         jar="E:\workspace\Quantum\libs\okio-1.3.0.jar"
@@ -93,13 +128,6 @@
         <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\okio-1.3.0-b0003667a0fb553b3d93bb4b6fe3f1cc9568eed3.jar" />
     </item>
     <item
-        jar="E:\workspace\Quantum\PlDemo\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.0.0\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="d84409890828e07d344a3b9b1da545dba9897b51">
-        <dex dex="E:\workspace\Quantum\PlDemo\build\intermediates\pre-dexed\debug\classes-82a57b3f63557417d44328e9aa9af16383d28fd5.jar" />
-    </item>
-    <item
         jar="E:\workspace\Quantum\libs\httpmime-4.1.3.jar"
         jumboMode="false"
         revision="19.1.0"
@@ -107,45 +135,10 @@
         <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\httpmime-4.1.3-f8f327a56b4866d5360a7b399c164d538287243b.jar" />
     </item>
     <item
-        jar="E:\workspace\Quantum\libs\SocialSDK_comment.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="189be2ef1ef73018338442dfecfae6c11f4a3ac5">
-        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\SocialSDK_comment-9b7aa30a2e52e98d49d8b940f13277b7ee9be415.jar" />
-    </item>
-    <item
-        jar="E:\workspace\Quantum\build\intermediates\exploded-aar\Quantum\circleimageview\0.4-SNAPSHOT\classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="96b6087697cfeec852835d1bd6a729d62f46ef6c">
-        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\classes-52eb98186d7da9440a94e8ee3ba7a3036fd4fa29.jar" />
-    </item>
-    <item
-        jar="E:\workspace\Quantum\libs\SocialSDK_Sina.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="fd07c18d274be387922d55964e04cb418133c80f">
-        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\SocialSDK_Sina-c1f0c44ca8c1b502b75b7bddb36f5396f6905822.jar" />
-    </item>
-    <item
-        jar="E:\workspace\Quantum\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.1.1\classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
-        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\classes-493c391e1c7e519c03405c4d045fc94b8bb1d6df.jar" />
-    </item>
-    <item
-        jar="E:\workspace\Quantum\PlDemo\libs\pldroid-player-1.0.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="2ff1297443eb686b28e567ab27808b405654d6e4">
-        <dex dex="E:\workspace\Quantum\PlDemo\build\intermediates\pre-dexed\debug\pldroid-player-1.0.0-32610632f17cfef0aaff49fa5bc87e3277f16196.jar" />
-    </item>
-    <item
         jar="E:\workspace\Quantum\build\intermediates\exploded-aar\Quantum\ninjaCropLib\0.4-SNAPSHOT\classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="149f9f7276371102f0abfe26d2c86ea0c52cfd65">
+        sha1="331b55f8a9110075965c407f655bf8944eb3efc7">
         <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\classes-4ba256105f885a768c508c7822b6b144fa8186dc.jar" />
     </item>
     <item
@@ -154,13 +147,6 @@
         revision="19.1.0"
         sha1="03e3948d42b8d78961a092a184af66bd86da42e6">
         <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\universal-image-loader-1.9.3-with-sources-e8a404dd8c09ce741f428b803d83c12f17633d85.jar" />
-    </item>
-    <item
-        jar="E:\workspace\Quantum\libs\SocialSDK_WeiXin_1.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="d7c2f29c05b35e8c8713be2b81c41cf18f98b64a">
-        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\SocialSDK_WeiXin_1-a95c39a518e370dd0aa220fe8d4c0b3ddd731ebb.jar" />
     </item>
     <item
         jar="E:\workspace\Quantum\libs\gson-2.2.4.jar"
@@ -177,20 +163,6 @@
         <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\ijkmediaplayer-d0a13c95181a07c7bd6afc40b2fe92afe7d3fe43.jar" />
     </item>
     <item
-        jar="E:\workspace\Quantum\PlDemo\libs\ijkmediaplayer.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="bcd69c602b7e2cf8f2b1e14d2a7b7ff37c901aef">
-        <dex dex="E:\workspace\Quantum\PlDemo\build\intermediates\pre-dexed\debug\ijkmediaplayer-17842f518054bf2e2bc64521f20432c25c251963.jar" />
-    </item>
-    <item
-        jar="E:\workspace\Quantum\build\intermediates\exploded-aar\Quantum\multi-image-selector\0.4-SNAPSHOT\libs\picasso-2.5.2.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
-        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\picasso-2.5.2-1f82c40e22ea61398f89410bfd728f176ff6508e.jar" />
-    </item>
-    <item
         jar="E:\workspace\Quantum\libs\easemobchat_2.1.9.jar"
         jumboMode="false"
         revision="19.1.0"
@@ -198,25 +170,11 @@
         <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\easemobchat_2.1.9-4919202f801f2585d20ccdcd289de27125eb249c.jar" />
     </item>
     <item
-        jar="E:\workspace\Quantum\PlDemo\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\libs\internal_impl-22.0.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
-        <dex dex="E:\workspace\Quantum\PlDemo\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-4205baf27ae4468d382ee61920392e8ed427f6b6.jar" />
-    </item>
-    <item
         jar="E:\workspace\Quantum\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\classes.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
         <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\classes-d9ae17239ab51e489ff02e9cc54afc94f77f8803.jar" />
-    </item>
-    <item
-        jar="E:\workspace\Quantum\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\libs\internal_impl-22.1.1.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
-        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\internal_impl-22.1.1-982583e8d69648a3d1534d64766d4b7230dd9fb0.jar" />
     </item>
 
 </items>

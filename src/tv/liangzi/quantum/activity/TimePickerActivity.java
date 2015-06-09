@@ -117,6 +117,13 @@ public class TimePickerActivity extends Activity implements OnClickListener
 					break;
 				case 2:
 					if(living){
+						Intent intent=new Intent(TimePickerActivity.this,ShowLiveActivity.class);
+						intent.putExtra("roomId",mLiveVideo.getChatroomId());
+						intent.putExtra("rtmpUrl",mLiveVideo.getRtmpPlayUrl());
+						intent.putExtra("userid",mLiveVideo.getUserId());
+						intent.putExtra("nikeName",mLiveVideo.getNickName());
+						intent.putExtra("shareUrl", mLiveVideo.getShareUrl());
+						startActivity(intent);
 						Toast.makeText(TimePickerActivity.this,"直播成功+++++++！！！！",Toast.LENGTH_SHORT).show();
 					}else
 						Toast.makeText(TimePickerActivity.this,"预约成功+++++++！！！！",Toast.LENGTH_SHORT).show();

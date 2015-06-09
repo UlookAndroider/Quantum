@@ -1,7 +1,9 @@
 package tv.liangzi.quantum.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.hardware.Camera;
 import android.os.Handler;
 import android.os.Message;
@@ -19,78 +21,40 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import com.easemob.EMChatRoomChangeListener;
+import com.easemob.EMEventListener;
+import com.easemob.EMNotifierEvent;
+import com.easemob.EMValueCallBack;
+import com.easemob.chat.EMChat;
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMChatRoom;
+import com.easemob.chat.EMConversation;
+import com.easemob.chat.EMMessage;
+import com.easemob.util.EMLog;
 
 import java.io.IOException;
+import java.util.List;
 
 import tv.liangzi.quantum.R;
-import tv.liangzi.quantum.adapter.ShowLiveActivityAdapter;
 import tv.liangzi.quantum.base.BaseActivity;
 
-public class StartLiveActivity extends BaseActivity implements SurfaceHolder.Callback, Camera.PreviewCallback, OnClickListener, TextWatcher{
+public class StartLiveActivity extends BaseActivity  {
 	private ListView  mListview;
-	private String videoURL;
-	private ImageView etDiscuss;
     private String TAG="SHOWLIVING";
-    private RelativeLayout rl;
-    private EditText removeET;
-//    private ImageView imLove;
-    private ImageView imShare;
-    private ImageView imSwitch;
+    private String roomId;
+    private String nikeName;
+    private String userid;
+    private String shareUrl;
+    private String rtmpUrl;
+    EMConversation conversation;
 
-    private int temp;
-    int time=0;
-    private KeyboardLayout mRoot;
-    public static final  int MESSAGE_LISTVIEW=0;
-    private int cameraNum=0;
-
-    private int mLoginBottom;
-    private static final int KEYBOARD_SHOW = 0X10;
-    private static final int KEYBOARD_HIDE = 0X20;
-    private boolean mGetBottom = true;
-
-
-    private Camera mCamera;
-    private SurfaceView surfaceView;
-    private SurfaceHolder surfaceHolder;
-    private Handler mHandler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            // TODO Auto-generated method stub
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case KEYBOARD_HIDE:
-                	mListview.setVisibility(View.VISIBLE);
-                	removeET.setVisibility(View.GONE);
-//                	imLove.setVisibility(View.VISIBLE);
-                	imShare.setVisibility(View.VISIBLE);
-                	etDiscuss.setVisibility(View.VISIBLE);
-//                	mRoot.setPadding(0, 0, 0, 0);
-                    break;
-
-                case KEYBOARD_SHOW:
-                    int mRootBottom = mRoot.getBottom();
-                    mListview.setVisibility(View.GONE);
-                    removeET.setVisibility(View.VISIBLE);
-//                    imLove.setVisibility(View.GONE);
-                	imShare.setVisibility(View.GONE);
-                	etDiscuss.setVisibility(View.GONE);
-                    Log.d(TAG, "the mLoginBottom is  " + mLoginBottom);
-//                    mRoot.setPadding(0, mRootBottom - mLoginBottom, 0, 0);
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-    };
 	@Override
 	public void setContentView() {
 		// TODO Auto-generated method stub
 
         setContentView(R.layout.activity_sendlive);
-//        getWindow().setBackgroundDrawableResource(R.drawable.test_live) ;
 	}
 
 	@Override
@@ -103,109 +67,20 @@ public class StartLiveActivity extends BaseActivity implements SurfaceHolder.Cal
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
-                Intent intent=new Intent(StartLiveActivity.this,UserInfoActivity.class);
+                Intent intent = new Intent(StartLiveActivity.this, UserInfoActivity.class);
                 startActivity(intent);
             }
         });
 		// TODO Auto-generated method stub
 		mListview=(ListView) findViewById(R.id.lv_live_listview);
-        imSwitch= (ImageView) findViewById(R.id.im_live_switch);
-		imShare=(ImageView) findViewById(R.id.im_live_share);
-        etDiscuss=(ImageView)findViewById(R.id.ibtn_disscuss);
-        etDiscuss.setOnClickListener(this);
-		LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
-		linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//		rlView.setLayoutManager(linearLayoutManager);
-		removeET=(EditText) findViewById(R.id.et_remove_disscuss);
-//
-        mRoot= (KeyboardLayout) findViewById(R.id.rl_root);
-        mRoot.setOnSizeChangedListener(new KeyboardLayout.onSizeChangedListener() {
-            @Override
-            public void onChanged(boolean showKeyboard) {
-            	if (showKeyboard) {
-                    mHandler.sendMessage(mHandler.obtainMessage(KEYBOARD_SHOW));
-                    Log.d(TAG, "show keyboard");
-                } else {
-                    mHandler.sendMessage(mHandler.obtainMessage(KEYBOARD_HIDE));
-                }
-
-
-            }
-        });
-        mRoot.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-
-            @Override
-            public boolean onPreDraw() {
-                // TODO Auto-generated method stub
-                if (mGetBottom) {
-                    mLoginBottom = etDiscuss.getBottom();//获取登录按钮的位置信息。
-                }
-                mGetBottom = false;
-                return true;
-            }
-        });
-
-      /*  rl.getViewTreeObserver().addOnGlobalLayoutListener(
-                new ViewTreeObserver.OnGlobalLayoutListener(){
-                    @Override
-                    public void onGlobalLayout()
-                    {
-                    	
-                    	int[] location = new int[2];  
-                    	removeET.getLocationOnScreen(location);  
-                        int x = location[0];  
-                        int y = location[1];  
-                        int heightDiff = rl.getRootView().getHeight() - removeET.getHeight();
-                        Log.v(TAG, "detailMainRL.getRootView().getHeight() = " + y );
-                        Log.v(TAG,"第一次y值 " +temp );
-                      if (time!=0) {
-                        if (temp==y)
-                        { // 说明键盘是没弹出状态
-                            Log.v(TAG, "键盘没弹起状态");
-//                            Message msg=new Message();
-//                            mHandler.sendMessage(msg);
-//                            try {
-//                                Thread.sleep(500);
-//                            } catch (InterruptedException e) {
-//                                e.printStackTrace();
-//                            }
-                            mListview.setVisibility(View.VISIBLE);
-                        } else if(temp>y){
-                            Log.v(TAG, "键盘弹起状态");
-                            mListview.setVisibility(View.GONE);
-
-                        }
-                        
-                      }
-                      time++;
-                    }
-                });*/
-
-        mRoot.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-
-            @Override
-            public void onGlobalLayout() {
-                int offset = mRoot.getRootView().getHeight() - mRoot.getHeight();
-                //根据视图的偏移值来判断键盘是否显示
-//                if (offset > 300) {
-//                    Log.v(TAG, "键盘弹起状态-----------");
-//                    mHandler.sendMessage(mHandler.obtainMessage(KEYBOARD_SHOW));
-//                } else {
-//                    Log.v(TAG, "。。。。。。。键盘收起状态");
-//                    mHandler.sendMessage(mHandler.obtainMessage(KEYBOARD_HIDE));
-//                }
-
-            }
-        });
 
 
     }
 
     private void initSurfaceView() {
-        surfaceView=(SurfaceView) findViewById(R.id.surfaceview);
-        surfaceHolder = surfaceView.getHolder();
-        surfaceHolder.addCallback(this);
-        surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+//        surfaceView=(SurfaceView) findViewById(R.id.surfaceview);
+//        surfaceHolder = surfaceView.getHolder();
+//        surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
     }
 
 
@@ -214,179 +89,180 @@ public class StartLiveActivity extends BaseActivity implements SurfaceHolder.Cal
 		// TODO Auto-generated method stub
 //		playButton.setOnClickListener(this);
 //		etDiscuss.addTextChangedListener(this);
-        imSwitch.setOnClickListener(this);
+//        imSwitch.setOnClickListener(this);
 		
 	}
 
 	@Override
 	public void initData() {
+        Intent intent = getIntent();
+        roomId = intent.getStringExtra("roomId");
+        rtmpUrl = intent.getStringExtra("rtmpUrl");
+        userid = intent.getStringExtra("userid");
+        nikeName = intent.getStringExtra("nikeName");
+        shareUrl = intent.getStringExtra("shareUrl");
         // TODO Auto-generated method stub
 //		videoURL="rtsp://218.204.223.237:554/live/1/66251FC11353191F/e7ooqwcfbqjoo80j.sdp";
-        videoURL="http://hot.vrs.sohu.com/ipad2025214_4639791893179_5236535.m3u8?plat=17";
-        ShowLiveActivityAdapter adapter=new ShowLiveActivityAdapter(StartLiveActivity.this, null);
-        mListview.setAdapter(adapter);
-//        Uri uri = Uri.parse(videoURL);
-//        videoView.setVideoURI(uri);
-//        videoView.start();
-		 
-	}
-@Override
-public void onWindowFocusChanged(boolean hasFocus) {
-	// TODO Auto-generated method stub
-	int[] location = new int[2];  
-	removeET.getLocationOnScreen(location);  
-    temp=location[1]; 
-    Log.v(TAG, temp+"temp 坐标。。。。。。。。。。。");
-	super.onWindowFocusChanged(hasFocus);
-}
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		switch (v.getId()) {
-            case R.id.ibtn_disscuss:
-            	 Log.e(TAG, "评论按钮被点击。。。。。。。。。。。");
-            	removeET.setVisibility(View.VISIBLE);
-            	removeET.setFocusable(true);
-            	removeET.setFocusableInTouchMode(true);
-            	removeET.requestFocus();
-            	removeET.findFocus();
-//               mListview.setVisibility(View.GONE);
-               InputMethodManager imm = ( InputMethodManager ) removeET.getContext( ).getSystemService( Context.INPUT_METHOD_SERVICE );     
-               imm.showSoftInput(removeET,InputMethodManager.SHOW_FORCED);    
-               Log.v(TAG, "anjiandianji");
+//        StartLiveActivityAdapter adapter=new StartLiveActivityAdapter(StartLiveActivity.this, null);
+//        mListview.setAdapter(adapter);
+        onChatroomViewCreation(roomId);
 
-            case  R.id.im_live_switch:
-//                releaseCamera();
 
-                //切换前后摄像头
-                int cameraCount = 0;
-                Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
-                cameraCount = Camera.getNumberOfCameras();//得到摄像头的个数
+        EMChatManager.getInstance().registerEventListener(new EMEventListener() {
 
-                for(int i = 0; i < cameraCount; i++  ) {
-                    Camera.getCameraInfo(i, cameraInfo);//得到每一个摄像头的信息
-                    if(cameraNum == 1) {
-                        //现在是后置，变更为前置
-                        if(cameraInfo.facing  == Camera.CameraInfo.CAMERA_FACING_FRONT) {//代表摄像头的方位，CAMERA_FACING_FRONT前置      CAMERA_FACING_BACK后置
-                            mCamera.stopPreview();//停掉原来摄像头的预览
-                            mCamera.release();//释放资源
-                            mCamera = null;//取消原来摄像头
-                            mCamera = Camera.open(i);//打开当前选中的摄像头
-                            try {
-                                mCamera.setPreviewDisplay(surfaceHolder);//通过surfaceview显示取景画面
-                            } catch (IOException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-                            mCamera.startPreview();//开始预览
-                            cameraNum = 0;
-                            break;
-                        }
-                    } else {
-                        //现在是前置， 变更为后置
-                        if(cameraInfo.facing  == Camera.CameraInfo.CAMERA_FACING_BACK) {//代表摄像头的方位，CAMERA_FACING_FRONT前置      CAMERA_FACING_BACK后置
-                            mCamera.stopPreview();//停掉原来摄像头的预览
-                            mCamera.release();//释放资源
-                            mCamera = null;//取消原来摄像头
-                            mCamera = Camera.open(i);//打开当前选中的摄像头
-                            try {
-                                mCamera.setPreviewDisplay(surfaceHolder);//通过surfaceview显示取景画面
-                            } catch (IOException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-                            mCamera.startPreview();//开始预览
-                            cameraNum = 1;
-                            break;
-                        }
-                    }
-
-                }
-
-            default:
-			break;
-		}
-	}
-
-	@Override
-	public void afterTextChanged(Editable arg0) {
-		// TODO Auto-generated method stub
-//        mListview.setVisibility(View.GONE);
-	}
-
-	@Override
-	public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-			int arg3) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
-		
-	}
-
-    @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        if (mCamera != null) {
-            mCamera = Camera.open(0);
-            try {
-                mCamera.setDisplayOrientation(90);
-                mCamera.startPreview();
-                mCamera.setPreviewDisplay(holder);
-                mCamera.setPreviewCallback(this);
-            } catch (IOException e) {
-                mCamera.release();
-                mCamera = null;
+            @Override
+            public void onEvent(EMNotifierEvent event) {
+                // TODO Auto-generated method stub
+                EMMessage message = (EMMessage) event.getData();
             }
+        });
+	}
+
+    private class NewMessageBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // 注销广播
+            abortBroadcast();
+
+            // 消息id（每条消息都会生成唯一的一个id，目前是SDK生成）
+            String msgId = intent.getStringExtra("msgid");
+            //发送方
+            String username = intent.getStringExtra("from");
+            // 收到这个广播的时候，message已经在db和内存里了，可以通过id获取mesage对象
+            EMMessage message = EMChatManager.getInstance().getMessage(msgId);
+            EMConversation	conversation = EMChatManager.getInstance().getConversation(username);
+            // 如果是群聊消息，获取到group id
+            if (!username.equals(username)) {
+                // 消息不是发给当前会话，return
+                return;
+            }
+            EMChat.getInstance().setAppInited();
         }
     }
+    public void onChatroomViewCreation(String roomIdq) {
 
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        if(mCamera!=null){
-            mCamera.stopPreview();
-            mCamera.release();
-            mCamera = null;
+//        findViewById(R.id.container_to_group).setVisibility(View.GONE);
+
+//        final ProgressDialog pd = ProgressDialog.show(this, "", "Joining......");
+        EMChatManager.getInstance().joinChatRoom(roomId, new EMValueCallBack<EMChatRoom>() {
+
+            @Override
+            public void onSuccess(EMChatRoom value) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+//                        pd.dismiss();
+                        EMChatRoom room = EMChatManager.getInstance().getChatRoom(roomId);
+                        if (room != null) {
+//                            ((TextView) findViewById(R.id.name)).setText(room.getName());
+                        } else {
+//                            ((TextView) findViewById(R.id.name)).setText(roomId);
+                        }
+                        Log.e(TAG, "join room success : " + room.getName());
+
+                        onConversationInit();
+
+                        onListViewCreation();
+//                        NewMessageBroadcastReceiver msgReceiver = new NewMessageBroadcastReceiver();
+//                        IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
+//                        intentFilter.setPriority(3);
+//                        registerReceiver(msgReceiver, intentFilter);
+//                        EMChatManager.getInstance().registerEventListener(
+//                                StartLiveActivity.this,
+//                                new EMNotifierEvent.Event[]{EMNotifierEvent.Event.EventNewMessage, EMNotifierEvent.Event.EventOfflineMessage,
+//                                        EMNotifierEvent.Event.EventDeliveryAck, EMNotifierEvent.Event.EventReadAck});
+                    }
+                });
+            }
+
+            @Override
+            public void onError(final int error, String errorMsg) {
+                EMLog.d(TAG, "join room failure : " + error);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+//                        pd.dismiss();
+                    }
+                });
+                finish();
+            }
+        });
+    }
+
+    private void onListViewCreation() {
+//        adapter = new StartLiveActivityAdapter(StartLiveActivity.this, roomId);
+//        mListview.setAdapter(adapter);
+//        adapter.refreshSelectLast();
+
+    }
+
+    protected void onConversationInit() {
+
+        conversation = EMChatManager.getInstance().getConversationByType(roomId, EMConversation.EMConversationType.ChatRoom);
+
+        // 把此会话的未读数置为0
+        conversation.markAllMessagesAsRead();
+
+        // 初始化db时，每个conversation加载数目是getChatOptions().getNumberOfMessagesLoaded
+        // 这个数目如果比用户期望进入会话界面时显示的个数不一样，就多加载一些
+        final List<EMMessage> msgs = conversation.getAllMessages();
+        int msgCount = msgs != null ? msgs.size() : 0;
+        if (msgCount < conversation.getAllMsgCount() && msgCount < 20) {
+            String msgId = null;
+            if (msgs != null && msgs.size() > 0) {
+                msgId = msgs.get(0).getMsgId();
+            }
+            conversation.loadMoreGroupMsgFromDB(msgId, 20);//pagesize
         }
 
+        // 监听聊天室变化回调
+        EMChatManager.getInstance().addChatRoomChangeListener(new EMChatRoomChangeListener() {
+
+//            @Override
+//            public void onInvitationReceived(String roomId, String roomName,
+//                                             String inviter, String reason) {
+//            }
+
+            @Override
+            public void onChatRoomDestroyed(String roomId, String roomName) {
+                if (roomId.equals(roomId)) {
+                    finish();
+                }
+            }
+
+            @Override
+            public void onMemberJoined(String roomId, String participant) {
+                Toast.makeText(StartLiveActivity.this, "有人加入房间", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onMemberExited(String roomId, String roomName,
+                                       String participant) {
+                Toast.makeText(StartLiveActivity.this, "有人加入房间", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onMemberKicked(String roomId, String roomName,
+                                       String participant) {
+                if (roomId.equals(roomId)) {
+                    String curUser = EMChatManager.getInstance().getCurrentUser();
+                    if (curUser.equals(participant)) {
+                        EMChatManager.getInstance().leaveChatRoom(roomId);
+                        finish();
+                    }
+                }
+            }
+
+        });
     }
 
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-
-    }
-
-    @Override
-    public void onPreviewFrame(byte[] data, Camera camera) {
-
-    }
-
-
-
-/**
-
-
- * 释放mCamera
-
-
- */
-
-    private void releaseCamera() {
-
-        if (mCamera != null) {
-
-            mCamera.setPreviewCallback(null);
-            mCamera.stopPreview();// 停掉原来摄像头的预览
-            mCamera.release();
-            mCamera = null;
-
-
-        }
-
-
-    }
+//    @Override
+//    public void onEvent(EMNotifierEvent emNotifierEvent) {
+//        EMNotifierEvent.Event a=  emNotifierEvent.getEvent();
+//        String b=a.toString();
+//
+//
+//    }
 }
 
 

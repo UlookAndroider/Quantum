@@ -20,12 +20,12 @@ import tv.liangzi.quantum.utils.LogUtils;
 public class MyAapplication extends Application {
     public  String EMuserId;
     public static final String IP="http://101.200.173.120:8080/LiangZiServer/";
-
     @Override
 public void onCreate() {
 	// TODO Auto-generated method stub
 	initImageLoader(getApplicationContext());//初始化图片缓�?
 	LogUtils.i("APPLICATION", "--------------------------");
+//        hxSDKHelper.onInit(getApplicationContext());
 //环信初始化配置
         EMChat.getInstance().init(getApplicationContext());
 /**
@@ -34,6 +34,7 @@ public void onCreate() {
  * 在做代码混淆的时候需要设置成false
  */
         EMChat.getInstance().setDebugMode(true);//在做打包混淆时，要关闭debug模式，如果未被关闭，则会出现程序无法运行问题
+//        EMChat.getInstance().setAppInited();
     super.onCreate();
 
 
