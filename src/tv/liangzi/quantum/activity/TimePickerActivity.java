@@ -124,6 +124,8 @@ public class TimePickerActivity extends Activity implements OnClickListener
 					if(living){
 						Intent intent=new Intent(TimePickerActivity.this,ShowLiveActivity.class);
 						intent.putExtra("roomId",mLiveVideo.getChatroomId());
+						intent.putExtra("photo",mLiveVideo.getPhoto());
+						intent.putExtra("nickName",mLiveVideo.getNickName());
 						intent.putExtra("rtmpUrl",mLiveVideo.getRtmpPlayUrl());
 						intent.putExtra("userid",mLiveVideo.getUserId());
 						intent.putExtra("nikeName",mLiveVideo.getNickName());

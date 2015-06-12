@@ -5,7 +5,7 @@
     >
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="400dp">
+    android:layout_height="match_parent">
     <SurfaceView
         android:id="@+id/surface_record"
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
     <RelativeLayout
         android:id="@+id/rl_send_schedule"
         android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_height="390dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/start_background" >
 

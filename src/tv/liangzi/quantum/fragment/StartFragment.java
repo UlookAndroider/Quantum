@@ -14,24 +14,18 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
-import gdg.ninja.croplib.Crop;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 import tv.liangzi.quantum.R;
-import tv.liangzi.quantum.activity.StartLiveActivity;
 import tv.liangzi.quantum.activity.TimePickerActivity;
-import tv.liangzi.quantum.activity.UserInfoActivity;
-import tv.liangzi.quantum.config.MyAapplication;
+import tv.liangzi.quantum.utils.SharedPreferencesUtils;
 
 public class StartFragment extends BaseFragment implements SurfaceHolder.Callback, PreviewCallback,View.OnClickListener {
 
@@ -53,7 +47,7 @@ public class StartFragment extends BaseFragment implements SurfaceHolder.Callbac
 		return collectFragment;
 	}
 
-
+	private String photo;
     //对话框相关
 
     private TextView schedule;
@@ -93,6 +87,7 @@ public class StartFragment extends BaseFragment implements SurfaceHolder.Callbac
         schedule=(TextView) view.findViewById(R.id.tv_schedule);
         now=(TextView)view.findViewById(R.id.tv_now);
         schduleLayout= (RelativeLayout) view.findViewById(R.id.rl_send_schedule);
+		photo= (String) SharedPreferencesUtils.getParam(getActivity(),"photo","");
             initListener(view);
     }
 

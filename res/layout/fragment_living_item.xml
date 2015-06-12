@@ -20,6 +20,12 @@
                 android:src="@drawable/background_info" />
  
         </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gray_bg"
+        android:layout_alignParentBottom="true"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +33,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_alignParentBottom="true"
-        >
+        android:id="@+id/linearLayout3">
         <TextView
             android:id="@+id/theme_name"
             android:layout_width="wrap_content"
@@ -40,7 +46,7 @@
             android:gravity="left"
             android:padding="5dp"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="16sp"
 
             />
         <ImageView
@@ -51,13 +57,14 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="1dp"
+            android:padding="2dp"
             >
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/living_head"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:padding="2dp"
                 android:src="@drawable/a"
                 app:border_width="1dp"
                 app:border_color="@color/red_bg"/>
@@ -71,7 +78,7 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 />
-            <ImageView
+             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@drawable/follow_head"
@@ -109,7 +116,7 @@
                 android:text="哦哦哦诗人"
                 android:layout_toRightOf="@+id/living_head"
                 android:textColor="@color/white"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:layout_centerVertical="true"
                 />
 
@@ -121,9 +128,10 @@
         android:id="@+id/icon_living"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginLeft="8dp"
         android:src="@drawable/icon_living_middle"
-        />
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/linearLayout3"
+        android:layout_alignStart="@+id/linearLayout3" />
 
     <!--<RelativeLayout-->
         <!--android:layout_width="match_parent"-->
