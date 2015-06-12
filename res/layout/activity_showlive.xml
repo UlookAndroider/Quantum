@@ -83,11 +83,11 @@
                android:layout_marginLeft="8dp"
                android:background="@drawable/bg_textview_btn"
                android:id="@+id/linearLayout2">
-               <ImageView
+               <de.hdodenhof.circleimageview.CircleImageView
                    android:id="@+id/im_live_head"
                    android:layout_width="40dp"
                    android:layout_height="40dp"
-                   android:src="@drawable/headtest"
+                   android:src="@drawable/default_head"
                    />
                <TextView
                    android:id="@+id/tv_live_id"

@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/im_title_head"
         android:layout_width="35dp"
         android:layout_height="35dp"

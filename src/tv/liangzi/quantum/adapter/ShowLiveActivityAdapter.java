@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +12,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMMessage;
-import com.easemob.chat.MessageBody;
 import com.easemob.chat.TextMessageBody;
 import com.easemob.exceptions.EaseMobException;
-import com.easemob.util.EMLog;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -109,8 +104,8 @@ public class ShowLiveActivityAdapter extends BaseAdapter {
 		options = new DisplayImageOptions.Builder()
 //			.showStubImage(R.drawable.index_iv02)			// 设置图片下载期间显示的图片
 			.showImageOnLoading(R.drawable.ic_loading)
-			.showImageForEmptyUri(R.drawable.bg_live)	// 设置图片Uri为空或是错误的时候显示的图片
-			.showImageOnFail(R.drawable.a)		// 设置图片加载或解码过程中发生错误显示的图片	
+			.showImageForEmptyUri(R.drawable.default_head)	// 设置图片Uri为空或是错误的时候显示的图片
+			.showImageOnFail(R.drawable.default_head)		// 设置图片加载或解码过程中发生错误显示的图片
 			.cacheInMemory(true)						// 设置下载的图片是否缓存在内存中
 			.cacheOnDisc(true)							// 设置下载的图片是否缓存在SD卡中
 			.considerExifParams(true)
@@ -212,17 +207,19 @@ public class ShowLiveActivityAdapter extends BaseAdapter {
 //			 holder.loading.setVisibility(View.GONE);
 //			 holder.videoPlay.setVisibility(View.GONE);
 		}
-//		imageLoader.displayImage(mList.get(position), holder.imageView, options, animateFirstListener);
+
 		String content = null;
+		String photo=null;
 		try {
 			 content=message.getStringAttribute("content");
-			String photo=message.getStringAttribute("photo");
+			 photo=message.getStringAttribute("photo");
 			String nickName=message.getStringAttribute("nickName");
 		} catch (EaseMobException e) {
 			e.printStackTrace();
 		}
 		TextMessageBody body= (TextMessageBody) message.getBody();
 		holder.textViewContent.setText(body.getMessage());
+		imageLoader.displayImage(photo, holder.imageView, options, animateFirstListener);
 		return convertView;
 	}
 	 static class ViewHolder{

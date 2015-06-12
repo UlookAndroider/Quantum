@@ -8,7 +8,7 @@
     <!-- title bar -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="@color/red"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -17,10 +17,10 @@
         android:layout_width="0dp"
         android:layout_weight="4.5"
         android:layout_height="40dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="1dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="1dp"
-        android:background="@drawable/shape_search_app_bg_yj"
+        android:background="@drawable/shape_search_bg"
         android:orientation="horizontal">
 
         <!-- 输入的搜索信息 -->
@@ -59,12 +59,11 @@
         </LinearLayout>
 
     </LinearLayout>
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/im_title_head"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:padding="2dp"
-
             android:layout_gravity="right|center_vertical"
 android:layout_marginRight="5dp"
             android:src="@drawable/headtest"
@@ -76,7 +75,6 @@ android:layout_marginRight="5dp"
          android:dividerHeight="1dp"
 		android:layout_height="fill_parent"
 		android:layout_width="fill_parent"    
-    
     />
 </LinearLayout>
 <!-- From: file:/E:/workspace/Quantum/res/layout/fragment_people.xml -->

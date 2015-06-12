@@ -59,8 +59,8 @@
                 android:layout_width="38dp"
                 android:layout_height="38dp"
                 android:src="@drawable/headtest"
-                app:border_width="1dp"
                 android:padding="5dp"
+                app:border_width="1dp"
                 app:border_color="@color/transparent"/>
             <TextView
             android:id="@+id/tv_living_time"

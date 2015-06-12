@@ -1,26 +1,9 @@
 package tv.liangzi.quantum.activity;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-
-import tv.liangzi.quantum.R;
-import tv.liangzi.quantum.base.BaseActivity;
-import tv.liangzi.quantum.bean.HTTPKey;
-import tv.liangzi.quantum.bean.PeopleDetails;
-import tv.liangzi.quantum.config.MyAapplication;
-import tv.liangzi.quantum.utils.MD5Util;
-import tv.liangzi.quantum.utils.OkHttpUtil;
-import tv.liangzi.quantum.utils.SharedPreferencesUtils;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.location.Location;
-import android.location.LocationListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -34,7 +17,6 @@ import android.widget.Toast;
 
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMGroupManager;
 import com.google.gson.Gson;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
@@ -50,6 +32,23 @@ import com.umeng.socialize.exception.SocializeException;
 import com.umeng.socialize.sso.SinaSsoHandler;
 import com.umeng.socialize.sso.UMSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
+import tv.liangzi.quantum.R;
+import tv.liangzi.quantum.base.BaseActivity;
+import tv.liangzi.quantum.bean.HTTPKey;
+import tv.liangzi.quantum.bean.PeopleDetails;
+import tv.liangzi.quantum.config.MyAapplication;
+import tv.liangzi.quantum.config.PushReceiver;
+import tv.liangzi.quantum.utils.ImageToSD;
+import tv.liangzi.quantum.utils.MD5Util;
+import tv.liangzi.quantum.utils.OkHttpUtil;
+import tv.liangzi.quantum.utils.SharedPreferencesUtils;
 
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
@@ -141,26 +140,40 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					FormEncodingBuilder formBody = new FormEncodingBuilder();
 					StringBuilder sb = new StringBuilder();
 					Set<String> keys = info.keySet();
-					String account = null;
-					String token = null;
+					String photo = null;
+					String nickName=null;
+					String	account=null;
 					for (String key : keys) {
 						if (key.equals("uid")) {
-							account= String.valueOf(info.get(key));
+								account= String.valueOf(info.get(key));
 							formBody.add(httpKey.USER_ACCOUNT, account);
 						} else if (key.equals("access_token")) {
-							token = (String) info.get(key);
+							String token = (String) info.get(key);
 							formBody.add(httpKey.USER_PASSWORD, token);
 							mapJson.put(httpKey.USER_PASSWORD, token);
 						} else if (key.equals("screen_name")) {
-							String sinaName = (String) info.get(key);
-							formBody.add(httpKey.USER_SINA_NICKNAME, sinaName);
+							nickName= (String) info.get(key);
+							formBody.add(httpKey.USER_SINA_NICKNAME, nickName);
+						}
+						else if (key.equals("profile_image_url")) {
+							 photo = (String) info.get(key);
+							formBody.add(httpKey.USER_PHOTO, photo);
+						}else if (key.equals("description")) {
+							String value = (String) info.get(key);
+							formBody.add(httpKey.USER_SIGN, value);
+						}else if (key.equals("location")) {
+							String value = (String) info.get(key);
+							formBody.add(httpKey.KEY_ADDR, value);
 						}
 //    	             
 					}
 					formBody.add(httpKey.KEY_TYPE, 1 + "");
 					formBody.add(httpKey.KEY_CLIENT_TYPE, 3 + "");
+					formBody.add("gtClientId", PushReceiver.clientid.toString());
+					Log.e("gtClientId", "gtClientId="+PushReceiver.clientid.toString());
 					try {
 						post(MyAapplication.IP + "session", formBody);
+//						ImageToSD.loadImageFromUrl(photo, nickName);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -184,7 +197,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void onComplete(Bundle value, SHARE_MEDIA platform) {
 				if (value != null && !TextUtils.isEmpty(value.getString("uid"))) {
-
 					//回去微博相关信息
 					getWeiBoInfo();
 					Toast.makeText(LoginActivity.this, "授权成功.", Toast.LENGTH_SHORT).show();
@@ -218,40 +230,55 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			}
 
 			@Override
-			public void onComplete(Bundle value, SHARE_MEDIA platform) {
+			public void onComplete(Bundle info, SHARE_MEDIA platform) {
 				StringBuilder sb1 = new StringBuilder();
 				FormEncodingBuilder EncodingBody = new FormEncodingBuilder();
-				Set<String> keySet = value.keySet();
+				Set<String> keySet = info.keySet();
 				Iterator<String> iter = keySet.iterator();
 				String account = null;
 				String token = null;
+				String nickName = null;
+				String photo = null;
+				String addr=null;
 				while (iter.hasNext()) {
 					String key = iter.next();
 //					map.put(key, bundle.getStringArray(key));
-					sb1.append(key + "=" + value.getString(key) + "\r\n");
+					sb1.append(key + "=" + info.getString(key) + "\r\n");
 					if (key.equals("openid")) {
-						account = String.valueOf(value.getString(key));
+						account = String.valueOf(info.getString(key));
 						EncodingBody.add(httpKey.USER_ACCOUNT, account);
 					} else if (key.equals("access_token")) {
-						token = (String) value.getString(key);
+						token = (String) info.getString(key);
 						EncodingBody.add(httpKey.USER_PASSWORD, token);
-					} else if (key.equals("screen_name")) {
-						String sinaName = (String) value.getString(key);
-						EncodingBody.add(httpKey.USER_SINA_NICKNAME, sinaName);
+					} else if (key.equals("nickname")) {
+						 nickName = (String) info.getString(key);
+						EncodingBody.add(httpKey.USER_WECHAT_NICKNAME, nickName);
+					}else if (key.equals("headimgurl")) {
+						photo = (String) info.get(key);
+						EncodingBody.add(httpKey.USER_PHOTO, photo);
+					}else if (key.equals("country")) {
+						addr = (String) info.get(key);
+					}else if (key.equals("province")) {
+						addr = addr+"."+(String) info.get(key);
+					}else if (key.equals("city")) {
+						addr = addr+"."+(String) info.get(key);
+						EncodingBody.add(httpKey.KEY_ADDR, addr);
 					}
 
 				}
 				EncodingBody.add(httpKey.KEY_TYPE, 2 + "");
 				EncodingBody.add(httpKey.KEY_CLIENT_TYPE, 3 + "");
+				EncodingBody.add("gtClientId", PushReceiver.clientid.toString());
 				//请求服务器接口
 				Toast.makeText(LoginActivity.this, "http://192.168.1.144:8080/LiangZiServer/sessio...", Toast.LENGTH_SHORT).show();
 				try {
 					post(MyAapplication.IP + "session", EncodingBody);
+					ImageToSD.loadImageFromUrl(photo, nickName);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				Toast.makeText(LoginActivity.this, "授权完成value" + value.toString(), Toast.LENGTH_SHORT).show();
+				Toast.makeText(LoginActivity.this, "授权完成value" + info.toString(), Toast.LENGTH_SHORT).show();
 				//获取相关授权信息
 				mController.getPlatformInfo(LoginActivity.this, SHARE_MEDIA.WEIXIN, new UMDataListener() {
 					@Override

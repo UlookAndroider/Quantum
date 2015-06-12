@@ -1,11 +1,11 @@
 package tv.liangzi.quantum.fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.media.MediaRecorder;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -17,38 +17,42 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
-import org.apache.http.impl.client.DefaultUserTokenHandler;
-
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import tv.liangzi.quantum.R;
 import tv.liangzi.quantum.activity.UserInfoActivity;
-import tv.liangzi.quantum.activity.videoInfoPageActivity;
 import tv.liangzi.quantum.adapter.ExploreAdapter;
 import tv.liangzi.quantum.bean.PeopleDetails;
 import tv.liangzi.quantum.bean.ServiceStatus;
-import tv.liangzi.quantum.config.MyAapplication;
-import tv.liangzi.quantum.utils.ImageToSD;
 import tv.liangzi.quantum.utils.OkHttpUtil;
 import tv.liangzi.quantum.utils.SharedPreferencesUtils;
-import tv.liangzi.quantum.view.TopIndicator.OnTopIndicatorListener;
-import tv.liangzi.quantum.view.XListView;
 import zrc.widget.SimpleFooter;
 import zrc.widget.SimpleHeader;
 import zrc.widget.ZrcAbsListView;
@@ -60,6 +64,29 @@ public class ExploreFragment extends BaseFragment implements ZrcListView.OnScrol
 		return exploreFragment;
 	}
 //	private SharedPreferences sp;
+
+	public static final String TAG = "HomeFragment";
+	private Activity mActivity;
+	private TextView mTitleTv;
+	private zrc.widget.ZrcListView listView;
+	private TabPagerAdapter mPagerAdapter;
+	private List<ServiceStatus.Video> Videos=new ArrayList<ServiceStatus.Video>();
+	private ExploreAdapter mAdapter;
+	List<ServiceStatus.Video> VideoList=new ArrayList<ServiceStatus.Video>();
+	private PeopleDetails peopleDetails;
+	private String userid;
+	private final static String ALBUM_PATH= Environment.getExternalStorageDirectory() + "/download_test/";
+
+	private ImageView mImageView;
+	private Bitmap mBitmap;
+	private String mFileName;
+	private String mSaveMessage;
+
+	protected ImageLoader imageLoader = ImageLoader.getInstance();
+	DisplayImageOptions options;		// DisplayImageOptions是用于设置图片显示的类
+	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
+
+
 	private Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -77,16 +104,6 @@ public class ExploreFragment extends BaseFragment implements ZrcListView.OnScrol
 			}
 		}
 	};
-	public static final String TAG = "HomeFragment";
-	private Activity mActivity;
-	private TextView mTitleTv;
-	private zrc.widget.ZrcListView listView;
-	private TabPagerAdapter mPagerAdapter;
-	private List<ServiceStatus.Video> Videos=new ArrayList<ServiceStatus.Video>();
-	private ExploreAdapter mAdapter;
-	List<ServiceStatus.Video> VideoList=new ArrayList<ServiceStatus.Video>();
-	private PeopleDetails peopleDetails;
-	private String userid;
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -97,7 +114,6 @@ public class ExploreFragment extends BaseFragment implements ZrcListView.OnScrol
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 	}
 
 	@Override
@@ -121,16 +137,20 @@ public class ExploreFragment extends BaseFragment implements ZrcListView.OnScrol
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
 		initDisplay();
 	}
 
 	private void initViews(View view) throws Exception {
+		initImageLoaderOptions();
+//		new Thread(connectNet).start();
+//		new Thread(saveFileRunnable).start();
 //		sp=getActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
 //	    peopleDetails= MyAapplication.getApplicationuser();
-		ImageView imHead=(ImageView) view.findViewById(R.id.im_title_head);
-		String photo= (String) SharedPreferencesUtils.getParam(getActivity(),"photo","");
 		userid=(String) SharedPreferencesUtils.getParam(getActivity(),"userId","");
+		String photo= (String) SharedPreferencesUtils.getParam(getActivity(),"photo","");
+		ImageView imHead=(ImageView) view.findViewById(R.id.im_title_head);
+		imageLoader.displayImage(photo, imHead, options, animateFirstListener);
+
 //		imHead.setImageDrawable(ImageToSD.loadImageFromUrl(photo,userid));//图片接口调通后处理
 		imHead.setOnClickListener(new OnClickListener() {
 
@@ -191,13 +211,12 @@ public class ExploreFragment extends BaseFragment implements ZrcListView.OnScrol
 
 	private void initDisplay() {
 
-		mPagerAdapter.notifyDataSetChanged();
-		listView.setOnItemClickListener(new ZrcListView.OnItemClickListener() {
-			@Override
-			public void onItemClick(ZrcListView parent, View view, int position, long id) {
-
-			}
-		});
+//		listView.setOnItemClickListener(new ZrcListView.OnItemClickListener() {
+//			@Override
+//			public void onItemClick(ZrcListView parent, View view, int position, long id) {
+//
+//			}
+//		});
 	}
 
 	@Override
@@ -386,4 +405,202 @@ public class ExploreFragment extends BaseFragment implements ZrcListView.OnScrol
 		listView.setLoadMoreSuccess();
 		listView.startLoadMore();
 	}
+
+
+
+
+	private Runnable saveFileRunnable = new Runnable(){
+		@Override
+		public void run() {
+			try {
+				saveFile(mBitmap, mFileName);
+				mSaveMessage = "图片保存成功！";
+			} catch (IOException e) {
+				mSaveMessage = "图片保存失败！";
+				e.printStackTrace();
+			}
+			messageHandler.sendMessage(messageHandler.obtainMessage());
+		}
+
+	};
+
+	private Handler messageHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+		}
+	};
+
+	/*
+     * 连接网络
+     * 由于在4.0中不允许在主线程中访问网络，所以需要在子线程中访问
+     */
+	private Runnable connectNet = new Runnable(){
+		@Override
+		public void run() {
+			try {
+				String filePath = "http://img.my.csdn.net/uploads/201402/24/1393242467_3999.jpg";
+				mFileName = "test.jpg";
+
+				//以下是取得图片的两种方法
+				//////////////// 方法1：取得的是byte数组, 从byte数组生成bitmap
+				byte[] data = getImage(filePath);
+				if(data!=null){
+					mBitmap = BitmapFactory.decodeByteArray(data, 0, data.length);// bitmap
+				}else{
+				}
+				////////////////////////////////////////////////////////
+
+				//******** 方法2：取得的是InputStream，直接从InputStream生成bitmap ***********/
+				mBitmap = BitmapFactory.decodeStream(getImageStream(filePath));
+				//********************************************************************/
+				// 发送消息，通知handler在主线程中更新UI
+				connectHanlder.sendEmptyMessage(0);
+				Log.d(TAG, "set image ...");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
+
+	};
+
+	private Handler connectHanlder = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			Log.d(TAG, "display image");
+			// 更新UI，显示图片
+			if (mBitmap != null) {
+				mImageView.setImageBitmap(mBitmap);// display image
+			}
+		}
+	};
+
+
+
+		/**
+		 * Get image from newwork
+		 * @param path The path of image
+		 * @return byte[]
+		 * @throws Exception
+		 */
+		public byte[] getImage(String path) throws Exception{
+			URL url = new URL(path);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setConnectTimeout(5 * 1000);
+			conn.setRequestMethod("GET");
+			InputStream inStream = conn.getInputStream();
+			if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
+				return readStream(inStream);
+			}
+			return null;
+		}
+
+		/**
+		 * Get image from newwork
+		 * @param path The path of image
+		 * @return InputStream
+		 * @throws Exception
+		 */
+		public InputStream getImageStream(String path) throws Exception{
+			URL url = new URL(path);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setConnectTimeout(5 * 1000);
+			conn.setRequestMethod("GET");
+			if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
+				return conn.getInputStream();
+			}
+			return null;
+		}
+		/**
+		 * Get data from stream
+		 * @param inStream
+		 * @return byte[]
+		 * @throws Exception
+		 */
+		public static byte[] readStream(InputStream inStream) throws Exception{
+			ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+			byte[] buffer = new byte[1024];
+			int len = 0;
+			while( (len=inStream.read(buffer)) != -1){
+				outStream.write(buffer, 0, len);
+			}
+			outStream.close();
+			inStream.close();
+			return outStream.toByteArray();
+		}
+
+		/**
+		 * 保存文件
+		 * @param bm
+		 * @param fileName
+		 * @throws IOException
+		 */
+		public void saveFile(Bitmap bm, String fileName) throws IOException {
+			File dirFile = new File(ALBUM_PATH);
+			if(!dirFile.exists()){
+				dirFile.mkdir();
+			}
+			File myCaptureFile = new File(ALBUM_PATH + fileName);
+			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
+			bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+			bos.flush();
+			bos.close();
+		}
+
+
+	/**
+	 * 初始化缓存设置
+	 */
+	private void initImageLoaderOptions(){
+		// 使用DisplayImageOptions.Builder()创建DisplayImageOptions
+		options = new DisplayImageOptions.Builder()
+//			.showStubImage(R.drawable.index_iv02)			// 设置图片下载期间显示的图片
+				.showImageOnLoading(R.drawable.ic_loading)
+				.showImageForEmptyUri(R.drawable.default_head)	// 设置图片Uri为空或是错误的时候显示的图片
+				.showImageOnFail(R.drawable.a)		// 设置图片加载或解码过程中发生错误显示的图片
+				.cacheInMemory(true)						// 设置下载的图片是否缓存在内存中
+				.cacheOnDisc(true)							// 设置下载的图片是否缓存在SD卡中
+				.considerExifParams(true)
+
+			/*
+			 * 设置图片以如何的编码方式显示 imageScaleType(ImageScaleType imageScaleType)
+			 * EXACTLY :图像将完全按比例缩小的目标大小
+			 * EXACTLY_STRETCHED:图片会缩放到目标大小完全 IN_SAMPLE_INT:图像将被二次采样的整数倍
+			 * IN_SAMPLE_POWER_OF_2:图片将降低2倍，直到下一减少步骤，使图像更小的目标大小
+			 * IN_SAMPLE_INT
+			 * NONE:图片不会调整
+			 */
+				.bitmapConfig(Bitmap.Config.RGB_565)
+				.imageScaleType(ImageScaleType.IN_SAMPLE_INT)
+//			.displayer(new Ro undedBitmapDisplayer(20))	// 设置成圆角图片
+				.build();
+		// 创建配置过得DisplayImageOption对象
+
+	}
+
+
+	/**
+	 * 图片加载第一次显示监听器
+	 * @author Administrator
+	 *
+	 */
+	private static class AnimateFirstDisplayListener extends SimpleImageLoadingListener {
+
+		static final List<String> displayedImages = Collections.synchronizedList(new LinkedList<String>());
+
+		@Override
+		public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+			if (loadedImage != null) {
+				ImageView imageView = (ImageView) view;
+				// 是否第一次显示
+				boolean firstDisplay = !displayedImages.contains(imageUri);
+				if (firstDisplay) {
+					// 图片淡入效果
+					FadeInBitmapDisplayer.animate(imageView, 500);
+					displayedImages.add(imageUri);
+				}
+			}
+		}
+	}
+
 }

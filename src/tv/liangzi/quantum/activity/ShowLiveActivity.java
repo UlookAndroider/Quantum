@@ -3,18 +3,15 @@ package tv.liangzi.quantum.activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -37,7 +34,13 @@ import com.easemob.chat.EMMessage;
 import com.easemob.chat.TextMessageBody;
 import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.EMLog;
-import com.pili.pldroid.player.widget.VideoView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -46,16 +49,15 @@ import com.umeng.socialize.controller.listener.SocializeListeners;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.UMSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
-import com.umeng.socialize.weixin.media.CircleShareContent;
-import com.umeng.socialize.weixin.media.WeiXinShareContent;
 
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import tv.liangzi.quantum.R;
-import tv.liangzi.quantum.adapter.RecycleAdapter;
 import tv.liangzi.quantum.adapter.ShowLiveActivityAdapter;
 import tv.liangzi.quantum.base.BaseActivity;
-import tv.liangzi.quantum.config.MyAapplication;
+import tv.liangzi.quantum.utils.SharedPreferencesUtils;
 import tv.liangzi.quantum.view.MediaController;
 
 public class ShowLiveActivity extends BaseActivity implements OnClickListener,EditText.OnEditorActionListener,EMEventListener {
@@ -75,13 +77,14 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ed
     int time = 0;
     //    private KeyboardLayout mRoot;
     public static final int MESSAGE_LISTVIEW = 0;
-
+    ImageView imHead;
     private int mLoginBottom;
     private static final int KEYBOARD_SHOW = 0X10;
     private static final int KEYBOARD_HIDE = 0X20;
     private boolean mGetBottom = true;
     private String roomId;
     private String nikeName;
+    private String photo;
     private String userid;
     private String shareUrl;
     private String rtmpUrl;
@@ -89,6 +92,12 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ed
     private MediaController mMediaController;
     private String EmuserId;
     private UMSocialService mController = null;
+    String MyPhoto;
+
+    protected ImageLoader imageLoader = ImageLoader.getInstance();
+    DisplayImageOptions options;		// DisplayImageOptions是用于设置图片显示的类
+    private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
+
     private Handler mHandler = new Handler() {
 
         @Override
@@ -131,7 +140,7 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ed
 
     @Override
     public void initViews() {
-        ImageView imHead = (ImageView) findViewById(R.id.im_live_head);
+         imHead = (ImageView) findViewById(R.id.im_live_head);
         imHead.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -154,7 +163,60 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ed
 //        rlView.setAdapter(adapter);
 
     }
+    /**
+     * 初始化缓存设置
+     */
+    private void initImageLoaderOptions(){
+        // 使用DisplayImageOptions.Builder()创建DisplayImageOptions
+        options = new DisplayImageOptions.Builder()
+//			.showStubImage(R.drawable.index_iv02)			// 设置图片下载期间显示的图片
+                .showImageOnLoading(R.drawable.ic_loading)
+                .showImageForEmptyUri(R.drawable.default_head)	// 设置图片Uri为空或是错误的时候显示的图片
+                .showImageOnFail(R.drawable.a)		// 设置图片加载或解码过程中发生错误显示的图片
+                .cacheInMemory(true)						// 设置下载的图片是否缓存在内存中
+                .cacheOnDisc(true)							// 设置下载的图片是否缓存在SD卡中
+                .considerExifParams(true)
 
+			/*
+			 * 设置图片以如何的编码方式显示 imageScaleType(ImageScaleType imageScaleType)
+			 * EXACTLY :图像将完全按比例缩小的目标大小
+			 * EXACTLY_STRETCHED:图片会缩放到目标大小完全 IN_SAMPLE_INT:图像将被二次采样的整数倍
+			 * IN_SAMPLE_POWER_OF_2:图片将降低2倍，直到下一减少步骤，使图像更小的目标大小
+			 * IN_SAMPLE_INT
+			 * NONE:图片不会调整
+			 */
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .imageScaleType(ImageScaleType.IN_SAMPLE_INT)
+//			.displayer(new Ro undedBitmapDisplayer(20))	// 设置成圆角图片
+                .build();
+        // 创建配置过得DisplayImageOption对象
+
+    }
+
+
+    /**
+     * 图片加载第一次显示监听器
+     * @author Administrator
+     *
+     */
+    private static class AnimateFirstDisplayListener extends SimpleImageLoadingListener {
+
+        static final List<String> displayedImages = Collections.synchronizedList(new LinkedList<String>());
+
+        @Override
+        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+            if (loadedImage != null) {
+                ImageView imageView = (ImageView) view;
+                // 是否第一次显示
+                boolean firstDisplay = !displayedImages.contains(imageUri);
+                if (firstDisplay) {
+                    // 图片淡入效果
+                    FadeInBitmapDisplayer.animate(imageView, 500);
+                    displayedImages.add(imageUri);
+                }
+            }
+        }
+    }
     private void uMengConfig() {
 // 首先在您的Activity中添加如下成员变量
         mController = UMServiceFactory.getUMSocialService("com.umeng.share");
@@ -204,11 +266,7 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ed
                         EMNotifierEvent.Event.EventDeliveryAck, EMNotifierEvent.Event.EventReadAck});
         EMChat.getInstance().setAppInited();
         //只有注册了广播才能接收到新消息，目前离线消息，在线消息都是走接收消息的广播（离线消息目前无法监听，在登录以后，接收消息广播会执行一次拿到所有的离线消息）
-//        NewMessageBroadcastReceiver msgReceiver = new NewMessageBroadcastReceiver();
-//        IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
-//        intentFilter.setPriority(3);
-//        registerReceiver(msgReceiver, intentFilter);
-
+        imageLoader.init(ImageLoaderConfiguration.createDefault(ShowLiveActivity.this));
 
     }
 
@@ -233,13 +291,14 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ed
     public void initData() {
 
 //        uMengConfig();
+      MyPhoto= (String) SharedPreferencesUtils.getParam(ShowLiveActivity.this, "photo", "");
         Intent intent = getIntent();
         roomId = intent.getStringExtra("roomId");
         rtmpUrl = intent.getStringExtra("rtmpUrl");
         userid = intent.getStringExtra("userid");
         nikeName = intent.getStringExtra("nikeName");
+        photo=intent.getStringExtra("photo");
         shareUrl = intent.getStringExtra("shareUrl");
-
 //        EmuserId = app.getEMuserId();
         // TODO Auto-generated method stub
 //        videoURL = "http://hot.vrs.sohu.com/ipad2025214_4639791893179_5236535.m3u8?plat=17";
@@ -247,6 +306,7 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ed
 //        videoView.setMediaController(mMediaController);
 //        videoView.setVideoPath(rtmpUrl);
 //        videoView.start();
+        imageLoader.displayImage(photo, imHead, options, animateFirstListener);
         onChatroomViewCreation(roomId);
 
 
@@ -319,142 +379,6 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ed
         }
     }
 
-    /**
-     * 发送文本消息
-     *
-     * @param content message content
-     *                <p>
-     *                boolean resend
-     */
-    private void sendText(String content) {
-
-        if (content.length() > 0) {
-            EMMessage message = EMMessage.createSendMessage(EMMessage.Type.TXT);
-//          message.setAttribute("nikeName", nikeName);
-//            message.setAttribute("photo", "");
-//            message.setAttribute("content", content);
-//            message.setAttribute("funcation", "");
-            // 如果是群聊，设置chattype,默认是单聊
-            message.setChatType(EMMessage.ChatType.ChatRoom);
-            TextMessageBody txtBody = new TextMessageBody(content);
-            // 设置消息body
-            message.addBody(txtBody);
-            // 设置要发给谁,用户username或者群聊groupid
-            message.setReceipt(roomId);
-            // 把messgage加到conversation中
-            conversation.addMessage(message);
-            // 通知adapter有消息变动，adapter会根据加入的这条message显示消息和调用sdk的发送方法
-            adapter.refreshSelectLast();
-            removeET.setText("");
-            handleTextMessage(message);
-            setResult(RESULT_OK);
-
-        }
-    }
-
-    /**
-     * 文本消息
-     *
-     * @param message
-     * @param
-     * @param
-     */
-    private void handleTextMessage(EMMessage message) {
-        TextMessageBody txtBody = (TextMessageBody) message.getBody();
-//		Spannable span = SmileUtils.getSmiledText(mContext, txtBody.getMessage());
-        // 设置内容
-        // 设置长按事件监听
-//        holder.textViewContent.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-////				activity.startActivityForResult(
-////						(new Intent(activity, ContextMenu.class)).putExtra("position", position).putExtra("type",
-////								EMMessage.Type.TXT.ordinal()), ChatActivity.REQUEST_CODE_CONTEXT_MENU);
-//                return true;
-//            }
-//        });
-
-        if (message.direct == EMMessage.Direct.SEND) {
-            switch (message.status) {
-                case SUCCESS: // 发送成功
-//					holder.pb.setVisibility(View.GONE);
-//					holder.staus_iv.setVisibility(View.GONE);
-                    break;
-                case FAIL: // 发送失败
-//					holder.pb.setVisibility(View.GONE);
-//					holder.staus_iv.setVisibility(View.VISIBLE);
-                    break;
-                case INPROGRESS: // 发送中
-//					holder.pb.setVisibility(View.VISIBLE);
-//					holder.staus_iv.setVisibility(View.GONE);
-                    break;
-                default:
-                    Log.e("adapter", "message=" + ((TextMessageBody) message.getBody()).getMessage());
-                    // 发送消息
-                    sendMsgInBackground(message);
-
-            }
-        }
-    }
-
-    /**
-     * 发送消息
-     *
-     * @param message
-     * @param
-     */
-    public void sendMsgInBackground(final EMMessage message) {
-//		holder.staus_iv.setVisibility(View.GONE);
-//		holder.pb.setVisibility(View.VISIBLE);
-
-        final long start = System.currentTimeMillis();
-        // 调用sdk发送异步发送方法
-        EMChatManager.getInstance().sendMessage(message, new EMCallBack() {
-
-            @Override
-            public void onSuccess() {
-
-                updateSendedView(message);
-            }
-
-            @Override
-            public void onError(int code, String error) {
-
-                updateSendedView(message);
-            }
-
-            @Override
-            public void onProgress(int progress, String status) {
-            }
-
-        });
-
-    }
-
-    /**
-     * 更新ui上消息发送状态
-     *
-     * @param message
-     * @param
-     */
-    private void updateSendedView(final EMMessage message) {
-        ShowLiveActivity.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                // send success
-                EMLog.d("adapter", "message status : " + message.status);
-                if (message.status == EMMessage.Status.SUCCESS) {
-                    Toast.makeText(ShowLiveActivity.this, "发送chng", Toast.LENGTH_SHORT)
-                            .show();
-                } else if (message.status == EMMessage.Status.FAIL) {
-                    Toast.makeText(ShowLiveActivity.this, "发送失败", Toast.LENGTH_SHORT)
-                            .show();
-                }
-
-                adapter.notifyDataSetChanged();
-            }
-        });
-    }
 
     private class NewMessageBroadcastReceiver extends BroadcastReceiver {
         @Override
@@ -585,6 +509,142 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ed
 
             });
         }
+    /**
+     * 发送文本消息
+     *
+     * @param content message content
+     *                <p>
+     *                boolean resend
+     */
+    private void sendText(String content) {
+
+        if (content.length() > 0) {
+            EMMessage message = EMMessage.createSendMessage(EMMessage.Type.TXT);
+            TextMessageBody txtBody = new TextMessageBody(content);
+            message.addBody(txtBody);
+            message.setAttribute("nikeName", nikeName);
+            message.setAttribute("photo", MyPhoto);
+            message.setAttribute("content", content);
+//            message.setAttribute("funcation", "");
+            // 如果是群聊，设置chattype,默认是单聊
+            message.setChatType(EMMessage.ChatType.ChatRoom);
+
+            // 设置要发给谁,用户username或者群聊groupid
+            message.setReceipt(roomId);
+            // 把messgage加到conversation中
+            conversation.addMessage(message);
+            // 通知adapter有消息变动，adapter会根据加入的这条message显示消息和调用sdk的发送方法
+            adapter.refreshSelectLast();
+            removeET.setText("");
+            handleTextMessage(message);
+            setResult(RESULT_OK);
+
+        }
+    }
+
+    /**
+     * 文本消息
+     *
+     * @param message
+     * @param
+     * @param
+     */
+    private void handleTextMessage(EMMessage message) {
+        TextMessageBody txtBody = (TextMessageBody) message.getBody();
+//		Spannable span = SmileUtils.getSmiledText(mContext, txtBody.getMessage());
+        // 设置内容
+        // 设置长按事件监听
+//        holder.textViewContent.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+////				activity.startActivityForResult(
+////						(new Intent(activity, ContextMenu.class)).putExtra("position", position).putExtra("type",
+////								EMMessage.Type.TXT.ordinal()), ChatActivity.REQUEST_CODE_CONTEXT_MENU);
+//                return true;
+//            }
+//        });
+
+        if (message.direct == EMMessage.Direct.SEND) {
+            switch (message.status) {
+                case SUCCESS: // 发送成功
+//					holder.pb.setVisibility(View.GONE);
+//					holder.staus_iv.setVisibility(View.GONE);
+                    break;
+                case FAIL: // 发送失败
+//					holder.pb.setVisibility(View.GONE);
+//					holder.staus_iv.setVisibility(View.VISIBLE);
+                    break;
+                case INPROGRESS: // 发送中
+//					holder.pb.setVisibility(View.VISIBLE);
+//					holder.staus_iv.setVisibility(View.GONE);
+                    break;
+                default:
+                    Log.e("adapter", "message=" + ((TextMessageBody) message.getBody()).getMessage());
+                    // 发送消息
+                    sendMsgInBackground(message);
+
+            }
+        }
+    }
+
+    /**
+     * 发送消息
+     *
+     * @param message
+     * @param
+     */
+    public void sendMsgInBackground(final EMMessage message) {
+//		holder.staus_iv.setVisibility(View.GONE);
+//		holder.pb.setVisibility(View.VISIBLE);
+
+        final long start = System.currentTimeMillis();
+        // 调用sdk发送异步发送方法
+        EMChatManager.getInstance().sendMessage(message, new EMCallBack() {
+
+            @Override
+            public void onSuccess() {
+
+                updateSendedView(message);
+            }
+
+            @Override
+            public void onError(int code, String error) {
+
+                updateSendedView(message);
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+            }
+
+        });
+
+    }
+
+    /**
+     * 更新ui上消息发送状态
+     *
+     * @param message
+     * @param
+     */
+    private void updateSendedView(final EMMessage message) {
+        ShowLiveActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // send success
+                EMLog.d("adapter", "message status : " + message.status);
+                if (message.status == EMMessage.Status.SUCCESS) {
+                    Toast.makeText(ShowLiveActivity.this, "发送chng", Toast.LENGTH_SHORT)
+                            .show();
+                } else if (message.status == EMMessage.Status.FAIL) {
+                    Toast.makeText(ShowLiveActivity.this, "发送失败", Toast.LENGTH_SHORT)
+                            .show();
+                }
+
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
 
             @Override
     public void onEvent(EMNotifierEvent emNotifierEvent) {
@@ -603,6 +663,14 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ed
                 } catch (EaseMobException e) {
                     e.printStackTrace();
                 }
+                // 消息id
+//                String msgId = intent.getStringExtra("msgid");
+//                //根据消息id获取message
+//                EMMessage message = EMChatManager.getInstance().getMessage(msgId);
+                //获取自定义的属性，第2个参数为返回的默认值
+                message.getStringAttribute("nikeName", null);
+                message.getStringAttribute("photo", null);
+                message.getStringAttribute("content", null);
 // 把messgage加到conversation中
                 conversation.addMessage(message);
                 // 通知adapter有消息变动，adapter会根据加入的这条message显示消息和调用sdk的发送方法
@@ -646,29 +714,7 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ed
         }
     }
 
-        private void refreshUIWithNewMessage() {
-            if (adapter == null) {
-                return;
-            }
 
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    adapter.refreshSelectLast();
-                }
-            });
-        }
-
-        private void refreshUI() {
-            if (adapter == null) {
-                return;
-            }
-
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    adapter.refresh();
-                }
-            });
-        }
 
         public ListView getListView() {
             return mListview;

@@ -3,6 +3,7 @@ package tv.liangzi.quantum.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +21,12 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Request;
@@ -28,13 +35,12 @@ import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import tv.liangzi.quantum.R;
-import tv.liangzi.quantum.activity.ChatActivity;
 import tv.liangzi.quantum.activity.ShowLiveActivity;
-import tv.liangzi.quantum.activity.StartLiveActivity;
-import tv.liangzi.quantum.activity.TimePickerActivity;
 import tv.liangzi.quantum.activity.UserInfoActivity;
 import tv.liangzi.quantum.adapter.LiveAdapter;
 import tv.liangzi.quantum.bean.Live;
@@ -62,6 +68,11 @@ public class LiveFragment extends BaseFragment implements
 	private Live liveTitle=new Live();
 	private Live liveTitle1=new Live();
     private int mPosition;
+
+	protected ImageLoader imageLoader = ImageLoader.getInstance();
+	DisplayImageOptions options;		// DisplayImageOptions是用于设置图片显示的类
+	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
+
 
 	private String freshen="";
 	private int  lastId;
@@ -157,6 +168,7 @@ public class LiveFragment extends BaseFragment implements
 					break;
 				case 7:
 					Toast.makeText(getActivity(),"直播列表为空",Toast.LENGTH_SHORT).show();
+					mListView.setRefreshSuccess("当前没有视频信息");
 //					mAdapter.notifyDataSetChanged();
 					break;
 				default:
@@ -197,10 +209,12 @@ public class LiveFragment extends BaseFragment implements
 	}
 
 	private void initViews(View view) {
+		initImageLoaderOptions();
 		userId= (String) SharedPreferencesUtils.getParam(getActivity(), "userId", "");
+		String photo= (String) SharedPreferencesUtils.getParam(getActivity(),"photo","");
 		accessToken= (String) SharedPreferencesUtils.getParam(getActivity(),"accessToken","");
 		ImageView imHead=(ImageView) view.findViewById(R.id.im_title_head);
-
+		imageLoader.displayImage(photo, imHead, options, animateFirstListener);
 		imHead.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -216,8 +230,9 @@ public class LiveFragment extends BaseFragment implements
 
 		freshen="";
 		mLiveVideos.clear();
-		 Thread liveThread = new Thread(new LiveThread());
-		liveThread.start();
+//		 Thread liveThread = new Thread(new LiveThread());
+//		liveThread.start();
+		mListView.refresh(); // 主动下拉刷新
 		// 设置默认偏移量，主要用于实现透明标题栏功能。（可选）
 //		float density = getResources().getDisplayMetrics().density;
 //		mListView.setFirstTopOffset((int) (50 * density));
@@ -271,6 +286,7 @@ public class LiveFragment extends BaseFragment implements
 			  intent.putExtra("userid",mReaddVideos.get(position).getUserId());
 			  intent.putExtra("nikeName",mReaddVideos.get(position).getNickName());
 			  intent.putExtra("shareUrl",mReaddVideos.get(position).getShareUrl());
+			  intent.putExtra("photo",mReaddVideos.get(position).getPhoto());
 			  startActivity(intent);
 		  }
 	  });
@@ -325,9 +341,14 @@ public class LiveFragment extends BaseFragment implements
 	@Override
 	public void onItemClick(View view, int position, int id, int subid) {
 		mPosition=position;
+		int Subscibes=mReaddVideos.get(mPosition).getSubscibes();
 		TextView count= (TextView) view.findViewById(R.id.tv_schedule_concerned_count);
 		ImageView ulook= (ImageView)view.findViewById(R.id.icon_ulooked);
-		if (subid==0){
+
+		if (subid == 0) {
+			//没有预约现在预约
+			count.setText(Subscibes+1+"");
+			mReaddVideos.get(mPosition).setSubscibes(Subscibes+1);
 			count.setTextColor(Color.parseColor("#B90B0E"));
 			ulook.setImageResource(R.drawable.subscribe_middle);
 			subscribeThread threadSub=new subscribeThread();
@@ -336,6 +357,11 @@ public class LiveFragment extends BaseFragment implements
 			Thread subscribeTh= new Thread(threadSub);
 			subscribeTh.start();
 		}else{
+			//已经预约，现在取消预约
+			if (Subscibes>0){
+				count.setText(Subscibes-1+"");
+				mReaddVideos.get(mPosition).setSubscibes(Subscibes-1);
+			}
 			count.setTextColor(Color.WHITE);
 			ulook.setImageResource(R.drawable.unsubscribe_middle);
 			unsubscribeThread threadunSub=new unsubscribeThread();
@@ -360,8 +386,6 @@ public class LiveFragment extends BaseFragment implements
 		dismissAnimFragment();
 	}
 
-
-
 	class LiveThread implements Runnable
 	{
 		@Override
@@ -374,7 +398,6 @@ public class LiveFragment extends BaseFragment implements
 				e.printStackTrace();
 			}
 			Log.e("log", "查询直播列表请求"+"lives"+"?userId="+userId+"&count="+10+"&freshen="+freshen+"&lastId="+lastId);
-
 		}
 	}
 	void getLives(String url) throws IOException {
@@ -539,5 +562,62 @@ public class LiveFragment extends BaseFragment implements
 				}
 			}
 		});
+	}
+
+
+
+	/**
+	 * 初始化缓存设置
+	 */
+	private void initImageLoaderOptions(){
+		// 使用DisplayImageOptions.Builder()创建DisplayImageOptions
+		options = new DisplayImageOptions.Builder()
+//			.showStubImage(R.drawable.index_iv02)			// 设置图片下载期间显示的图片
+				.showImageOnLoading(R.drawable.ic_loading)
+				.showImageForEmptyUri(R.drawable.default_head)	// 设置图片Uri为空或是错误的时候显示的图片
+				.showImageOnFail(R.drawable.a)		// 设置图片加载或解码过程中发生错误显示的图片
+				.cacheInMemory(true)						// 设置下载的图片是否缓存在内存中
+				.cacheOnDisc(true)							// 设置下载的图片是否缓存在SD卡中
+				.considerExifParams(true)
+
+			/*
+			 * 设置图片以如何的编码方式显示 imageScaleType(ImageScaleType imageScaleType)
+			 * EXACTLY :图像将完全按比例缩小的目标大小
+			 * EXACTLY_STRETCHED:图片会缩放到目标大小完全 IN_SAMPLE_INT:图像将被二次采样的整数倍
+			 * IN_SAMPLE_POWER_OF_2:图片将降低2倍，直到下一减少步骤，使图像更小的目标大小
+			 * IN_SAMPLE_INT
+			 * NONE:图片不会调整
+			 */
+				.bitmapConfig(Bitmap.Config.RGB_565)
+				.imageScaleType(ImageScaleType.IN_SAMPLE_INT)
+//			.displayer(new Ro undedBitmapDisplayer(20))	// 设置成圆角图片
+				.build();
+		// 创建配置过得DisplayImageOption对象
+
+	}
+
+
+	/**
+	 * 图片加载第一次显示监听器
+	 * @author Administrator
+	 *
+	 */
+	private static class AnimateFirstDisplayListener extends SimpleImageLoadingListener {
+
+		static final List<String> displayedImages = Collections.synchronizedList(new LinkedList<String>());
+
+		@Override
+		public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+			if (loadedImage != null) {
+				ImageView imageView = (ImageView) view;
+				// 是否第一次显示
+				boolean firstDisplay = !displayedImages.contains(imageUri);
+				if (firstDisplay) {
+					// 图片淡入效果
+					FadeInBitmapDisplayer.animate(imageView, 500);
+					displayedImages.add(imageUri);
+				}
+			}
+		}
 	}
 	}

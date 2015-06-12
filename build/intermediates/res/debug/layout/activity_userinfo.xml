@@ -13,13 +13,13 @@
         android:background="@color/red_bg"
         android:gravity="center"
         >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="个人主页"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="个人主页"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="22sp"-->
+            <!--/>-->
     </LinearLayout>
 <!--<LinearLayout-->
     <!--android:layout_width="match_parent"-->
@@ -64,21 +64,28 @@
             android:gravity="center_horizontal"
             android:orientation="vertical" >
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/im_user_dead"
-                android:layout_width="95dp"
-                android:layout_height="95dp"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/headtest" />
+                android:src="@drawable/headtest"
+                app:border_width="2dp"
+                app:border_color="@color/gray"
+                />
 
             <TextView
                 android:id="@+id/tv_user_nike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Bradley"
-                android:textStyle="bold"
+                android:maxEms="6"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textColor="@color/white"
-                android:textSize="22sp" />
+                android:textSize="16sp" />
                  <TextView
                      android:id="@+id/tv_place_id"
                      android:layout_width="match_parent"
@@ -116,7 +123,6 @@
                 android:layout_alignParentLeft="true"
                 android:textColor="@color/white"
                 android:layout_marginRight="3dp"
-                android:textStyle="bold"
                 android:textSize="18sp" />
 
             <TextView
@@ -163,7 +169,6 @@
                 android:text="2345"
                 android:layout_centerInParent="true"
                 android:textColor="@color/white"
-                android:textStyle="bold"
                 android:textSize="18sp" />
         </RelativeLayout>
 

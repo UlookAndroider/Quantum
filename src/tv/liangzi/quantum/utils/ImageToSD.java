@@ -1,5 +1,9 @@
 package tv.liangzi.quantum.utils;
 
+import android.graphics.drawable.Drawable;
+import android.os.Environment;
+import android.os.Handler;
+
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,9 +14,7 @@ import java.lang.ref.SoftReference;
 import java.net.URL;
 import java.util.HashMap;
 
-import android.graphics.drawable.Drawable;
-import android.os.Environment;
-import android.os.Handler;
+import tv.liangzi.quantum.config.MyAapplication;
 
 public class ImageToSD {
 
@@ -137,15 +139,18 @@ public class ImageToSD {
 	}
 
 	public static Drawable loadImageFromUrl(String url,String author) throws IOException {
+		if (url==null||url.equals("")){
+			return null;
+		}
 		//是否SD卡可用
 		if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
 			//检查是或有保存图片的文件夹，没有就穿件一个
-			String FileUrl = Environment.getExternalStorageDirectory()+"/ULook/";
+			String FileUrl = MyAapplication.HEAD_PATH;
 			File folder = new File(FileUrl);
 			if(!folder.exists()){
 				folder.mkdir();
 			}
-			File f = new File(FileUrl+author+".jpg");
+			File f = new File(FileUrl+File.separator+author+".jpg");
 			//SD卡中是否有该文件，有则直接读取返回
 			if(f.exists()){
 				FileInputStream fis = new FileInputStream(f);
@@ -154,7 +159,7 @@ public class ImageToSD {
 			}
 			//没有的话则去连接下载，并写入到SD卡中
 			URL m = new URL(url);
-			InputStream i = (InputStream) m.getContent();
+			InputStream i =  (InputStream) m.getContent();
 			DataInputStream in = new DataInputStream(i);
 			FileOutputStream out = new FileOutputStream(f);
 			byte[] buffer = new byte[1024];

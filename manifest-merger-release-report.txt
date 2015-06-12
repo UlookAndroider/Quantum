@@ -368,41 +368,13 @@ ADDED from AndroidManifest.xml:188:9
 		ADDED from AndroidManifest.xml:192:13
 	android:name
 		ADDED from AndroidManifest.xml:188:19
-activity#tv.liangzi.quantum.activity.ChatActivity
-ADDED from AndroidManifest.xml:193:1
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:196:5
-	android:exported
-		ADDED from AndroidManifest.xml:195:5
-	android:configChanges
-		ADDED from AndroidManifest.xml:194:5
-	android:theme
-		ADDED from AndroidManifest.xml:197:5
-	android:name
-		ADDED from AndroidManifest.xml:193:11
 meta-data#EASEMOB_APPKEY
-ADDED from AndroidManifest.xml:200:9
+ADDED from AndroidManifest.xml:195:9
 	android:value
-		ADDED from AndroidManifest.xml:200:51
+		ADDED from AndroidManifest.xml:195:51
 	android:name
-		ADDED from AndroidManifest.xml:200:20
+		ADDED from AndroidManifest.xml:195:20
 service#com.easemob.chat.EMChatService
-ADDED from AndroidManifest.xml:202:9
+ADDED from AndroidManifest.xml:197:9
 	android:name
-		ADDED from AndroidManifest.xml:202:18
-receiver#com.easemob.chat.StartServiceReceiver
-ADDED from AndroidManifest.xml:205:9
-	android:name
-		ADDED from AndroidManifest.xml:205:19
-intent-filter#android.intent.action.BOOT_COMPLETED+android.intent.action.QUICKBOOT_POWERON+android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:206:13
-	android:priority
-		ADDED from AndroidManifest.xml:206:28
-action#android.intent.action.BOOT_COMPLETED
-ADDED from AndroidManifest.xml:207:17
-	android:name
-		ADDED from AndroidManifest.xml:207:25
-action#android.intent.action.QUICKBOOT_POWERON
-ADDED from AndroidManifest.xml:208:17
-	android:name
-		ADDED from AndroidManifest.xml:208:25
+		ADDED from AndroidManifest.xml:197:18

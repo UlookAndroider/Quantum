@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -19,18 +18,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.edmodo.cropper.cropwindow.handle.Handle;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UploadManager;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
-import java.text.BreakIterator;
+import java.net.URI;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,7 +46,6 @@ import gdg.ninja.croplib.utils.FileUtils;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 import tv.liangzi.quantum.R;
 import tv.liangzi.quantum.bean.Live;
-import tv.liangzi.quantum.bean.LiveVideoStatus;
 import tv.liangzi.quantum.config.MyAapplication;
 import tv.liangzi.quantum.utils.CommonUtils;
 import tv.liangzi.quantum.utils.DateUtil;
@@ -106,7 +108,10 @@ public class TimePickerActivity extends Activity implements OnClickListener
 	private String accessToken;
 	private String userId;
 	private String state="0";
-	private String filePath = Environment.getExternalStorageDirectory()+ File.separator+"Ulooktemp";
+	private String filePath =MyAapplication.HEAD_PATH;
+	File cropFile;
+	String upImage;
+
 	public Handler mHandler=new Handler(){
 
 		@Override
@@ -334,38 +339,30 @@ public class TimePickerActivity extends Activity implements OnClickListener
 				int min = ca.get(Calendar.MINUTE);
 				if (selectDateText.equals(getNowTime())) {
 					//day等于当前时间的 进一步判断时分
-					if (selectedHour == hour) {
+					if (selectedHour < hour) {
+						//小时大于当前
+//						Toast.makeText(TimePickerActivity.this, "请重新选择时间 h",
+//								Toast.LENGTH_SHORT).show();
+						return;
+					} else if (selectedHour == hour) {
 						//小时相同的进一步判断 分钟
-						if (selectedMin > min) {
-							Toast.makeText(TimePickerActivity.this, "预约直播成功，请牢记时间哦d- h-m",
-									Toast.LENGTH_SHORT).show();
-						} else {
-							Toast.makeText(TimePickerActivity.this, "请选择正确的时间。。m",
-									Toast.LENGTH_SHORT).show();
+						if (selectedMin <=min) {
+//							Toast.makeText(TimePickerActivity.this, "小于等于当前分钟不可以",
+//									Toast.LENGTH_SHORT).show();
 							return;
 						}
-					} else if (selectedHour > hour) {
-						//小时大于当前 
-						Toast.makeText(TimePickerActivity.this, "预约成功 h",
-								Toast.LENGTH_SHORT).show();
-					} else if (selectedHour < hour) {
-						//小时大于当前 
-						Toast.makeText(TimePickerActivity.this, "请重新选择时间 h",
-								Toast.LENGTH_SHORT).show();
-						return;
 					}
-				}
+					}
 				//day大于现在的选择的直接 ok
-				Toast.makeText(TimePickerActivity.this, "时间ok,day",
-						Toast.LENGTH_SHORT).show();
+//				Toast.makeText(TimePickerActivity.this, "时间ok,day",
+//						Toast.LENGTH_SHORT).show();
 				 if (!EmptyPic){
 					Toast.makeText(TimePickerActivity.this, "请选择图片封面", Toast.LENGTH_SHORT).show();
-					break;
+					return;
 				}
-				Toast.makeText(TimePickerActivity.this, "图片ok成功",
+				Toast.makeText(TimePickerActivity.this, "开始上传图片",
 						Toast.LENGTH_SHORT).show();
-				Thread liveThread= new Thread(new LiveThread());
-				liveThread.start();
+				uploadImageToQiNiu();
 			}else {
 				if (nameTopic.getText().toString().trim() == null || nameTopic.getText().toString().trim().equals("")) {
 					Toast.makeText(TimePickerActivity.this, "请输入直播话题后再选择图片", Toast.LENGTH_SHORT).show();
@@ -374,8 +371,8 @@ public class TimePickerActivity extends Activity implements OnClickListener
 					Toast.makeText(TimePickerActivity.this, "请选择图片封面", Toast.LENGTH_SHORT).show();
 					break;
 				}
-				Thread liveThread= new Thread(new LiveThread());
-				liveThread.start();
+
+				uploadImageToQiNiu();
 //				Toast.makeText(TimePickerActivity.this, "预约或直播创建成功", Toast.LENGTH_SHORT).show();
 
 			}
@@ -398,6 +395,24 @@ public class TimePickerActivity extends Activity implements OnClickListener
 
 	}
 
+	public boolean uploadImageToQiNiu(){
+		// 重用 uploadManager。一般地，只需要创建一个 uploadManager 对象
+		UploadManager uploadManager = new UploadManager();
+//		data = <File对象、或 文件路径、或 字节数组>
+		long key = System.currentTimeMillis();
+		String token = "hcy3ZbColTeL72Wdm7-AQowHPdJH4Ngf7dfcr5eU:qmhW6-lQpViKZk_P3nWbsCbB6s8=:eyJzY29wZSI6ImxpYW5nemkiLCJyZXR1cm5Cb2R5Ijoie1wia2V5XCI6JChrZXkpLFwidXVpZFwiOiQodXVpZCksXCJuYW1lXCI6JChmbmFtZSksXCJzaXplXCI6JChmc2l6ZSksXCJ3XCI6JChpbWFnZUluZm8ud2lkdGgpLFwiaFwiOiQoaW1hZ2VJbmZvLmhlaWdodCksXCJoYXNoXCI6JChldGFnKX0iLCJkZWFkbGluZSI6MTQzNjM4NDY1Nn0=";
+		uploadManager.put(cropFile, String.valueOf(key), token,
+				new UpCompletionHandler() {
+					@Override
+					public void complete(String key, ResponseInfo info, JSONObject response) {
+						upImage="http://7xix0q.com2.z0.glb.qiniucdn.com/"+String.valueOf(key);
+						Log.e("qiniu", String.valueOf(info)+".jpg");
+						Thread liveThread= new Thread(new LiveThread());
+						liveThread.start();
+					}
+				}, null);
+		return true;
+	}
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
@@ -422,6 +437,7 @@ public class TimePickerActivity extends Activity implements OnClickListener
 			Uri imgResult;
 			try {
 				imgResult = data.getData();
+				 cropFile = new File(new URI(imgResult.toString()));
 			} catch (Exception e) {
 				return;
 			}
@@ -443,12 +459,13 @@ public class TimePickerActivity extends Activity implements OnClickListener
 			@Override
 			public void run()
 			{
+
 				String millis = "";
 				FormEncodingBuilder	 Body = new FormEncodingBuilder();
 				String url= MyAapplication.IP+"live";
 				Body.add("userId", userId)
 						.add("state", state)
-						.add("img", "http://img3.imgtn.bdimg.com/it/u=3190314089,2370727376&fm=21&gp=0.jpg")
+						.add("img", upImage)
 						.add("title", nameTopic.getText().toString().trim())
 						.add("accessToken", accessToken);
 				if (!living){
@@ -497,7 +514,7 @@ public class TimePickerActivity extends Activity implements OnClickListener
 							Message msg = new Message();
 							msg.what = 6;
 							mHandler.sendMessage(msg);
-							Log.e("livefragment", "n ....................");
+							Log.e("livefragment", "....................");
 						}
 
 					} else if (mLiveVideo.getResponseCode().equals("500")) {
@@ -514,4 +531,7 @@ public class TimePickerActivity extends Activity implements OnClickListener
 			}
 		});
 	}
+
+
+
 }

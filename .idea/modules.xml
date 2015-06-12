@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/cropper/cropper.iml" filepath="$PROJECT_DIR$/cropper/cropper.iml" />
       <module fileurl="file://$PROJECT_DIR$/multi-image-selector/multi-image-selector.iml" filepath="$PROJECT_DIR$/multi-image-selector/multi-image-selector.iml" />
       <module fileurl="file://$PROJECT_DIR$/ninjaCropLib/ninjaCropLib.iml" filepath="$PROJECT_DIR$/ninjaCropLib/ninjaCropLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qiniulibrary/qiniulibrary.iml" filepath="$PROJECT_DIR$/qiniulibrary/qiniulibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/zrcListView/zrcListView.iml" filepath="$PROJECT_DIR$/zrcListView/zrcListView.iml" />
     </modules>
   </component>

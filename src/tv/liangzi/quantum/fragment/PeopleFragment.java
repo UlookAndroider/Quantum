@@ -3,7 +3,7 @@ package tv.liangzi.quantum.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,6 +21,12 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Request;
@@ -29,10 +35,11 @@ import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import tv.liangzi.quantum.R;
-import tv.liangzi.quantum.activity.LoginActivity;
 import tv.liangzi.quantum.activity.SearchActivity;
 import tv.liangzi.quantum.activity.UserInfoActivity;
 import tv.liangzi.quantum.adapter.PeopleAdapter;
@@ -68,7 +75,11 @@ public class PeopleFragment extends BaseFragment implements OnClickListener,Peop
 	private String toUserId;
 	private ImageView imageView;
 	private int mPosition;
-	
+	protected ImageLoader imageLoader = ImageLoader.getInstance();
+	DisplayImageOptions options;		// DisplayImageOptions是用于设置图片显示的类
+	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
+
+
 	public static PeopleFragment newInstance() {
 		PeopleFragment peopleFragment = new PeopleFragment();
 
@@ -136,11 +147,13 @@ public class PeopleFragment extends BaseFragment implements OnClickListener,Peop
 	}
 
 	private void initViews(View view) {
+		initImageLoaderOptions();
 //		peoplerSp=getActivity().getSharedPreferences("userInfo", getActivity().MODE_PRIVATE);
 		userId= (String) SharedPreferencesUtils.getParam(getActivity(), "userId", "");
+		String photo= (String) SharedPreferencesUtils.getParam(getActivity(),"photo","");
 		accessToken= (String) SharedPreferencesUtils.getParam(getActivity(),"accessToken","");
 		ImageView imHead=(ImageView) view.findViewById(R.id.im_title_head);
-
+		imageLoader.displayImage(photo, imHead, options, animateFirstListener);
 		imHead.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -378,7 +391,63 @@ public class PeopleFragment extends BaseFragment implements OnClickListener,Peop
 			//   备用子线程
 			Log.e("log", "发出取消请求");
 		}
+
+
+
+	}
+	/**
+	 * 初始化缓存设置
+	 */
+	private void initImageLoaderOptions(){
+		// 使用DisplayImageOptions.Builder()创建DisplayImageOptions
+		options = new DisplayImageOptions.Builder()
+//			.showStubImage(R.drawable.index_iv02)			// 设置图片下载期间显示的图片
+				.showImageOnLoading(R.drawable.ic_loading)
+				.showImageForEmptyUri(R.drawable.default_head)	// 设置图片Uri为空或是错误的时候显示的图片
+				.showImageOnFail(R.drawable.a)		// 设置图片加载或解码过程中发生错误显示的图片
+				.cacheInMemory(true)						// 设置下载的图片是否缓存在内存中
+				.cacheOnDisc(true)							// 设置下载的图片是否缓存在SD卡中
+				.considerExifParams(true)
+
+			/*
+			 * 设置图片以如何的编码方式显示 imageScaleType(ImageScaleType imageScaleType)
+			 * EXACTLY :图像将完全按比例缩小的目标大小
+			 * EXACTLY_STRETCHED:图片会缩放到目标大小完全 IN_SAMPLE_INT:图像将被二次采样的整数倍
+			 * IN_SAMPLE_POWER_OF_2:图片将降低2倍，直到下一减少步骤，使图像更小的目标大小
+			 * IN_SAMPLE_INT
+			 * NONE:图片不会调整
+			 */
+				.bitmapConfig(Bitmap.Config.RGB_565)
+				.imageScaleType(ImageScaleType.IN_SAMPLE_INT)
+//			.displayer(new Ro undedBitmapDisplayer(20))	// 设置成圆角图片
+				.build();
+		// 创建配置过得DisplayImageOption对象
+
 	}
 
+
+	/**
+	 * 图片加载第一次显示监听器
+	 * @author Administrator
+	 *
+	 */
+	private static class AnimateFirstDisplayListener extends SimpleImageLoadingListener {
+
+		static final List<String> displayedImages = Collections.synchronizedList(new LinkedList<String>());
+
+		@Override
+		public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+			if (loadedImage != null) {
+				ImageView imageView = (ImageView) view;
+				// 是否第一次显示
+				boolean firstDisplay = !displayedImages.contains(imageUri);
+				if (firstDisplay) {
+					// 图片淡入效果
+					FadeInBitmapDisplayer.animate(imageView, 500);
+					displayedImages.add(imageUri);
+				}
+			}
+		}
+	}
 
 }

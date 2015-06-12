@@ -4,7 +4,7 @@
     android:background="@color/transparent"
 
     >
-<ImageView
+<de.hdodenhof.circleimageview.CircleImageView
     android:id="@+id/im_live_head"
     android:layout_width="38dip"
     android:layout_height="38dip"
