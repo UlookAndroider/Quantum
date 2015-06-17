@@ -7,10 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
-import com.easemob.chat.EMChat;
-
 import tv.liangzi.quantum.R;
-import tv.liangzi.quantum.fragment.ExploreFragment;
 import tv.liangzi.quantum.fragment.LiveFragment;
 import tv.liangzi.quantum.fragment.PeopleFragment;
 import tv.liangzi.quantum.fragment.StartFragment;
@@ -29,10 +26,10 @@ public class MainActivity extends FragmentActivity implements
 
 	private static final String TAG = "MainActivity";
 	private MyTabWidget mTabWidget;
-	private ExploreFragment mHomeFragment;
-	private LiveFragment mCategoryFragment;
-	private StartFragment mCollectFragment;
-	private PeopleFragment mSettingFragment;
+//	private ExploreFragment exploreFragment;
+	private LiveFragment liveFragment;
+	private StartFragment startFragment;
+	private PeopleFragment peopleFragment;
 	private int mIndex = ConstantValues.HOME_FRAGMENT_INDEX;
 	private FragmentManager mFragmentManager;
 
@@ -43,7 +40,6 @@ public class MainActivity extends FragmentActivity implements
 		 Log.e(TAG, "Mainactivity->onResum() is  " + mIndex);
 		init();
 		initEvents();
-		EMChat.getInstance().setAppInited();
 	}
 
 	private void init() {
@@ -71,39 +67,40 @@ public class MainActivity extends FragmentActivity implements
 		FragmentTransaction transaction = mFragmentManager.beginTransaction();
 		hideFragments(transaction);
 		switch (index) {
-		case ConstantValues.HOME_FRAGMENT_INDEX:
-			if (null == mHomeFragment) {
-				mHomeFragment = new ExploreFragment();
-				transaction.add(R.id.center_layout, mHomeFragment);
+		case 0:
+			if (null == liveFragment) {
+//				mHomeFragment = new ExploreFragment();
+				liveFragment = new LiveFragment();
+				transaction.add(R.id.center_layout, liveFragment);
 			} else {
-				transaction.show(mHomeFragment);
+				transaction.show(liveFragment);
 			}
 			break;
-		case ConstantValues.CATEGORY_FRAGMENT_INDEX:
-			if (null == mCategoryFragment) {
-				mCategoryFragment = new LiveFragment();
-				transaction.add(R.id.center_layout, mCategoryFragment);
+		case 1:
+			if (null == startFragment) {
+				startFragment = new StartFragment();
+				transaction.add(R.id.center_layout, startFragment);
 			} else {
-				transaction.show(mCategoryFragment);
+				transaction.show(startFragment);
 			}
 			break;
-		case ConstantValues.COLLECT_FRAGMENT_INDEX:
-			if (null == mCollectFragment) {
+		case 2:
+			if (null == peopleFragment) {
 //				startActivity(new Intent(MainActivity.this,StartLivingActivity.class
 //				));
-				mCollectFragment = new StartFragment();
-				transaction.add(R.id.center_layout, mCollectFragment);
+				peopleFragment = new PeopleFragment();
+				transaction.add(R.id.center_layout, peopleFragment);
 			} else {
-				transaction.show(mCollectFragment);
+				transaction.show(peopleFragment);
 			}
 			break;
 		case ConstantValues.SETTING_FRAGMENT_INDEX:
-			if (null == mSettingFragment) {
-				mSettingFragment = new PeopleFragment();
-				transaction.add(R.id.center_layout, mSettingFragment);
-			} else {
-				transaction.show(mSettingFragment);
-			}
+//			if (null == mSettingFragment) {
+//				mSettingFragment = new PeopleFragment();
+//				transaction.add(R.id.center_layout, mSettingFragment);
+//			} else {
+//				transaction.show(mSettingFragment);
+//			}
 			break;
 
 		default:
@@ -114,18 +111,18 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	private void hideFragments(FragmentTransaction transaction) {
-		if (null != mHomeFragment) {
-			transaction.hide(mHomeFragment);
+		if (null != liveFragment) {
+			transaction.hide(liveFragment);
 		}
-		if (null != mCategoryFragment) {
-			transaction.hide(mCategoryFragment);
+		if (null != startFragment) {
+			transaction.hide(startFragment);
 		}
-		if (null != mCollectFragment) {
-			transaction.hide(mCollectFragment);
+		if (null != peopleFragment) {
+			transaction.hide(peopleFragment);
 		}
-		if (null != mSettingFragment) {
-			transaction.hide(mSettingFragment);
-		}
+//		if (null != mSettingFragment) {
+//			transaction.hide(mSettingFragment);
+//		}
 	}
 
 	@Override

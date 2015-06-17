@@ -3,20 +3,16 @@ package tv.liangzi.quantum.activity;
 import android.app.LocalActivityManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,12 +38,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import tv.liangzi.quantum.R;
-import tv.liangzi.quantum.adapter.ExploreAdapter;
-import tv.liangzi.quantum.adapter.UserInfoAdapter;
+import tv.liangzi.quantum.adapter.LiveAdapter;
 import tv.liangzi.quantum.base.BaseActivity;
+import tv.liangzi.quantum.bean.Live;
+import tv.liangzi.quantum.bean.LiveVideoStatus;
 import tv.liangzi.quantum.bean.PeopleDetails;
 import tv.liangzi.quantum.bean.ServiceStatus;
 import tv.liangzi.quantum.config.MyAapplication;
@@ -80,9 +76,10 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener,XL
 	private int bmpW;// 动画图片宽度
 	private ImageView cursor;// 动画图片
 
+
 	private  boolean otherUser;
-	List<ServiceStatus.Video> VideoList=new ArrayList<ServiceStatus.Video>();
-	private ExploreAdapter mAdapter;
+	private List<Live> mLiveVideos=new ArrayList<Live>();
+	private LiveAdapter mAdapter;
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
 	DisplayImageOptions options;		// DisplayImageOptions是用于设置图片显示的类
 	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
@@ -94,7 +91,7 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener,XL
 		public void handleMessage(Message msg) {
 			switch (msg.what){
 				case 1:
-					mAdapter.setList(VideoList);
+					mAdapter.setLives(mLiveVideos);
 					mAdapter.notifyDataSetChanged();
 					break;
 				case 2:
@@ -104,10 +101,16 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener,XL
 					Toast.makeText(UserInfoActivity.this, "关注成功", Toast.LENGTH_SHORT).show();
 					break;
 				case 3:
-
 					user.setIsFollow(false);
 					bt_user_follow.setImageResource(R.drawable.follow);
 					Toast.makeText(UserInfoActivity.this,"取消关注成功",Toast.LENGTH_SHORT).show();
+					break;
+				case 4:
+					initdisplay(user);
+					break;
+				case 7:
+					Toast.makeText(UserInfoActivity.this,"直播为空",Toast.LENGTH_SHORT).show();
+//					mAdapter.notifyDataSetChanged();
 					break;
 				default:
 					break;
@@ -145,39 +148,53 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener,XL
 
 
 
-		mAdapter=new ExploreAdapter(UserInfoActivity.this);
+		mAdapter=new LiveAdapter(UserInfoActivity.this,mLiveVideos,2);
 		mListView.setAdapter(mAdapter);
 		userId= (String) SharedPreferencesUtils.getParam(this, "userId", "");
 		accessToken= (String) SharedPreferencesUtils.getParam(this,"accessToken","");
 		Intent intent=getIntent();
-		if(intent.getSerializableExtra("userDetail")!=null){
-			user= (PeopleDetails) intent.getSerializableExtra("userDetail");
+		//来自搜索、排行榜的点击以及直播界面中的头像点击 首先判断是不是用户自己 若不是直接调用接口，如果是直接查询sp信息
+		if(intent.getParcelableExtra("userDetail")!=null){
+			user= (PeopleDetails) intent.getParcelableExtra("userDetail");
 			toUserId=user.getUserId()+"";
-			initdisplay(user);
-			otherUser=true;
-		}else {
-			otherUser=false;
-			tv_user_concerned.setText((String) SharedPreferencesUtils.getParam(this, "focusNum", ""));
-			tv_user_fans.setText((String) SharedPreferencesUtils.getParam(this, "fansNum", ""));
-			nikename.setText((String) SharedPreferencesUtils.getParam(this, "nickName", ""));
-			place.setText((String) SharedPreferencesUtils.getParam(this, "addr", ""));
-			imageLoader.displayImage((String) SharedPreferencesUtils.getParam(this, "photo", ""), im_user_dead, options, animateFirstListener);
-			bt_user_follow.setImageResource(R.drawable.followed);
+			if (userId.equals(toUserId)){
+				initDisplaySelf();
+			}else {
+				otherUser=true;
+				Thread getUserInfoThread = new Thread(new getUserInfoThread());
+				getUserInfoThread.start();
 			}
+		}else if(intent.getParcelableExtra("living")!=null){
+			Live liveUser= (Live) intent.getParcelableExtra("living");
+			toUserId=liveUser.getUserId()+"";
+			if (userId.equals(toUserId)){
+				initDisplaySelf();
+			}else {
+				otherUser=true;
+				Thread getUserInfoThread = new Thread(new getUserInfoThread());
+				getUserInfoThread.start();
+			}
+			}else
+			initDisplaySelf();
 
 		}
 
+	private void initDisplaySelf() {
+		otherUser=false;
+		tv_user_concerned.setText((String) SharedPreferencesUtils.getParam(this, "focusNum", ""));
+		tv_user_fans.setText((String) SharedPreferencesUtils.getParam(this, "fansNum", ""));
+		nikename.setText((String) SharedPreferencesUtils.getParam(this, "nickName", ""));
+		place.setText((String) SharedPreferencesUtils.getParam(this, "sign", ""));
+		imageLoader.displayImage((String) SharedPreferencesUtils.getParam(this, "photo", ""), im_user_dead, options, animateFirstListener);
+		bt_user_follow.setImageResource(R.drawable.followed);
+	}
 
-
-//		Thread getUserInfoThread = new Thread(new getUserInfoThread());
-//		getUserInfoThread.start();
-		
 
 	private void initdisplay(PeopleDetails user) {
 		tv_user_concerned.setText(user.getFocusNum()+"");
 		tv_user_fans.setText(user.getFansNum()+"");
 		nikename.setText(user.getNickName());
-		place.setText(user.getAddr());
+		place.setText(user.getSign());
 		imageLoader.displayImage(user.getPhoto(), im_user_dead, options, animateFirstListener);
 		if (user.isFollow()){
 			bt_user_follow.setImageResource(R.drawable.followed);
@@ -186,7 +203,6 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener,XL
 		}
 
 	}
-
 	@Override
 	public void initListeners() {
 		bt_user_follow.setOnClickListener(this);
@@ -197,7 +213,7 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener,XL
 	@Override
 	public void initData() {
 		// TODO Auto-generated method stub
-		String url="http://101.200.173.120:8080/LiangZiServer/videos?userId=" +""+Integer.valueOf(userId)+"&freshen=header"+"&count="+10;
+		String url=MyAapplication.IP+"lives"+"?userId="+userId+"&publisherId="+toUserId+"&count="+50;
 		try {
 			getData(url);
 		} catch (Exception e) {
@@ -329,7 +345,7 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener,XL
 		@Override
 		public void run()
 		{
-			String url= MyAapplication.IP+"user"+"?userId="+userId+"&id="+id;
+			String url= MyAapplication.IP+"user"+"?userId="+userId+"&id="+toUserId;
 			try {
 				getUserInfo(url);
 			} catch (IOException e) {
@@ -359,17 +375,10 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener,XL
 			public void onResponse(Response response) throws IOException {
 				Gson gson = new Gson();
 				if (response.isSuccessful()) {
-					Map<String,Object> InfoMap = gson.fromJson(response.body().charStream(), new TypeToken<Map<String,Object>>(){}.getType());
-//					for(Map.Entry<String, Object> entry : InfoMap.entrySet()) {
-//						String key = entry.getKey();
-//						Object newstr = entry.getValue();
-//						System.out.println("key:" + key + "," + newstr + ",");
-//					}
-					PeopleDetails peopleDetails = gson.fromJson(response.body().charStream(), PeopleDetails.class);
+					user = gson.fromJson(response.body().charStream(), PeopleDetails.class);
 					Message msg = new Message();
-					msg.what = 1;
+					msg.what = 4;
 					mHandler.sendMessage(msg);
-//					Log.e("videoInfoActivity", peopleDetails.toString());
 				}
 			}
 		});
@@ -442,17 +451,32 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener,XL
 
 			@Override
 			public void onResponse(Response response) throws IOException {
-				Log.e("exploreFragment", "response.toString()=" + response.toString());
 				Gson gson = new Gson();
-				Log.e("exploreFragment", "response.body().charStream()=" + response.body().toString());
-				ServiceStatus serviceStatus = gson.fromJson(response.body().charStream(), new TypeToken<ServiceStatus>() {
-				}.getType());
-				VideoList=serviceStatus.getVideos();
-				Message msg = new Message();
-				msg.what = 1;
-				mHandler.sendMessage(msg);
-//				Log.e("exploreFragment", "size....." + VideoList.size());
-				String json = gson.toJson(serviceStatus);
+				if (response.isSuccessful()) {
+					LiveVideoStatus liveVideoStatus = gson.fromJson(response.body().charStream(), new TypeToken<LiveVideoStatus>() {
+					}.getType());
+					if (liveVideoStatus.getResponseCode().equals("200")) {
+						if (liveVideoStatus.getLives().size() > 0) {
+							mLiveVideos = liveVideoStatus.getLives();
+							Message msg = new Message();
+								msg.what = 1;
+							mHandler.sendMessage(msg);
+						} else {
+							Message msg = new Message();
+							msg.what = 7;
+							mHandler.sendMessage(msg);
+							Log.e("livefragment", "直播数据null....................");
+						}
+
+					} else if (liveVideoStatus.getResponseCode().equals("500")) {
+						Log.e("videoInfoActivity", "连接服务器失败");
+					} else {
+						Message msg = new Message();
+						msg.what = 5;
+						msg.obj = liveVideoStatus.getResponseMsg();
+						mHandler.sendMessage(msg);
+					}
+				}
 			}
 		});
 
@@ -474,12 +498,10 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener,XL
 				Log.e("exploreFragment", "response.body().charStream()=" + response.body().toString());
 				ServiceStatus serviceStatus = gson.fromJson(response.body().charStream(), new TypeToken<ServiceStatus>() {
 				}.getType());
-				VideoList.addAll(VideoList.size(),serviceStatus.getVideos());
 				Message msg = new Message();
 
 				msg.what = 1;
 				mHandler.sendMessage(msg);
-				Log.e("exploreFragment", "size....." + VideoList.size());
 				String json = gson.toJson(serviceStatus);
 			}
 		});

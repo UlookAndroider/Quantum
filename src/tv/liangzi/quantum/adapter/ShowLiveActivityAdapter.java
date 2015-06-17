@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -210,15 +211,18 @@ public class ShowLiveActivityAdapter extends BaseAdapter {
 
 		String content = null;
 		String photo=null;
+		String nickName = null;
 		try {
 			 content=message.getStringAttribute("content");
 			 photo=message.getStringAttribute("photo");
-			String nickName=message.getStringAttribute("nickName");
+			nickName=message.getStringAttribute("nickName");
 		} catch (EaseMobException e) {
 			e.printStackTrace();
 		}
+		Log.e("",nickName+"、"+content+"、"+photo);
 		TextMessageBody body= (TextMessageBody) message.getBody();
 		holder.textViewContent.setText(body.getMessage());
+		holder.textViewID.setText(nickName);
 		imageLoader.displayImage(photo, holder.imageView, options, animateFirstListener);
 		return convertView;
 	}

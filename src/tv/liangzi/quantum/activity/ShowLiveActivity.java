@@ -3,6 +3,7 @@ package tv.liangzi.quantum.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,15 +43,14 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.bean.SocializeEntity;
-import com.umeng.socialize.controller.UMServiceFactory;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 import com.umeng.socialize.controller.UMSocialService;
-import com.umeng.socialize.controller.listener.SocializeListeners;
-import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.sso.UMSsoHandler;
-import com.umeng.socialize.weixin.controller.UMWXHandler;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -58,9 +58,14 @@ import java.util.List;
 import tv.liangzi.quantum.R;
 import tv.liangzi.quantum.adapter.ShowLiveActivityAdapter;
 import tv.liangzi.quantum.base.BaseActivity;
+import tv.liangzi.quantum.bean.Live;
+import tv.liangzi.quantum.config.MyAapplication;
+import tv.liangzi.quantum.utils.OkHttpUtil;
 import tv.liangzi.quantum.utils.SharedPreferencesUtils;
+import tv.liangzi.quantum.view.LoadingDialog;
 import tv.liangzi.quantum.view.MediaController;
 import tv.liangzi.quantum.view.SharePopupWindow;
+import tv.liangzi.quantum.view.TipsToast;
 
 public class ShowLiveActivity extends BaseActivity implements OnClickListener,AbsListView.OnScrollListener,EditText.OnEditorActionListener,EMEventListener {
     private com.pili.pldroid.player.widget.VideoView videoView;
@@ -75,14 +80,16 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
     private ImageView imLove;
     private ImageView imShare;
     ShowLiveActivityAdapter adapter;
-    private int temp;
-    int time = 0;
-    //    private KeyboardLayout mRoot;
+    private static TipsToast tipsToast;
+    private LoadingDialog dialog;
+    //private KeyboardLayout mRoot;
     public static final int MESSAGE_LISTVIEW = 0;
     ImageView imHead;
     private int mLoginBottom;
     private static final int KEYBOARD_SHOW = 0X10;
     private static final int KEYBOARD_HIDE = 0X20;
+    private static final int ROOM_ADD = 0;
+    private static final int ROOM_DELETE = 1;
     private boolean mGetBottom = true;
     private String roomId;
     private String nikeName;
@@ -90,12 +97,17 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
     private String userid;
     private String shareUrl;
     private String rtmpUrl;
+    private int audiences;
     EMConversation conversation;
     private MediaController mMediaController;
     private String EmuserId;
     private UMSocialService mController = null;
-    String MyPhoto;
+    private String MyPhoto;
+    private String MyUserId;
+    private String accessToken;
     private TextView nickName;
+    private TextView audienceCount;
+    private Live  living;
     protected ImageLoader imageLoader = ImageLoader.getInstance();
     DisplayImageOptions options;		// DisplayImageOptions是用于设置图片显示的类
     private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
@@ -126,7 +138,13 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
                     Log.d(TAG, "the mLoginBottom is  " + mLoginBottom);
 //                    mRoot.setPadding(0, mRootBottom - mLoginBottom, 0, 0);
                     break;
-
+                case ROOM_ADD:
+                    audienceCount.setText(++audiences+"");
+                    break;
+                case ROOM_DELETE:
+                    if (audiences>0)
+                    audienceCount.setText(--audiences+"");
+                    break;
                 default:
                     break;
             }
@@ -142,15 +160,9 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
 
     @Override
     public void initViews() {
+//        showTips(R.drawable.tips_error, R.string.hello_world);
          imHead = (ImageView) findViewById(R.id.im_live_head);
-        imHead.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                // TODO Auto-generated method stub
-                Intent intent = new Intent(ShowLiveActivity.this, UserInfoActivity.class);
-                startActivity(intent);
-            }
-        });
+        audienceCount= (TextView) findViewById(R.id.follow_count);
         // TODO Auto-generated method stub
         nickName=(TextView)findViewById(R.id.tv_live_id);
         mListview = (ListView) findViewById(R.id.lv_live_listview);
@@ -164,7 +176,6 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
         removeET = (EditText) findViewById(R.id.et_remove_disscuss);
 //        RecycleAdapter adapter = new RecycleAdapter(this, null);//暂时传null
 //        rlView.setAdapter(adapter);
-
     }
     /**
      * 初始化缓存设置
@@ -179,15 +190,6 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
                 .cacheInMemory(true)						// 设置下载的图片是否缓存在内存中
                 .cacheOnDisc(true)							// 设置下载的图片是否缓存在SD卡中
                 .considerExifParams(true)
-
-			/*
-			 * 设置图片以如何的编码方式显示 imageScaleType(ImageScaleType imageScaleType)
-			 * EXACTLY :图像将完全按比例缩小的目标大小
-			 * EXACTLY_STRETCHED:图片会缩放到目标大小完全 IN_SAMPLE_INT:图像将被二次采样的整数倍
-			 * IN_SAMPLE_POWER_OF_2:图片将降低2倍，直到下一减少步骤，使图像更小的目标大小
-			 * IN_SAMPLE_INT
-			 * NONE:图片不会调整
-			 */
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .imageScaleType(ImageScaleType.IN_SAMPLE_INT)
 //			.displayer(new Ro undedBitmapDisplayer(20))	// 设置成圆角图片
@@ -237,49 +239,17 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
             }
         }
     }
-    private void uMengConfig() {
-// 首先在您的Activity中添加如下成员变量
-        mController = UMServiceFactory.getUMSocialService("com.umeng.share");
-// 设置分享内容
-        mController.setShareContent("量子频道，http://liangzi.tv");
-// 设置分享图片, 参数2为图片的url地址
-        mController.setShareMedia(new UMImage(ShowLiveActivity.this,
-                "http://www.baidu.com/img/bdlogo.png"));
-        // 添加微信平台
-        UMWXHandler wxHandler = new UMWXHandler(ShowLiveActivity.this,
-                "wx325e62291f322e40", "1c74a6f8f5c327dd3015d23b2626fdc7");
-        wxHandler.addToSocialSDK();
-        SocializeListeners.SnsPostListener mSnsPostListener = new SocializeListeners.SnsPostListener() {
 
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onComplete(SHARE_MEDIA platform, int stCode,
-                                   SocializeEntity entity) {
-                if (stCode == 200) {
-                    Toast.makeText(ShowLiveActivity.this, "分享成功", Toast.LENGTH_SHORT)
-                            .show();
-                } else {
-                    Toast.makeText(ShowLiveActivity.this,
-                            "分享失败 : error code : " + stCode, Toast.LENGTH_SHORT)
-                            .show();
-                }
-            }
-        };
-        mController.registerListener(mSnsPostListener);
-
-
-    }
 
 
     @Override
     public void initListeners() {
         // TODO Auto-generated method stub
         imShare.setOnClickListener(this);
-        removeET.setOnEditorActionListener(this);
+        imHead.setOnClickListener(this);
+        findViewById(R.id.tv_live_follow).setOnClickListener(this);
+                removeET.setOnEditorActionListener(this);
+        findViewById(R.id.tv_close).setOnClickListener(this);
         EMChatManager.getInstance().registerEventListener(
                 this,
                 new EMNotifierEvent.Event[]{EMNotifierEvent.Event.EventNewMessage, EMNotifierEvent.Event.EventOfflineMessage,
@@ -287,7 +257,6 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
         EMChat.getInstance().setAppInited();
         //只有注册了广播才能接收到新消息，目前离线消息，在线消息都是走接收消息的广播（离线消息目前无法监听，在登录以后，接收消息广播会执行一次拿到所有的离线消息）
         imageLoader.init(ImageLoaderConfiguration.createDefault(ShowLiveActivity.this));
-
     }
 
     /**
@@ -309,36 +278,33 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
     @Override
     public void initData() {
 
-//        uMengConfig();
-      MyPhoto= (String) SharedPreferencesUtils.getParam(ShowLiveActivity.this, "photo", "");
+        MyPhoto= (String) SharedPreferencesUtils.getParam(ShowLiveActivity.this, "photo", "");
+        MyUserId=(String) SharedPreferencesUtils.getParam(ShowLiveActivity.this, "userId", "");
+        accessToken=(String) SharedPreferencesUtils.getParam(ShowLiveActivity.this, "accessToken", "");
         Intent intent = getIntent();
-        roomId = intent.getStringExtra("roomId");
-        rtmpUrl = intent.getStringExtra("rtmpUrl");
-        userid = intent.getStringExtra("userid");
-        nikeName = intent.getStringExtra("nikeName");
-        photo=intent.getStringExtra("photo");
-        shareUrl = intent.getStringExtra("shareUrl");
-//        EmuserId = app.getEMuserId();
+        living = intent.getParcelableExtra("Living");
+        roomId=living.getChatroomId();
+        rtmpUrl = living.getRtmpPlayUrl();
+        userid = living.getUserId()+"";
+        nikeName = living.getNickName();
+        photo=living.getPhoto();
+        audiences=living.getAudiences();
+        shareUrl = living.getShareUrl();
         // TODO Auto-generated method stub
-//        videoURL = "http://hot.vrs.sohu.com/ipad2025214_4639791893179_5236535.m3u8?plat=17";
-//        mMediaController.setMediaPlayer(videoView);
-//        videoView.setMediaController(mMediaController);
         nickName.setText(nikeName);
+        audienceCount.setText(audiences+"");
+        onChatroomViewCreation();
         imageLoader.displayImage(photo, imHead, options, animateFirstListener);
         videoView.setVideoPath(rtmpUrl);
 //        videoView.start();
 
-        onChatroomViewCreation(roomId);
+
 
 
     }
 
     @Override
     protected void onResume() {
-//        EMChatManager.getInstance().registerEventListener(
-//                this,
-//                new EMNotifierEvent.Event[]{EMNotifierEvent.Event.EventNewMessage, EMNotifierEvent.Event.EventOfflineMessage,
-//                        EMNotifierEvent.Event.EventDeliveryAck, EMNotifierEvent.Event.EventReadAck});
 
         super.onResume();
     }
@@ -349,7 +315,7 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
         // TODO Auto-generated method stub
         switch (v.getId()) {
             case R.id.ibtn_disscuss:
-                Log.e(TAG, "评论按钮被点击。。。。。。。。。。。");
+                Log.e(TAG, "评论按钮被点击");
                 removeET.setVisibility(View.VISIBLE);
                 removeET.setFocusable(true);
                 removeET.setFocusableInTouchMode(true);
@@ -360,15 +326,32 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
                 imm.showSoftInput(removeET, InputMethodManager.SHOW_FORCED);
                 Log.v(TAG, "");
                 break;
+
             case R.id.im_live_share:
 
                 SharePopupWindow share = new SharePopupWindow(ShowLiveActivity.this, mHandler, shareUrl);
 //				share.setPlatformActionListener(MainActivity.this);
                 share.showShareWindow();
                 // 显示窗口 (设置layout在PopupWindow中显示的位置)
-                share.showAtLocation(ShowLiveActivity.this.getLayoutInflater().inflate(R.layout.activity_videoinfo, null),
+                share.showAtLocation(ShowLiveActivity.this.getLayoutInflater().inflate(R.layout.activity_showlive, null),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
+            case R.id.tv_close:
+
+                 finish();
+                break;
+            case R.id.im_live_head:
+                Intent intent = new Intent(ShowLiveActivity.this, UserInfoActivity.class);
+                intent.putExtra("living",living);
+                startActivity(intent);
+                break;
+
+
+            case R.id.tv_live_follow:
+                Thread postThread = new Thread(new postThread());
+                postThread.start();
+                break;
+
             default:
                 break;
         }
@@ -378,24 +361,69 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        /**使用SSO授权必须添加如下代码 */
-        UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
-        if (ssoHandler != null) {
-            ssoHandler.authorizeCallBack(requestCode, resultCode, data);
-        }
     }
 
+    /**
+     * 添加关注接口
+     */
+    class postThread implements Runnable
+    {
+        @Override
+        public void run()
+        {
+            String url= MyAapplication.IP+"follow";
+            try {
+                followPost(url);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //   备用子线程
+            Log.e("log", "发出关注请求请求");
 
+        }
+    }
+    /**
+     * 添加关注
+     * @param url
+     * @throws IOException
+     */
+    void followPost(String url) throws IOException {
 
-        public void onChatroomViewCreation(String roomIdq) {
+        RequestBody formBody = new FormEncodingBuilder()
+                .add("userId", userid)
+                .add("toUserId", MyUserId)
+                .add("accessToken", accessToken)
+                .build();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(formBody)
+                .build();
+        OkHttpUtil.enqueue(request, new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
 
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    Message msg = new Message();
+                    msg.what = 2;
+                    mHandler.sendMessage(msg);
+                }
+            }
+        });
+    }
+
+        public void onChatroomViewCreation(){
 //        findViewById(R.id.container_to_group).setVisibility(View.GONE);
-
+            Log.e(TAG, "join room  : " +"roomId="+roomId);
 //        final ProgressDialog pd = ProgressDialog.show(this, "", "Joining......");
             EMChatManager.getInstance().joinChatRoom(roomId, new EMValueCallBack<EMChatRoom>() {
 
                 @Override
                 public void onSuccess(EMChatRoom value) {
+                    EMLog.e(TAG, "joining room : " +"roomId="+roomId);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -407,9 +435,10 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
 //                            ((TextView) findViewById(R.id.name)).setText(roomId);
                             }
                             Log.e(TAG, "join room success : " + room.getName());
-
+                            Message msg=new Message();
+                            msg.what=0;
+                            mHandler.sendMessage(msg);
                             onConversationInit();
-
                             onListViewCreation();
                             EMChatManager.getInstance().registerEventListener(
                                     ShowLiveActivity.this,
@@ -421,7 +450,7 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
 
                 @Override
                 public void onError(final int error, String errorMsg) {
-                    EMLog.d(TAG, "join room failure : " + error);
+                    EMLog.e(TAG, "join room failure : " + error+"errorMsg="+errorMsg);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -462,27 +491,28 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
             // 监听聊天室变化回调
             EMChatManager.getInstance().addChatRoomChangeListener(new EMChatRoomChangeListener() {
 
-//            @Override
-//            public void onInvitationReceived(String roomId, String roomName,
-//                                             String inviter, String reason) {
-//            }
 
                 @Override
                 public void onChatRoomDestroyed(String roomId, String roomName) {
                     if (roomId.equals(roomId)) {
-                        finish();
+//                        finish();
                     }
                 }
 
                 @Override
                 public void onMemberJoined(String roomId, String participant) {
-                    Toast.makeText(ShowLiveActivity.this,"有人加入房间",Toast.LENGTH_SHORT).show();
+                    Message msg=new Message();
+                    msg.what=0;
+                   mHandler.sendMessage(msg);
+                    Log.e(TAG,audiences+1+"");
                 }
 
                 @Override
                 public void onMemberExited(String roomId, String roomName,
                                            String participant) {
-                    Toast.makeText(ShowLiveActivity.this,"有人加入房间",Toast.LENGTH_SHORT).show();
+                    Message msg=new Message();
+                    msg.what=1;
+                    mHandler.sendMessage(msg);
                 }
 
                 @Override
@@ -515,10 +545,9 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
             message.setAttribute("nikeName", nikeName);
             message.setAttribute("photo", MyPhoto);
             message.setAttribute("content", content);
-//            message.setAttribute("funcation", "");
+            message.setAttribute("funcation", "");
             // 如果是群聊，设置chattype,默认是单聊
             message.setChatType(EMMessage.ChatType.ChatRoom);
-
             // 设置要发给谁,用户username或者群聊groupid
             message.setReceipt(roomId);
             // 把messgage加到conversation中
@@ -541,18 +570,6 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
      */
     private void handleTextMessage(EMMessage message) {
         TextMessageBody txtBody = (TextMessageBody) message.getBody();
-//		Spannable span = SmileUtils.getSmiledText(mContext, txtBody.getMessage());
-        // 设置内容
-        // 设置长按事件监听
-//        holder.textViewContent.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-////				activity.startActivityForResult(
-////						(new Intent(activity, ContextMenu.class)).putExtra("position", position).putExtra("type",
-////								EMMessage.Type.TXT.ordinal()), ChatActivity.REQUEST_CODE_CONTEXT_MENU);
-//                return true;
-//            }
-//        });
 
         if (message.direct == EMMessage.Direct.SEND) {
             switch (message.status) {
@@ -709,7 +726,21 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
         public ListView getListView() {
             return mListview;
         }
+
+    private void showTips(int iconResId, int msgResId) {
+        if (tipsToast != null) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                tipsToast.cancel();
+            }
+        } else {
+            tipsToast = TipsToast.makeText(getApplication().getBaseContext(), msgResId, TipsToast.LENGTH_SHORT);
+        }
+        tipsToast.show();
+        tipsToast.setIcon(iconResId);
+        tipsToast.setText(msgResId);
     }
+    }
+
 
 
 

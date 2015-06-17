@@ -1,7 +1,6 @@
 package tv.liangzi.quantum.adapter;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Color;
@@ -27,7 +26,7 @@ import java.util.List;
 
 import tv.liangzi.quantum.R;
 import tv.liangzi.quantum.bean.Live;
-import tv.liangzi.quantum.fragment.LiveFragment;
+import tv.liangzi.quantum.utils.DateUtil;
 
 
 public class LiveAdapter extends BaseAdapter   {
@@ -36,6 +35,7 @@ public class LiveAdapter extends BaseAdapter   {
 	private static final int TYPE_WAIT=0;
 	private static final int TYPE_LIVE_TITLE=2;
 	private static final int TYPE_WAIT_TITLE=3;
+	private int mTypeCount=4;
 	private Context mContext;
 	private View livingView;
 	private View titleView;
@@ -44,7 +44,8 @@ public class LiveAdapter extends BaseAdapter   {
 	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 	private List<Live> mList;
 	OnItemButtonClickListener mListener;
-	public LiveAdapter(Context context,List<Live> list){
+	public LiveAdapter(Context context,List<Live> list,int typeCount){
+		mTypeCount=typeCount;
 		inflater=LayoutInflater.from(context);
 		mContext=context;
 		imageLoader.init(ImageLoaderConfiguration.createDefault(context));
@@ -130,7 +131,7 @@ public class LiveAdapter extends BaseAdapter   {
 	@Override
 	public int getViewTypeCount() {
 		// TODO Auto-generated method stub
-		return 4;
+		return mTypeCount;
 	}
 @Override
 public int getItemViewType(int position) {
@@ -179,7 +180,7 @@ public int getItemViewType(int position) {
 			imageLoader.displayImage(mList.get(position).getImg(), livingHolder.picBackground, options, animateFirstListener);
 			livingHolder.theme.setText(mList.get(position).getTitle());
 			livingHolder.userName.setText(mList.get(position).getNickName());
-			livingHolder.concernedCount1.setText(mList.get(position).getSubscibes()+"");
+			livingHolder.concernedCount1.setText(mList.get(position).getAudiences()+"");
 		}else if (type==TYPE_WAIT){
 
 			final ScheduleHolder scheduleHolder;
@@ -219,8 +220,8 @@ public int getItemViewType(int position) {
 			imageLoader.displayImage(mList.get(position).getPhoto(), scheduleHolder.userHead, options, animateFirstListener);
 			imageLoader.displayImage(mList.get(position).getImg(), scheduleHolder.picBackground, options, animateFirstListener);
 			scheduleHolder.theme.setText(mList.get(position).getTitle());
-			scheduleHolder.year.setText(mList.get(position).getBegin()+"");
-			scheduleHolder.hour.setText(mList.get(position).getBegin()+"");
+			scheduleHolder.year.setText(DateUtil.getDateToString(mList.get(position).getReserved()));
+			scheduleHolder.hour.setText(DateUtil.getDateToHourString(mList.get(position).getReserved()));
 			scheduleHolder.userName.setText(mList.get(position).getNickName());
 			scheduleHolder.concernedCount2.setText(mList.get(position).getSubscibes()+"");
 		}else if(type==TYPE_LIVE_TITLE){

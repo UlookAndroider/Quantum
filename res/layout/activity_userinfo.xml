@@ -183,9 +183,10 @@
         android:gravity="center"
         android:text="现场"
         android:padding="3dp"
-        android:textColor="@color/gray"
+        android:textColor="@color/red_bg"
         android:textSize="22sp"
         android:layout_height="wrap_content" />
+<!--
     <ImageView
         android:layout_width="1dp"
         android:layout_height="match_parent"
@@ -200,6 +201,7 @@
         android:textColor="@color/red_bg"
         android:textSize="22sp"
         android:layout_height="wrap_content" />
+-->
 
 </LinearLayout>
 

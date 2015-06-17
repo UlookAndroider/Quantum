@@ -160,7 +160,6 @@ public class PeopleFragment extends BaseFragment implements OnClickListener,Peop
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent intent=new Intent(getActivity(),UserInfoActivity.class);
-				intent.putExtra("userId",userId);
 //				intent.putExtra("userDetail",peopleDetails);
 				startActivity(intent);
 			}
@@ -178,8 +177,8 @@ public class PeopleFragment extends BaseFragment implements OnClickListener,Peop
 	}
 
 	private void initdata() {
-		Thread userThread = new Thread(new getUserThread());
-		userThread.start();
+//		Thread userThread = new Thread(new getUserThread());
+//		userThread.start();
 
 	}
 
@@ -187,7 +186,17 @@ public class PeopleFragment extends BaseFragment implements OnClickListener,Peop
 	}
 
 	@Override
+	public void onResume() {
+		Thread userThread = new Thread(new getUserThread());
+		userThread.start();
+		super.onResume();
+	}
+
+	@Override
 	public void onDestroy() {
+//		Intent intent = new Intent(context, LoginView.class);
+//		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//		context.startActivity(intent);
 		super.onDestroy();
 	}
 
@@ -237,7 +246,7 @@ public class PeopleFragment extends BaseFragment implements OnClickListener,Peop
 				if (response.isSuccessful()){
 					Person person = gson.fromJson(response.body().charStream(), new TypeToken<Person>() {
 					}.getType());
-					mlist.addAll(mlist.size(), person.getUsers());
+					mlist=person.getUsers();
 					Message msg = new Message();
 					msg.what = 1;
 					mHandler.sendMessage(msg);
@@ -346,6 +355,7 @@ public class PeopleFragment extends BaseFragment implements OnClickListener,Peop
 		{
 			String url= MyAapplication.IP+"users"+"?userId="+userId;
 			try {
+				mlist.clear();
 				getUsers(url);
 			} catch (IOException e) {
 				e.printStackTrace();

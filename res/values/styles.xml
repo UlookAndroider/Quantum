@@ -48,8 +48,8 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textColorHint">@color/G_black_light_5</item>
         <item name="android:ellipsize">end</item>
+     <item name="android:background">#00000000</item>
         <item name="android:gravity">left|center</item>
-        <item name="android:background">#00000000</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:singleLine">true</item>

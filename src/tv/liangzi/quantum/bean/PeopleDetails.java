@@ -1,12 +1,12 @@
 package tv.liangzi.quantum.bean;
 
-import java.io.Serializable;
-import java.security.PublicKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by invinjun on 2015/5/14.
  */
-public class PeopleDetails implements Serializable {
+public class PeopleDetails implements Parcelable {
     private String responseCode;
     private String responseMsg;
 
@@ -27,6 +27,40 @@ public class PeopleDetails implements Serializable {
     private String commonUploadToken;
     private String especialUploadToken;
     private String accessToken;
+    protected PeopleDetails(){
+
+    }
+    protected PeopleDetails(Parcel in) {
+        responseCode = in.readString();
+        responseMsg = in.readString();
+        userId = in.readInt();
+        created = in.readLong();
+        nickName = in.readString();
+        photo = in.readString();
+        sign = in.readString();
+        wechatNickName = in.readString();
+        sinaNickName = in.readString();
+        focusNum = in.readInt();
+        fansNum = in.readInt();
+        lng = in.readDouble();
+        lat = in.readDouble();
+        addr = in.readString();
+        commonUploadToken = in.readString();
+        especialUploadToken = in.readString();
+        accessToken = in.readString();
+    }
+
+    public static final Creator<PeopleDetails> CREATOR = new Creator<PeopleDetails>() {
+        @Override
+        public PeopleDetails createFromParcel(Parcel in) {
+            return new PeopleDetails(in);
+        }
+
+        @Override
+        public PeopleDetails[] newArray(int size) {
+            return new PeopleDetails[size];
+        }
+    };
 
     public String getCommonUploadToken() {
         return commonUploadToken;
@@ -174,4 +208,29 @@ public class PeopleDetails implements Serializable {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(responseCode);
+        parcel.writeString(responseMsg);
+        parcel.writeInt(userId);
+        parcel.writeLong(created);
+        parcel.writeString(nickName);
+        parcel.writeString(photo);
+        parcel.writeString(sign);
+        parcel.writeString(wechatNickName);
+        parcel.writeString(sinaNickName);
+        parcel.writeInt(focusNum);
+        parcel.writeInt(fansNum);
+        parcel.writeDouble(lng);
+        parcel.writeDouble(lat);
+        parcel.writeString(addr);
+        parcel.writeString(commonUploadToken);
+        parcel.writeString(especialUploadToken);
+        parcel.writeString(accessToken);
+    }
 }

@@ -49,6 +49,7 @@ import tv.liangzi.quantum.config.MyAapplication;
 import tv.liangzi.quantum.fragment.AnimFragment.OnFragmentDismissListener;
 import tv.liangzi.quantum.utils.OkHttpUtil;
 import tv.liangzi.quantum.utils.SharedPreferencesUtils;
+import zrc.widget.SimpleFooter;
 import zrc.widget.SimpleHeader;
 import zrc.widget.ZrcListView;
 
@@ -127,27 +128,26 @@ public class LiveFragment extends BaseFragment implements
 					mAdapter.setLives(mReaddVideos);
 					mAdapter.notifyDataSetChanged();
 
-					mListView.startLoadMore(); // 开启LoadingMore功能
 					break;
 				case 3:
-					mListView.setLoadMoreSuccess();
-					liveTitle.setState(2);
-					mReaddVideos.add(liveTitle);
-					for (int i = 0; i <mLiveVideos.size() ; i++) {
-						if (mLiveVideos.get(i).getState()==1){
-							mReaddVideos.add(mLiveVideos.get(i));
-						}
-					}
-					liveTitle1.setState(3);
-					mReaddVideos.add(liveTitle1);
-					for (int i = 0; i <mLiveVideos.size() ; i++) {
-						if (mLiveVideos.get(i).getState()==0){
-							mReaddVideos.add(mLiveVideos.get(i));
-						}
-					}
-
-					mAdapter.setLives(mReaddVideos);
-					mAdapter.notifyDataSetChanged();
+//					mListView.setLoadMoreSuccess();
+//					liveTitle.setState(2);
+//					mReaddVideos.add(liveTitle);
+//					for (int i = 0; i <mLiveVideos.size() ; i++) {
+//						if (mLiveVideos.get(i).getState()==1){
+//							mReaddVideos.add(mLiveVideos.get(i));
+//						}
+//					}
+//					liveTitle1.setState(3);
+//					mReaddVideos.add(liveTitle1);
+//					for (int i = 0; i <mLiveVideos.size() ; i++) {
+//						if (mLiveVideos.get(i).getState()==0){
+//							mReaddVideos.add(mLiveVideos.get(i));
+//						}
+//					}
+//
+//					mAdapter.setLives(mReaddVideos);
+//					mAdapter.notifyDataSetChanged();
 					break;
 //
 				case 4:
@@ -205,7 +205,6 @@ public class LiveFragment extends BaseFragment implements
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
 	}
 
 	private void initViews(View view) {
@@ -221,15 +220,13 @@ public class LiveFragment extends BaseFragment implements
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent intent=new Intent(getActivity(),UserInfoActivity.class);
-				intent.putExtra("userId",userId);
-//				intent.putExtra("userDetail",peopleDetails);
+//				intent.putExtra("userId",userId);
 				startActivity(intent);
 			}
 		});
       mListView=(ZrcListView) view.findViewById(R.id.xlistview);
 
 		freshen="";
-		mLiveVideos.clear();
 //		 Thread liveThread = new Thread(new LiveThread());
 //		liveThread.start();
 		mListView.refresh(); // 主动下拉刷新
@@ -244,9 +241,9 @@ public class LiveFragment extends BaseFragment implements
 		mListView.setHeadable(header);
 
 // 设置加载更多的样式
-//		SimpleFooter footer = new SimpleFooter(getActivity());
-//		footer.setCircleColor(0xff33bbee);
-//		mListView.setFootable(footer);
+		SimpleFooter footer = new SimpleFooter(getActivity());
+		footer.setCircleColor(0xff33bbee);
+		mListView.setFootable(footer);
 
 // 设置列表项出现动画
 		mListView.setItemAnimForTopIn(R.anim.topitem_in);
@@ -264,32 +261,38 @@ public class LiveFragment extends BaseFragment implements
 			}
 		});
 //		//加载更多回调
-//		mListView.setOnLoadMoreStartListener(new ZrcListView.OnStartListener() {
-//			@Override
-//			public void onStart() {
-//				freshen="footer";
-//			lastId =mLiveVideos.get(mLiveVideos.size()-1).getLiveId();
-//				Thread liveThread = new Thread(new LiveThread());
-//				liveThread.start();
-//			}
-//		});
-        mAdapter=new LiveAdapter(getActivity(), mLiveVideos);
+		mListView.setOnLoadMoreStartListener(new ZrcListView.OnStartListener() {
+			@Override
+			public void onStart() {
+				freshen="footer";
+			lastId =mLiveVideos.get(mLiveVideos.size()-1).getLiveId();
+				Thread liveThread = new Thread(new LiveThread());
+				liveThread.start();
+			}
+		});
+        mAdapter=new LiveAdapter(getActivity(), mLiveVideos,4);
 		mAdapter.setButtonOnClickListener(this);
         mListView.setAdapter(mAdapter);
 
       mListView.setOnItemClickListener(new ZrcListView.OnItemClickListener() {
 		  @Override
 		  public void onItemClick(ZrcListView parent, View view, int position, long id) {
-			  Intent intent=new Intent(getActivity(),ShowLiveActivity.class);
-			  intent.putExtra("roomId",mReaddVideos.get(position).getChatroomId());
-			  intent.putExtra("rtmpUrl",mReaddVideos.get(position).getRtmpPlayUrl());
-			  intent.putExtra("userid",mReaddVideos.get(position).getUserId());
-			  intent.putExtra("nikeName",mReaddVideos.get(position).getNickName());
-			  intent.putExtra("shareUrl",mReaddVideos.get(position).getShareUrl());
-			  intent.putExtra("photo",mReaddVideos.get(position).getPhoto());
-			  startActivity(intent);
+			  if (mReaddVideos.get(position).getState()==1){
+				  Intent intent=new Intent(getActivity(),ShowLiveActivity.class);
+				  intent.putExtra("Living",mReaddVideos.get(position));
+				  Log.e("roomid",mReaddVideos.get(position).getChatroomId());
+				  startActivity(intent);
+			  }
+			  return;
+
 		  }
 	  });
+	}
+
+	@Override
+	public void onResume() {
+		mListView.refresh();
+		super.onResume();
 	}
 
 	@Override

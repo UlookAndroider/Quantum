@@ -123,17 +123,22 @@ public class TimePickerActivity extends Activity implements OnClickListener
 				case 2:
 					if(living){
 						Intent intent=new Intent(TimePickerActivity.this,ShowLiveActivity.class);
-						intent.putExtra("roomId",mLiveVideo.getChatroomId());
-						intent.putExtra("photo",mLiveVideo.getPhoto());
-						intent.putExtra("nickName",mLiveVideo.getNickName());
-						intent.putExtra("rtmpUrl",mLiveVideo.getRtmpPlayUrl());
-						intent.putExtra("userid",mLiveVideo.getUserId());
-						intent.putExtra("nikeName",mLiveVideo.getNickName());
-						intent.putExtra("shareUrl", mLiveVideo.getShareUrl());
+						intent.putExtra("Living",mLiveVideo);
+//						intent.putExtra("roomId",mLiveVideo.getChatroomId());
+//						intent.putExtra("photo",mLiveVideo.getPhoto());
+//						intent.putExtra("nickName",mLiveVideo.getNickName());
+//						intent.putExtra("rtmpUrl",mLiveVideo.getRtmpPlayUrl());
+//						intent.putExtra("userid",mLiveVideo.getUserId());
+//						intent.putExtra("nikeName",mLiveVideo.getNickName());
+//						intent.putExtra("shareUrl", mLiveVideo.getShareUrl());
 						startActivity(intent);
 						Toast.makeText(TimePickerActivity.this,"直播成功+++++++！！！！",Toast.LENGTH_SHORT).show();
-					}else
-						Toast.makeText(TimePickerActivity.this,"预约成功+++++++！！！！",Toast.LENGTH_SHORT).show();
+					}else{
+						Intent intent=new Intent(TimePickerActivity.this,MainActivity.class);
+//						intent.putExtra("Living",mLiveVideo);
+						startActivity(intent);
+					}
+//						Toast.makeText(TimePickerActivity.this,"预约成功+++++++！！！！",Toast.LENGTH_SHORT).show();
 					break;
 				case 3:
 					break;
@@ -277,7 +282,7 @@ public class TimePickerActivity extends Activity implements OnClickListener
 	
 		String[] months_big = { "1", "3", "5", "7", "8", "10", "12" };
 		String[] months_little = { "4", "6", "9", "11" };
-		for (int i = 1; i < 25; i++)
+		for (int i = 1; i < 24; i++)
 		{
 			hours.add("" + i);
 		}
@@ -303,11 +308,10 @@ public class TimePickerActivity extends Activity implements OnClickListener
 		} else if (position==15) {
 			 Datas.add(temp,"预约截止日");
 		}
-		 
 		 return reStr;
-		 
+
 	}
-	@Override
+
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
@@ -343,14 +347,14 @@ public class TimePickerActivity extends Activity implements OnClickListener
 					//day等于当前时间的 进一步判断时分
 					if (selectedHour < hour) {
 						//小时大于当前
-//						Toast.makeText(TimePickerActivity.this, "请重新选择时间 h",
-//								Toast.LENGTH_SHORT).show();
+						Toast.makeText(TimePickerActivity.this, "请选择正确的预约时间",
+								Toast.LENGTH_SHORT).show();
 						return;
 					} else if (selectedHour == hour) {
 						//小时相同的进一步判断 分钟
 						if (selectedMin <=min) {
-//							Toast.makeText(TimePickerActivity.this, "小于等于当前分钟不可以",
-//									Toast.LENGTH_SHORT).show();
+							Toast.makeText(TimePickerActivity.this, "请选择正确的预约时间",
+									Toast.LENGTH_SHORT).show();
 							return;
 						}
 					}
@@ -471,8 +475,8 @@ public class TimePickerActivity extends Activity implements OnClickListener
 						.add("title", nameTopic.getText().toString().trim())
 						.add("accessToken", accessToken);
 				if (!living){
-					long mill=DateUtil.getStringToDate(selectDateText + " " + selectedHour + "时" + selectedMin);
-					millis=	String.valueOf((mill) - (Calendar.getInstance().getTimeInMillis()));
+					long mill=DateUtil.getStringToDate(selectDateText + " " + selectedHour + ":" + selectedMin);
+					millis=	String.valueOf(mill);
 					Body.add("reserved", millis);
 				}
 				try {
@@ -527,8 +531,6 @@ public class TimePickerActivity extends Activity implements OnClickListener
 						msg.obj = mLiveVideo.getResponseMsg();
 						mHandler.sendMessage(msg);
 					}
-
-
 				}
 			}
 		});

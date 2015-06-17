@@ -3,7 +3,7 @@
     <!-- From: file:/E:/workspace/Quantum/res/values/arrays.xml -->
     <eat-comment/>
     <string-array name="bottom_bar_labels">
-        <item>@string/explore</item>
+        <!--<item>@string/explore</item>-->
         <item>@string/live</item>
         <item>@string/send</item>
         <item>@string/people</item>
@@ -344,7 +344,6 @@
     <string name="error_invalid_password">This password is too short</string>
     <!-- From: file:/E:/workspace/Quantum/res/values/strings.xml -->
     <eat-comment/>
-    <string name="explore">精 选</string>
     <string name="feedback">意见反馈</string>
     <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/Quantum/multi-image-selector/0.4-SNAPSHOT/res/values/values.xml -->
     <eat-comment/>
@@ -359,6 +358,11 @@
     <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/Quantum/multi-image-selector/0.4-SNAPSHOT/res/values/values.xml -->
     <eat-comment/>
     <string name="msg_amount_limit">Select images amount is limit</string>
+    <!-- From: file:/E:/workspace/Quantum/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="msg_load_ing">加载中....</string>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/Quantum/multi-image-selector/0.4-SNAPSHOT/res/values/values.xml -->
+    <eat-comment/>
     <string name="msg_no_camera">No system camera found</string>
     <!-- From: file:/E:/workspace/Quantum/res/values/strings.xml -->
     <eat-comment/>
@@ -1418,8 +1422,8 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textColorHint">@color/G_black_light_5</item>
         <item name="android:ellipsize">end</item>
+     <item name="android:background">#00000000</item>
         <item name="android:gravity">left|center</item>
-        <item name="android:background">#00000000</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:singleLine">true</item>

@@ -1,8 +1,53 @@
 package tv.liangzi.quantum.bean;
 
-public  class Live {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public  class Live implements Parcelable{
 	private String responseCode;
 	private String responseMsg;
+	public Live(){
+
+	}
+	public Live(Parcel in) {
+		responseCode = in.readString();
+		responseMsg = in.readString();
+		liveId = in.readInt();
+		userId = in.readInt();
+		nickName = in.readString();
+		photo = in.readString();
+		title = in.readString();
+		describe = in.readString();
+		img = in.readString();
+		rtmpPublishUrl = in.readString();
+		hlsPublishUrl = in.readString();
+		rtmpPlayUrl = in.readString();
+		hlsPlayUrl = in.readString();
+		groupid = in.readString();
+		shareUrl = in.readString();
+		scope = in.readInt();
+		subscibeId = in.readInt();
+		subscibes = in.readInt();
+		shares = in.readInt();
+		likes = in.readInt();
+		audiences = in.readInt();
+		state = in.readInt();
+		reserved = in.readLong();
+		begin = in.readLong();
+		chatroomId = in.readString();
+	}
+
+	public static final Creator<Live> CREATOR = new Creator<Live>() {
+		@Override
+		public Live createFromParcel(Parcel in) {
+			return new Live(in);
+		}
+
+		@Override
+		public Live[] newArray(int size) {
+			return new Live[size];
+		}
+	};
 
 	public String getResponseCode() {
 		return responseCode;
@@ -226,4 +271,37 @@ public  class Live {
 	}
 
 
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel parcel, int i) {
+		parcel.writeString(responseCode);
+		parcel.writeString(responseMsg);
+		parcel.writeInt(liveId);
+		parcel.writeInt(userId);
+		parcel.writeString(nickName);
+		parcel.writeString(photo);
+		parcel.writeString(title);
+		parcel.writeString(describe);
+		parcel.writeString(img);
+		parcel.writeString(rtmpPublishUrl);
+		parcel.writeString(hlsPublishUrl);
+		parcel.writeString(rtmpPlayUrl);
+		parcel.writeString(hlsPlayUrl);
+		parcel.writeString(groupid);
+		parcel.writeString(shareUrl);
+		parcel.writeInt(scope);
+		parcel.writeInt(subscibeId);
+		parcel.writeInt(subscibes);
+		parcel.writeInt(shares);
+		parcel.writeInt(likes);
+		parcel.writeInt(audiences);
+		parcel.writeInt(state);
+		parcel.writeLong(reserved);
+		parcel.writeLong(begin);
+		parcel.writeString(chatroomId);
+	}
 }

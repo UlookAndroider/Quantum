@@ -26,8 +26,6 @@ public void onCreate() {
          * 个推初始化
          */
         PushManager.getInstance().initialize(this.getApplicationContext());
-	    initImageLoader(getApplicationContext());//初始化图片缓�?
-	    LogUtils.i("APPLICATION", "--------------------------");
         //环信初始化配置
         EMChat.getInstance().init(getApplicationContext());
         /**
@@ -36,7 +34,9 @@ public void onCreate() {
          * 在做代码混淆的时候需要设置成false
          */
         EMChat.getInstance().setDebugMode(true);//在做打包混淆时，要关闭debug模式，如果未被关闭，则会出现程序无法运行问题
-        EMChat.getInstance().setAppInited();
+//        EMChat.getInstance().setAppInited();
+        initImageLoader(getApplicationContext());//初始化图片缓存
+        LogUtils.i("APPLICATION", "--------------------------");
     super.onCreate();
 
 

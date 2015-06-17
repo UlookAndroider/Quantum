@@ -114,10 +114,9 @@ public class ExploreAdapter extends BaseAdapter {
 		// TODO Auto-generated method stub
 		if (convertView==null) {
 			convertView =inflater.inflate(R.layout.home_listview_item,null);
-			 holder=new ViewHolder();
+			holder=new ViewHolder();
 			holder.imageView=(ImageView) convertView.findViewById(R.id.video_pic);
 			holder.textView=(TextView)convertView.findViewById(R.id.video_name);
-//			holder.timeView=(TextView)convertView.findViewById(R.id.video_time);
 			convertView.setTag(holder);
 		}else {
 			 holder = (ViewHolder) convertView.getTag();

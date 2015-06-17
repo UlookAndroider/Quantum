@@ -27,7 +27,8 @@ import tv.liangzi.quantum.utils.LogUtils;
 public class MyTabWidget extends LinearLayout {
 
 	private static final String TAG = "MyTabWidget";
-	private int[] mDrawableIds = new int[] { R.drawable.bg_explore,
+	//R.drawable.bg_explore,
+	private int[] mDrawableIds = new int[] {
 			R.drawable.bg_live, R.drawable.bg_sned,
 			R.drawable.bg_people };
 	// ��ŵײ��˵��ĸ�������CheckedTextView

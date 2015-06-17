@@ -192,12 +192,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     	mController.doOauthVerify(LoginActivity.this, SHARE_MEDIA.SINA, new UMAuthListener() {
 			@Override
 			public void onError(SocializeException e, SHARE_MEDIA platform) {
+			String error=e.getMessage();
+				int code=e.getErrorCode();
 			}
 
 			@Override
 			public void onComplete(Bundle value, SHARE_MEDIA platform) {
 				if (value != null && !TextUtils.isEmpty(value.getString("uid"))) {
-					//回去微博相关信息
+					//回调微博相关信息
 					getWeiBoInfo();
 					Toast.makeText(LoginActivity.this, "授权成功.", Toast.LENGTH_SHORT).show();
 				} else {

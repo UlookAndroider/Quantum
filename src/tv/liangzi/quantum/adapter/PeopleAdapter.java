@@ -18,8 +18,6 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.RequestBody;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,7 +26,6 @@ import java.util.List;
 
 import tv.liangzi.quantum.R;
 import tv.liangzi.quantum.bean.PeopleDetails;
-import tv.liangzi.quantum.bean.Person;
 
 
 
@@ -148,6 +145,7 @@ public class PeopleAdapter extends BaseAdapter {
 				holder.imageView=(ImageView) convertView.findViewById(R.id.im_head);
 			    holder.textView=(TextView)convertView.findViewById(R.id.tv_nikename);
 				holder.addImage=(ImageView)convertView.findViewById(R.id.im_people_add);
+			holder.textViewSign=(TextView)convertView.findViewById(R.id.tv_info);
 			    convertView.setTag(holder);
 		}else {
 			 holder = (ViewHolder) convertView.getTag();
@@ -170,6 +168,7 @@ public class PeopleAdapter extends BaseAdapter {
 				mCallback.headClick(v,position);
 			}
 		});
+		holder.textViewSign.setText(mList.get(position).getSign());
 		holder.textView.setText(mList.get(position).getNickName());
 		imageLoader.displayImage(mList.get(position).getPhoto(), holder.imageView, options, animateFirstListener);
 		return convertView;
@@ -178,6 +177,7 @@ public class PeopleAdapter extends BaseAdapter {
 		ImageView imageView;
 		 TextView textView;
 		 ImageView addImage;
+		 TextView textViewSign;
 
 	}
 
