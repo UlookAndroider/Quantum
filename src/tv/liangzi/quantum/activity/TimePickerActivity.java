@@ -131,12 +131,13 @@ public class TimePickerActivity extends Activity implements OnClickListener
 //						intent.putExtra("userid",mLiveVideo.getUserId());
 //						intent.putExtra("nikeName",mLiveVideo.getNickName());
 //						intent.putExtra("shareUrl", mLiveVideo.getShareUrl());
+						finish();
 						startActivity(intent);
-						Toast.makeText(TimePickerActivity.this,"直播成功+++++++！！！！",Toast.LENGTH_SHORT).show();
 					}else{
 						Intent intent=new Intent(TimePickerActivity.this,MainActivity.class);
 //						intent.putExtra("Living",mLiveVideo);
 						startActivity(intent);
+						finish();
 					}
 //						Toast.makeText(TimePickerActivity.this,"预约成功+++++++！！！！",Toast.LENGTH_SHORT).show();
 					break;

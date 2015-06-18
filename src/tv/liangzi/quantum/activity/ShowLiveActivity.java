@@ -55,6 +55,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.liangzi.quantum.R;
 import tv.liangzi.quantum.adapter.ShowLiveActivityAdapter;
 import tv.liangzi.quantum.base.BaseActivity;
@@ -67,7 +68,16 @@ import tv.liangzi.quantum.view.MediaController;
 import tv.liangzi.quantum.view.SharePopupWindow;
 import tv.liangzi.quantum.view.TipsToast;
 
-public class ShowLiveActivity extends BaseActivity implements OnClickListener,AbsListView.OnScrollListener,EditText.OnEditorActionListener,EMEventListener {
+public class ShowLiveActivity extends BaseActivity implements
+        OnClickListener,
+        AbsListView.OnScrollListener,
+        EditText.OnEditorActionListener,
+        EMEventListener
+        ,IMediaPlayer.OnCompletionListener,
+        IMediaPlayer.OnInfoListener,
+        IMediaPlayer.OnErrorListener,
+        IMediaPlayer.OnPreparedListener
+{
     private com.pili.pldroid.player.widget.VideoView videoView;
     private ListView mListview;
     //	private ImageButton playButton;
@@ -84,7 +94,8 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
     private LoadingDialog dialog;
     //private KeyboardLayout mRoot;
     public static final int MESSAGE_LISTVIEW = 0;
-    ImageView imHead;
+    private ImageView imHead;
+    private ImageView followImage;
     private int mLoginBottom;
     private static final int KEYBOARD_SHOW = 0X10;
     private static final int KEYBOARD_HIDE = 0X20;
@@ -145,6 +156,13 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
                     if (audiences>0)
                     audienceCount.setText(--audiences+"");
                     break;
+                case 2:
+//                    user.setIsFollow(true);
+//					peopleAdapter.notifyDataSetChanged();
+                    followImage.setImageResource(R.drawable.followed);
+                    Toast.makeText(ShowLiveActivity.this, "关注成功", Toast.LENGTH_SHORT).show();
+                    audienceCount.setText(++audiences+"");
+                    break;
                 default:
                     break;
             }
@@ -174,6 +192,7 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rlView.setLayoutManager(linearLayoutManager);
         removeET = (EditText) findViewById(R.id.et_remove_disscuss);
+         followImage= (ImageView) findViewById(R.id.tv_live_follow);
 //        RecycleAdapter adapter = new RecycleAdapter(this, null);//暂时传null
 //        rlView.setAdapter(adapter);
     }
@@ -205,14 +224,30 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
 
     @Override
     public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//                    for (int i=firstVisibleItem;firstVisibleItem<totalItemCount;firstVisibleItem++){
-//            absListView.getChildAt(i).setBackgroundTintList();
-//        }
-//        if (firstVisibleItem<firstVisibleItem+visibleItemCount){
-//            absListView.getChildAt(firstVisibleItem).setBackgroundColor(Color.WHITE);
-//            absListView.getChildAt(firstVisibleItem++).setBackgroundColor(Color.GREEN);
-//            absListView.getChildAt(firstVisibleItem++).setBackgroundColor(Color.RED);
-//        }
+    }
+
+    /**
+     * 播放监听
+     * @param iMediaPlayer
+     */
+    @Override
+    public void onCompletion(IMediaPlayer iMediaPlayer) {
+        videoView.stopPlayback();
+    }
+
+    @Override
+    public boolean onError(IMediaPlayer iMediaPlayer, int i, int i1) {
+        return false;
+    }
+
+    @Override
+    public boolean onInfo(IMediaPlayer iMediaPlayer, int i, int i1) {
+        return false;
+    }
+
+    @Override
+    public void onPrepared(IMediaPlayer iMediaPlayer) {
+
     }
 
 
@@ -247,7 +282,7 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
         // TODO Auto-generated method stub
         imShare.setOnClickListener(this);
         imHead.setOnClickListener(this);
-        findViewById(R.id.tv_live_follow).setOnClickListener(this);
+        followImage.setOnClickListener(this);
                 removeET.setOnEditorActionListener(this);
         findViewById(R.id.tv_close).setOnClickListener(this);
         EMChatManager.getInstance().registerEventListener(
@@ -337,7 +372,7 @@ public class ShowLiveActivity extends BaseActivity implements OnClickListener,Ab
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.tv_close:
-
+videoView.stopPlayback();
                  finish();
                 break;
             case R.id.im_live_head:

@@ -13,8 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +41,7 @@ import tv.liangzi.quantum.R;
 import tv.liangzi.quantum.activity.ShowLiveActivity;
 import tv.liangzi.quantum.activity.UserInfoActivity;
 import tv.liangzi.quantum.adapter.LiveAdapter;
+import tv.liangzi.quantum.adapter.LiveAdapter.OnItemButtonClickListener;
 import tv.liangzi.quantum.bean.Live;
 import tv.liangzi.quantum.bean.LiveVideoStatus;
 import tv.liangzi.quantum.config.MyAapplication;
@@ -55,7 +54,7 @@ import zrc.widget.ZrcListView;
 
 
 public class LiveFragment extends BaseFragment implements
-		OnItemClickListener, OnClickListener, OnFragmentDismissListener ,LiveAdapter.OnItemButtonClickListener {
+		 OnClickListener, OnFragmentDismissListener ,OnItemButtonClickListener {
 
 	private static final String TAG = "CategoryFragment";
 	private Activity mActivity;
@@ -305,10 +304,6 @@ public class LiveFragment extends BaseFragment implements
 		super.onDestroy();
 	}
 
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-	}
 
 
 
@@ -388,6 +383,8 @@ public class LiveFragment extends BaseFragment implements
 	public void onFragmentDismiss() {
 		dismissAnimFragment();
 	}
+
+
 
 	class LiveThread implements Runnable
 	{

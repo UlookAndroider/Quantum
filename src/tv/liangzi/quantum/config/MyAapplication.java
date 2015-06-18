@@ -18,7 +18,7 @@ import tv.liangzi.quantum.utils.LogUtils;
 public class MyAapplication extends Application {
     public  String EMuserId;
     public  String clientId;//个推clientid
-    public static final String IP="http://101.200.173.120:8080/LiangZiServer/";
+    public static final String IP="http://192.168.1.109:8080/LiangZiServer/";
     public static final String HEAD_PATH= Environment.getExternalStorageDirectory()+ File.separator+"Ulooktemp";
     @Override
 public void onCreate() {
@@ -65,18 +65,10 @@ public static void initImageLoader(Context context) {
                   .threadPriority(Thread.NORM_PRIORITY - 2)
                   .threadPoolSize(3)
                   .denyCacheImageMultipleSizesInMemory()//当同�?个Uri获取不同大小的图片，缓存到内存时，只缓存�?个�?�默认会缓存多个不同的大小的相同图片
-//                  .memoryCache(new LruMemoryCache(5 * 1024 * 1024))
-//                  .memoryCacheSize(5 * 1024 * 1024)
                   .memoryCacheExtraOptions(480, 800) //如果图片尺寸大于了这个参数，那么就会这按照这个参数对图片大小进行限制并缓�?
-//                  .discCacheExtraOptions(480, 800, CompressFormat.JPEG, 100, null)
-//                  .memoryCache(new WeakMemoryCache())
-//                  .discCacheSize(50 * 1024 * 1024)
-//                  .discCache(discCache)
                   .discCacheFileNameGenerator(new Md5FileNameGenerator())
                   .tasksProcessingOrder(QueueProcessingType.LIFO)
-//                  .memoryCache(UsingFreqLimitedMemoryCache)//按照使用频率，移除最少使用的缓存
                   .writeDebugLogs()
-//                  .enableLogging()
                   .build();
 	
 	ImageLoader.getInstance().init(config);

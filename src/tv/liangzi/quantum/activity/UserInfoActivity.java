@@ -3,15 +3,13 @@ package tv.liangzi.quantum.activity;
 import android.app.LocalActivityManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Parcelable;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -51,7 +49,7 @@ import tv.liangzi.quantum.utils.OkHttpUtil;
 import tv.liangzi.quantum.utils.SharedPreferencesUtils;
 import tv.liangzi.quantum.view.XListView;
 
-public class UserInfoActivity extends BaseActivity implements OnClickListener,XListView.IXListViewListener{
+public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItemButtonClickListener,OnClickListener,XListView.IXListViewListener{
 
 	private XListView mListView;
 	private String userId;
@@ -64,7 +62,7 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener,XL
 	private TextView place;
 	private TextView tv_decrip;
 	private ImageView bt_user_follow;
-	private String toUserId;
+	private String toUserId="";
 	private String accessToken;
 	LocalActivityManager manager = null;
 	ViewPager pager = null;
@@ -75,7 +73,7 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener,XL
 	private int currIndex = 0;// 当前页卡编号
 	private int bmpW;// 动画图片宽度
 	private ImageView cursor;// 动画图片
-
+    private int mPosition;
 
 	private  boolean otherUser;
 	private List<Live> mLiveVideos=new ArrayList<Live>();
@@ -149,6 +147,9 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener,XL
 
 
 		mAdapter=new LiveAdapter(UserInfoActivity.this,mLiveVideos,2);
+        mAdapter.setButtonOnClickListener(this);
+		mListView.setFooterDividersEnabled(false);
+		mListView.setPullLoadEnable(false);
 		mListView.setAdapter(mAdapter);
 		userId= (String) SharedPreferencesUtils.getParam(this, "userId", "");
 		accessToken= (String) SharedPreferencesUtils.getParam(this,"accessToken","");
@@ -206,13 +207,14 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener,XL
 	@Override
 	public void initListeners() {
 		bt_user_follow.setOnClickListener(this);
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void initData() {
 		// TODO Auto-generated method stub
+        if (toUserId==null||toUserId.equals("")){
+            toUserId=userId;
+        }
 		String url=MyAapplication.IP+"lives"+"?userId="+userId+"&publisherId="+toUserId+"&count="+50;
 		try {
 			getData(url);
@@ -280,52 +282,88 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener,XL
 //		matrix.postTranslate(offset, 0);
 //		cursor.setImageMatrix(matrix);// 设置动画初始位置
 	}
-	/**
-	 * Pager适配器
-	 */
-	public class MyPagerAdapter extends PagerAdapter {
-		List<View> list =  new ArrayList<View>();
-		public MyPagerAdapter(ArrayList<View> list) {
-			this.list = list;
-		}
 
-		@Override
-		public void destroyItem(ViewGroup container, int position,
-								Object object) {
-			ViewPager pViewPager = ((ViewPager) container);
-			pViewPager.removeView(list.get(position));
-		}
+    @Override
+    public void onItemClick(View view, int position, int id, int subid) {
+        mPosition=position;
+        int Subscibes=mLiveVideos.get(mPosition).getSubscibes();
+        TextView count= (TextView) view.findViewById(R.id.tv_schedule_concerned_count);
+        ImageView ulook= (ImageView)view.findViewById(R.id.icon_ulooked);
 
-		@Override
-		public boolean isViewFromObject(View arg0, Object arg1) {
-			return arg0 == arg1;
-		}
+        if (subid == 0) {
+            //没有预约现在预约
+            count.setText(Subscibes+1+"");
+            mLiveVideos.get(mPosition).setSubscibes(Subscibes+1);
+            count.setTextColor(Color.parseColor("#B90B0E"));
+            ulook.setImageResource(R.drawable.subscribe_middle);
+            subscribeThread threadSub=new subscribeThread();
+            threadSub.setLiveId(id+"");
+            threadSub.setSubscribeNum(subid);
+            Thread subscribeTh= new Thread(threadSub);
+            subscribeTh.start();
+        }else{
+            //已经预约，现在取消预约
+            if (Subscibes>0){
+                count.setText(Subscibes-1+"");
+                mLiveVideos.get(mPosition).setSubscibes(Subscibes-1);
+            }
+            count.setTextColor(Color.WHITE);
+            ulook.setImageResource(R.drawable.unsubscribe_middle);
+            unsubscribeThread threadunSub=new unsubscribeThread();
+            threadunSub.setLiveId(id+"");
+            threadunSub.setSubscribeNum(subid);
+            Thread unsubscribeTh= new Thread(threadunSub);
+            unsubscribeTh.start();
+        }
 
-		@Override
-		public int getCount() {
-			return list.size();
-		}
-		@Override
-		public Object instantiateItem(View arg0, int arg1) {
-			ViewPager pViewPager = ((ViewPager) arg0);
-			pViewPager.addView(list.get(arg1));
-			return list.get(arg1);
-		}
+    }
 
-		@Override
-		public void restoreState(Parcelable arg0, ClassLoader arg1) {
-
-		}
-
-		@Override
-		public Parcelable saveState() {
-			return null;
-		}
-
-		@Override
-		public void startUpdate(View arg0) {
-		}
-	}
+//    /**
+//	 * Pager适配器
+//	 */
+//	public class MyPagerAdapter extends PagerAdapter {
+//		List<View> list =  new ArrayList<View>();
+//		public MyPagerAdapter(ArrayList<View> list) {
+//			this.list = list;
+//		}
+//
+//		@Override
+//		public void destroyItem(ViewGroup container, int position,
+//								Object object) {
+//			ViewPager pViewPager = ((ViewPager) container);
+//			pViewPager.removeView(list.get(position));
+//		}
+//
+//		@Override
+//		public boolean isViewFromObject(View arg0, Object arg1) {
+//			return arg0 == arg1;
+//		}
+//
+//		@Override
+//		public int getCount() {
+//			return list.size();
+//		}
+//		@Override
+//		public Object instantiateItem(View arg0, int arg1) {
+//			ViewPager pViewPager = ((ViewPager) arg0);
+//			pViewPager.addView(list.get(arg1));
+//			return list.get(arg1);
+//		}
+//
+//		@Override
+//		public void restoreState(Parcelable arg0, ClassLoader arg1) {
+//
+//		}
+//
+//		@Override
+//		public Parcelable saveState() {
+//			return null;
+//		}
+//
+//		@Override
+//		public void startUpdate(View arg0) {
+//		}
+//	}
 
 	@Override
 	public void onRefresh() {
@@ -608,7 +646,118 @@ public class UserInfoActivity extends BaseActivity implements OnClickListener,XL
 			}
 		});
 	}
+    class subscribeThread  implements Runnable
+    {
+        private String liveId;
+        private  int subscribeNum;
 
+        public void setSubscribeNum(int subscribeNum) {
+            this.subscribeNum = subscribeNum;
+        }
+
+        public void setLiveId(String liveId) {
+            this.liveId = liveId;
+        }
+
+        @Override
+        public void run()
+        {
+            try {
+                FormEncodingBuilder	 Body = new FormEncodingBuilder();
+                Body.add("userId", userId)
+                        .add("liveId", liveId)
+                        .add("accessToken", accessToken);
+                Log.e("log", "订阅请求");
+                String url= MyAapplication.IP+"liveSubscribe";
+                subscribePost(url,Body);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+    }
+    void subscribePost(String url,FormEncodingBuilder Body) throws IOException {
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(Body.build())
+                .build();
+        OkHttpUtil.enqueue(request, new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                request.body().toString();
+                Message msg=new Message();
+                msg.what=4;
+                msg.obj=e.getMessage();
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                if (response.isSuccessful()){
+                    Message msg=new Message();
+                    msg.what=5;
+                    mHandler.sendMessage(msg);
+                }
+            }
+        });
+    }
+
+    class unsubscribeThread  implements Runnable
+    {
+        private String liveId;
+        private  int subscribeNum;
+
+        public void setSubscribeNum(int subscribeNum) {
+            this.subscribeNum = subscribeNum;
+        }
+
+        public void setLiveId(String liveId) {
+            this.liveId = liveId;
+        }
+
+        @Override
+        public void run()
+        {
+            String url= MyAapplication.IP+"liveSubscribe?"+"accessToken="+accessToken+"&userId="+userId+"&liveId="+liveId;
+            try {
+                Log.e("log", "取消订阅请求");
+                unsubscribePost(url);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+    }
+    void unsubscribePost(String url) throws IOException {
+
+
+        Request	request = new Request.Builder()
+                .url(url)
+                .delete()
+                .build();
+        OkHttpUtil.enqueue(request, new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                request.body().toString();
+                Message msg=new Message();
+                msg.what=4;
+                msg.obj=e.getMessage();
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                if (response.isSuccessful()){
+                    Message msg=new Message();
+                    msg.what=6;
+                    mHandler.sendMessage(msg);
+                }
+            }
+        });
+    }
 }
 
 

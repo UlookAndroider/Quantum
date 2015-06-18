@@ -15,7 +15,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -24,6 +23,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import tv.liangzi.quantum.R;
 import tv.liangzi.quantum.bean.PeopleDetails;
 
@@ -83,7 +83,7 @@ public class PeopleAdapter extends BaseAdapter {
 			 */
 			.bitmapConfig(Config.RGB_565)
 			.imageScaleType(ImageScaleType.IN_SAMPLE_INT)
-			.displayer(new RoundedBitmapDisplayer(20))	// 设置成圆角图片
+//			.IN_SAMPLE_INTdisplayer(new RoundedBitmapDisplayer(20))	// 设置成圆角图片
 			.build();
 		// 创建配置过得DisplayImageOption对象
 
@@ -142,7 +142,7 @@ public class PeopleAdapter extends BaseAdapter {
 			}else {
 				convertView.setBackgroundResource(R.color.gray_bg_people);
 			}
-				holder.imageView=(ImageView) convertView.findViewById(R.id.im_head);
+				holder.imageView=(CircleImageView) convertView.findViewById(R.id.im_head);
 			    holder.textView=(TextView)convertView.findViewById(R.id.tv_nikename);
 				holder.addImage=(ImageView)convertView.findViewById(R.id.im_people_add);
 			holder.textViewSign=(TextView)convertView.findViewById(R.id.tv_info);
@@ -174,7 +174,7 @@ public class PeopleAdapter extends BaseAdapter {
 		return convertView;
 	}
 	 static class ViewHolder{
-		ImageView imageView;
+		 CircleImageView imageView;
 		 TextView textView;
 		 ImageView addImage;
 		 TextView textViewSign;
