@@ -1,12 +1,20 @@
 buildscript {
-    repositories {
-        mavenCentral()
-    }
+
+repositories {
+    //从中央库里面获取依赖
+    mavenCentral()
+    //或者使用指定的本地maven 库
+
     dependencies {
         classpath 'com.android.tools.build:gradle:1.0.0'
     }
 }
-apply plugin: 'android'
+
+}
+repositories {
+    mavenCentral()
+}
+apply plugin: 'com.android.application'
 
 dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
@@ -22,6 +30,7 @@ dependencies {
     compile files('libs/GetuiSdk2.5.0.0.jar')
     compile project(':qiniulibrary')
     compile files('libs/easemobchat_2.2.0.jar')
+    compile 'me.drakeet.library:androiduiview:1.1.2'
 }
 
 android {

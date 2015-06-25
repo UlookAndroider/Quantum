@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import me.drakeet.library.UIButton;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 import tv.liangzi.quantum.R;
 import tv.liangzi.quantum.activity.TimePickerActivity;
@@ -51,7 +52,7 @@ public class StartFragment extends BaseFragment implements SurfaceHolder.Callbac
     //对话框相关
 
     private TextView schedule;
-    private TextView now;
+    private UIButton now;
 
     private RelativeLayout schduleLayout;
 	@Override
@@ -85,7 +86,7 @@ public class StartFragment extends BaseFragment implements SurfaceHolder.Callbac
 
 	private void initViews(View view) {
         schedule=(TextView) view.findViewById(R.id.tv_schedule);
-        now=(TextView)view.findViewById(R.id.tv_now);
+        now=(UIButton)view.findViewById(R.id.tv_now);
         schduleLayout= (RelativeLayout) view.findViewById(R.id.rl_send_schedule);
 		photo= (String) SharedPreferencesUtils.getParam(getActivity(),"photo","");
             initListener(view);

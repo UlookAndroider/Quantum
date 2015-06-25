@@ -26,6 +26,7 @@ MERGED from Quantum:ninjaCropLib:0.4-SNAPSHOT:7:5
 MERGED from com.android.support:support-v4:22.1.1:20:5
 MERGED from Quantum:circleimageview:0.4-SNAPSHOT:5:5
 MERGED from Quantum:qiniulibrary:0.4-SNAPSHOT:7:5
+MERGED from me.drakeet.library:androiduiview:1.1.2:7:5
 	android:targetSdkVersion
 		ADDED from AndroidManifest.xml:10:9
 	android:minSdkVersion
@@ -175,6 +176,7 @@ MERGED from Quantum:ninjaCropLib:0.4-SNAPSHOT:14:5
 MERGED from com.android.support:support-v4:22.1.1:22:5
 MERGED from Quantum:circleimageview:0.4-SNAPSHOT:9:5
 MERGED from Quantum:qiniulibrary:0.4-SNAPSHOT:14:5
+MERGED from me.drakeet.library:androiduiview:1.1.2:11:5
 	android:label
 		ADDED from AndroidManifest.xml:98:9
 	android:allowBackup

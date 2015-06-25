@@ -1,20 +1,40 @@
 package tv.liangzi.quantum.utils;
 
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.media.ThumbnailUtils;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.media.ThumbnailUtils;
-
 
 
 
 public class ImageUtil {
+
+	/**
+	 * 旋转图片，使图片保持正确的方向。
+	 * @param bitmap 原始图片
+	 * @param degrees 原始图片的角度
+	 * @return Bitmap 旋转后的图片
+	 */
+	public static Bitmap rotateBitmap(Bitmap bitmap, int degrees) {
+		if (degrees == 0 || null == bitmap) {
+			return bitmap;
+		}
+		Matrix matrix = new Matrix();
+		matrix.setRotate(degrees, bitmap.getWidth() / 2, bitmap.getHeight() / 2);
+		Bitmap bmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+		if (null != bitmap) {
+			bitmap.recycle();
+		}
+		return bmp;
+	}
 	/*
 	 * 如果图片是png的格式需要转化为jpg再去合成视频，第一步是png转为bitmap
 	 */

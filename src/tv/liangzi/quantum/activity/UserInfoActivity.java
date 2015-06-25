@@ -106,6 +106,18 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
 				case 4:
 					initdisplay(user);
 					break;
+				case 5:
+					mLiveVideos.get(mPosition).setSubscibeId(1);
+					mAdapter.setLives(mLiveVideos);
+//					Toast.makeText(getActivity(),"订阅成功",Toast.LENGTH_SHORT).show();
+//					mAdapter.notifyDataSetChanged();
+					break;
+				case 6:
+					mLiveVideos.get(mPosition).setSubscibeId(0);
+					mAdapter.setLives(mLiveVideos);
+//					Toast.makeText(getActivity(),"取消订阅成功",Toast.LENGTH_SHORT).show();
+//					mAdapter.notifyDataSetChanged();
+					break;
 				case 7:
 					Toast.makeText(UserInfoActivity.this,"直播为空",Toast.LENGTH_SHORT).show();
 //					mAdapter.notifyDataSetChanged();
@@ -252,36 +264,6 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
 		}
 		
 	}
-	/**
-	 * 初始化PageViewer
-	 */
-	private void initPagerViewer() {
-//		pager = (ViewPager) findViewById(R.id.viewpage);
-//		final ArrayList<View> list = new ArrayList<View>();
-//		Intent intent = new Intent(UserInfoActivity.this, A.class);
-//		list.add(getView("A", intent));
-//		Intent intent2 = new Intent(UserInfoActivity.this, B.class);
-//		list.add(getView("B", intent2));
-//
-//		pager.setAdapter(new MyPagerAdapter(list));
-//		pager.setCurrentItem(0);
-//		pager.setOnPageChangeListener(new MyOnPageChangeListener());
-	}
-	/**
-	 * 初始化动画
-	 */
-	private void InitImageView() {
-//		cursor = (ImageView) findViewById(R.id.cursor);
-//		bmpW = BitmapFactory.decodeResource(getResources(), R.drawable.roller)
-//				.getWidth();// 获取图片宽度
-//		DisplayMetrics dm = new DisplayMetrics();
-//		getWindowManager().getDefaultDisplay().getMetrics(dm);
-//		int screenW = dm.widthPixels;// 获取分辨率宽度
-//		offset = (screenW / 3 - bmpW) / 2;// 计算偏移量
-//		Matrix matrix = new Matrix();
-//		matrix.postTranslate(offset, 0);
-//		cursor.setImageMatrix(matrix);// 设置动画初始位置
-	}
 
     @Override
     public void onItemClick(View view, int position, int id, int subid) {
@@ -289,7 +271,6 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
         int Subscibes=mLiveVideos.get(mPosition).getSubscibes();
         TextView count= (TextView) view.findViewById(R.id.tv_schedule_concerned_count);
         ImageView ulook= (ImageView)view.findViewById(R.id.icon_ulooked);
-
         if (subid == 0) {
             //没有预约现在预约
             count.setText(Subscibes+1+"");
@@ -318,52 +299,6 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
 
     }
 
-//    /**
-//	 * Pager适配器
-//	 */
-//	public class MyPagerAdapter extends PagerAdapter {
-//		List<View> list =  new ArrayList<View>();
-//		public MyPagerAdapter(ArrayList<View> list) {
-//			this.list = list;
-//		}
-//
-//		@Override
-//		public void destroyItem(ViewGroup container, int position,
-//								Object object) {
-//			ViewPager pViewPager = ((ViewPager) container);
-//			pViewPager.removeView(list.get(position));
-//		}
-//
-//		@Override
-//		public boolean isViewFromObject(View arg0, Object arg1) {
-//			return arg0 == arg1;
-//		}
-//
-//		@Override
-//		public int getCount() {
-//			return list.size();
-//		}
-//		@Override
-//		public Object instantiateItem(View arg0, int arg1) {
-//			ViewPager pViewPager = ((ViewPager) arg0);
-//			pViewPager.addView(list.get(arg1));
-//			return list.get(arg1);
-//		}
-//
-//		@Override
-//		public void restoreState(Parcelable arg0, ClassLoader arg1) {
-//
-//		}
-//
-//		@Override
-//		public Parcelable saveState() {
-//			return null;
-//		}
-//
-//		@Override
-//		public void startUpdate(View arg0) {
-//		}
-//	}
 
 	@Override
 	public void onRefresh() {
@@ -606,7 +541,7 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
 		OkHttpUtil.enqueue(request, new Callback() {
 			@Override
 			public void onFailure(Request request, IOException e) {
-
+				Log.e("log", "添加关注请求失败="+e.getMessage().toString());
 			}
 
 			@Override
@@ -615,6 +550,7 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
 					Message msg=new Message();
 					msg.what=2;
 					mHandler.sendMessage(msg);
+					Log.e("log", "添加关注success="+response.message().toString());
 				}
 			}
 		});
@@ -634,6 +570,7 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
 			@Override
 			public void onFailure(Request request, IOException e) {
 				e.getMessage();
+				Log.e("log", "取消请求失败="+e.getMessage().toString());
 			}
 
 			@Override
@@ -642,6 +579,9 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
 					Message msg=new Message();
 					msg.what=3;
 					mHandler.sendMessage(msg);
+					Log.e("log", "取消请求success=" + response.message().toString());
+				}{
+					Log.e("log", "取消请求fail="+response.message().toString());
 				}
 			}
 		});
@@ -667,7 +607,7 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
                 Body.add("userId", userId)
                         .add("liveId", liveId)
                         .add("accessToken", accessToken);
-                Log.e("log", "订阅请求");
+                Log.e("sub", "订阅请求");
                 String url= MyAapplication.IP+"liveSubscribe";
                 subscribePost(url,Body);
             } catch (IOException e) {
@@ -691,6 +631,7 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
                 msg.what=4;
                 msg.obj=e.getMessage();
                 mHandler.sendMessage(msg);
+				Log.e("sub", "订阅请求Failure"+e.getMessage().toString());
             }
 
             @Override
@@ -699,7 +640,11 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
                     Message msg=new Message();
                     msg.what=5;
                     mHandler.sendMessage(msg);
-                }
+					Log.e("sub", "订阅请求success" + response.message().toString());
+                }else {
+					Log.e("sub", "订阅请求fail"+response.message().toString());
+				}
+
             }
         });
     }
@@ -722,7 +667,7 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
         {
             String url= MyAapplication.IP+"liveSubscribe?"+"accessToken="+accessToken+"&userId="+userId+"&liveId="+liveId;
             try {
-                Log.e("log", "取消订阅请求");
+                Log.e("sub", "取消订阅请求");
                 unsubscribePost(url);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -746,6 +691,7 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
                 msg.what=4;
                 msg.obj=e.getMessage();
                 mHandler.sendMessage(msg);
+				Log.e("sub", "取消订阅请求Failure"+e.getMessage().toString());
             }
 
             @Override
@@ -754,7 +700,12 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
                     Message msg=new Message();
                     msg.what=6;
                     mHandler.sendMessage(msg);
-                }
+					Log.e("sub", "订阅请求success"+response.message().toString());
+                }else{
+					response.message().toString();
+					Log.e("sub", "取消订阅请求Failure" + response.message().toString());
+				}
+
             }
         });
     }

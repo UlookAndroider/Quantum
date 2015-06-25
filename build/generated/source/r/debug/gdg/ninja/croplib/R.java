@@ -12,29 +12,29 @@ public final class R {
 		public static final int G_black_light_5 = 0x7f070001;
 		public static final int app_bg = 0x7f070008;
 		public static final int black = 0x7f07000e;
-		public static final int fuxk_base_divide_line_color = 0x7f07001c;
-		public static final int fuxk_settle_black_mark = 0x7f07001d;
-		public static final int gray = 0x7f07001e;
-		public static final int orange = 0x7f07002f;
-		public static final int red = 0x7f070038;
-		public static final int red_bg = 0x7f070039;
-		public static final int transparent = 0x7f070049;
-		public static final int trasparent_black = 0x7f07004a;
-		public static final int trasparent_black1 = 0x7f07004b;
-		public static final int trasparent_black2 = 0x7f07004c;
-		public static final int white = 0x7f07005c;
-		public static final int yellow = 0x7f07005d;
+		public static final int fuxk_base_divide_line_color = 0x7f07001d;
+		public static final int fuxk_settle_black_mark = 0x7f07001e;
+		public static final int gray = 0x7f07001f;
+		public static final int orange = 0x7f070030;
+		public static final int red = 0x7f070039;
+		public static final int red_bg = 0x7f07003a;
+		public static final int transparent = 0x7f07004b;
+		public static final int trasparent_black = 0x7f07004c;
+		public static final int trasparent_black1 = 0x7f07004d;
+		public static final int trasparent_black2 = 0x7f07004e;
+		public static final int white = 0x7f07005e;
+		public static final int yellow = 0x7f07005f;
 	}
 	public static final class drawable {
 		public static final int ic_launcher = 0x7f020076;
 	}
 	public static final class id {
-		public static final int btn_cancle = 0x7f080057;
-		public static final int btn_create = 0x7f080056;
-		public static final int btn_left_navi = 0x7f080054;
-		public static final int btn_right_navi = 0x7f080055;
-		public static final int img_quest_hint = 0x7f080052;
-		public static final int layout = 0x7f080053;
+		public static final int btn_cancle = 0x7f080059;
+		public static final int btn_create = 0x7f080058;
+		public static final int btn_left_navi = 0x7f080056;
+		public static final int btn_right_navi = 0x7f080057;
+		public static final int img_quest_hint = 0x7f080054;
+		public static final int layout = 0x7f080055;
 	}
 	public static final class layout {
 		public static final int ac_crop_image = 0x7f030019;

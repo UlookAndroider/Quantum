@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:drakeet="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -80,21 +81,29 @@
             android:orientation="vertical"
             >
 
-            <TextView
+            <!--<TextView-->
+                <!--android:id="@+id/tv_now"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="54dp"-->
+                <!--android:gravity="center"-->
+                <!--android:layout_marginRight="15dp"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:background="@drawable/go_living"-->
+                <!--/>-->
+            <me.drakeet.library.UIButton
                 android:id="@+id/tv_now"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="54dp"
-                android:gravity="center"
-                android:layout_marginRight="15dp"
-                android:layout_marginLeft="15dp"
-                android:background="@drawable/go_living"
-                />
+                android:layout_margin="16dp"
+                drakeet:alpha_pressed="80"
+                drakeet:color_pressed="@color/G_black_light_5"
+                android:background="@drawable/go_living"/>
             <TextView
                 android:layout_width="50dp"
                 android:layout_height="15dp"
                 android:visibility="invisible"
                 />
-            <TextView
+            <me.drakeet.library.UIButton
                 android:id="@+id/tv_schedule"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"

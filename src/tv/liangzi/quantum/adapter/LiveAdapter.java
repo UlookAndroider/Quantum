@@ -201,7 +201,7 @@ public int getItemViewType(int position) {
 				convertView=livingView;
 			}else{
 				scheduleHolder= (ScheduleHolder) convertView.getTag();
-//				scheduleHolder.ulooked.setImageDrawable(null);
+				scheduleHolder.ulooked.setImageDrawable(null);
 			}
 			if (mList.get(position).getSubscibeId()==0){
 				scheduleHolder.concernedCount2.setTextColor(Color.WHITE);

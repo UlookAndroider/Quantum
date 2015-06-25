@@ -18,7 +18,9 @@ import tv.liangzi.quantum.utils.LogUtils;
 public class MyAapplication extends Application {
     public  String EMuserId;
     public  String clientId;//个推clientid
-    public static final String IP="http://192.168.1.109:8080/LiangZiServer/";
+    public  String ip="http://101.200.173.120:8080/LiangZiServer/ http://192.168.1.109:8080/LiangZiServer/";
+    public static final String IP="http://101.200.173.120:8080/LiangZiServer/";
+//    public static final String IP="http://192.168.1.108:8080/LiangZiServer/";
     public static final String HEAD_PATH= Environment.getExternalStorageDirectory()+ File.separator+"Ulooktemp";
     @Override
 public void onCreate() {

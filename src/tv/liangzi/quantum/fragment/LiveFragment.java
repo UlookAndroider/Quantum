@@ -13,6 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +51,7 @@ import tv.liangzi.quantum.config.MyAapplication;
 import tv.liangzi.quantum.fragment.AnimFragment.OnFragmentDismissListener;
 import tv.liangzi.quantum.utils.OkHttpUtil;
 import tv.liangzi.quantum.utils.SharedPreferencesUtils;
+import tv.liangzi.quantum.view.Rotate3dAnimation;
 import zrc.widget.SimpleFooter;
 import zrc.widget.SimpleHeader;
 import zrc.widget.ZrcListView;
@@ -68,11 +72,17 @@ public class LiveFragment extends BaseFragment implements
 	private Live liveTitle=new Live();
 	private Live liveTitle1=new Live();
     private int mPosition;
+	private View viewContainer;
+	private ImageView ulook;
 
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
 	DisplayImageOptions options;		// DisplayImageOptions是用于设置图片显示的类
 	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
-
+	// 资源id
+	private static final int[] PIC_RESOURCES = new int[] {
+			R.drawable.unsubscribe_middle,
+			R.drawable.subscribe_middle,
+	};
 
 	private String freshen="";
 	private int  lastId;
@@ -235,8 +245,8 @@ public class LiveFragment extends BaseFragment implements
 
 		// 设置下拉刷新的样式
 		SimpleHeader header = new SimpleHeader(getActivity());
-		header.setTextColor(getResources().getColor(R.color.red_bg));
 		header.setCircleColor(getResources().getColor(R.color.red_bg));
+		header.setIsClipCanvas(false);
 		mListView.setHeadable(header);
 
 // 设置加载更多的样式
@@ -339,16 +349,23 @@ public class LiveFragment extends BaseFragment implements
 	@Override
 	public void onItemClick(View view, int position, int id, int subid) {
 		mPosition=position;
+		viewContainer=view;
 		int Subscibes=mReaddVideos.get(mPosition).getSubscibes();
 		TextView count= (TextView) view.findViewById(R.id.tv_schedule_concerned_count);
-		ImageView ulook= (ImageView)view.findViewById(R.id.icon_ulooked);
+		 ulook= (ImageView)view.findViewById(R.id.icon_ulooked);
+		// 准备ImageView
+//		ulook.setClickable(true);
+//		ulook.setFocusable(true);
+//		ulook.setOnClickListener(this);
 
 		if (subid == 0) {
+
 			//没有预约现在预约
 			count.setText(Subscibes+1+"");
 			mReaddVideos.get(mPosition).setSubscibes(Subscibes+1);
 			count.setTextColor(Color.parseColor("#B90B0E"));
-			ulook.setImageResource(R.drawable.subscribe_middle);
+
+			applyRotation(0, 0, -720,ulook);
 			subscribeThread threadSub=new subscribeThread();
 			threadSub.setLiveId(id+"");
 			threadSub.setSubscribeNum(subid);
@@ -361,7 +378,8 @@ public class LiveFragment extends BaseFragment implements
 				mReaddVideos.get(mPosition).setSubscibes(Subscibes-1);
 			}
 			count.setTextColor(Color.WHITE);
-			ulook.setImageResource(R.drawable.unsubscribe_middle);
+//			ulook.setImageResource(R.drawable.unsubscribe_middle);
+			applyRotation(1, 0, -720,ulook);
 			unsubscribeThread threadunSub=new unsubscribeThread();
 			threadunSub.setLiveId(id+"");
 			threadunSub.setSubscribeNum(subid);
@@ -371,6 +389,89 @@ public class LiveFragment extends BaseFragment implements
 
 
 
+	}
+	/**
+	 * 使用Rotate3d实现翻转
+	 * @param position 1-6对应picture1-6；-1对应list
+	 * @param start 翻转起始角度
+	 * @param end 翻转终止角度
+	 */
+	private void applyRotation(int position, float start, float end,ImageView imageView) {
+		// 计算中心点
+		final float centerX = viewContainer.getWidth() / 2.0f;
+		final float centerY = viewContainer.getHeight() / 2.0f;
+		final Rotate3dAnimation rotation =
+				new Rotate3dAnimation(start, end, centerX, centerY, 310.0f, true);
+		rotation.setDuration(200);
+		rotation.setFillAfter(true);
+		rotation.setInterpolator(new AccelerateInterpolator());
+		//设置监听
+		rotation.setAnimationListener(new DisplayNextView(position,imageView));
+
+		viewContainer.startAnimation(rotation);
+	}
+	/**
+	 * 用于监听前90度翻转完成
+	 */
+	private final class DisplayNextView implements Animation.AnimationListener {
+		private final int mPosition;
+		private  ImageView mImageview;
+
+		private DisplayNextView(int position,ImageView imageView) {
+			mPosition = position;
+			mImageview=imageView;
+		}
+
+		public void onAnimationStart(Animation animation) {
+		}
+		//动画结束
+		public void onAnimationEnd(Animation animation) {
+			viewContainer.post(new SwapViews(mPosition,mImageview));
+		}
+
+		public void onAnimationRepeat(Animation animation) {
+		}
+	}
+
+	/**
+	 * 用于翻转剩下的90度
+	 */
+	private final class SwapViews implements Runnable {
+		private final int mPosition;
+		private ImageView mImageView;
+		public SwapViews(int position,ImageView imageView) {
+			mPosition = position;
+			mImageView=imageView;
+		}
+
+		public void run() {
+			final float centerX = viewContainer.getWidth() / 2.0f;
+			final float centerY = viewContainer.getHeight() / 2.0f;
+			Rotate3dAnimation rotation;
+
+			if (mPosition ==1) {
+				//显示ImageView
+//				mImageView.requestFocus();
+				rotation = new Rotate3dAnimation(-720, -1440, centerX, centerY, 310.0f, false);
+				mImageView.setImageResource(R.drawable.unsubscribe_middle);
+			} else{
+				rotation = new Rotate3dAnimation(-720, -1440, centerX, centerY, 310.0f, false);
+				mImageView.setImageResource(R.drawable.subscribe_middle);
+			}
+
+			//显示ImageView
+//			mPhotosList.setVisibility(View.GONE);
+//			ulook.setVisibility(View.VISIBLE);
+//			ulook.requestFocus();
+//
+//			rotation = new Rotate3dAnimation(90, 180, centerX, centerY, 310.0f, false);
+
+			rotation.setDuration(200);
+			rotation.setFillAfter(true);
+			rotation.setInterpolator(new DecelerateInterpolator());//动画播放速度
+			//开始动画
+			viewContainer.startAnimation(rotation);
+		}
 	}
 	/**
 	 * ���ز�߶���fragment
