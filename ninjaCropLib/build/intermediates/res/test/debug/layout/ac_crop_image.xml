@@ -2,19 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/red_bg"
 android:orientation="vertical"
     >
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_weight="1.2"
-        android:layout_height="0dp" />
     <gdg.ninja.croplib.utils.CropView
         android:id="@+id/img_quest_hint"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"
+        android:layout_weight="9"
         android:scaleType="centerCrop"
-        android:background="@color/white"
+        android:background="@color/black"
          />
 
     <LinearLayout
@@ -28,25 +25,11 @@ android:orientation="vertical"
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:gravity="center"
             android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/btn_left_navi"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:visibility="gone"
-                android:text="@string/btn_rotate_left" />
 
-            <Button
-                android:visibility="gone"
-                android:id="@+id/btn_right_navi"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/btn_rotate_right" />
             <TextView
                 android:id="@+id/btn_create"
                 android:layout_width="wrap_content"

@@ -4,12 +4,40 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public  class Live implements Parcelable{
-	private String responseCode;
-	private String responseMsg;
+
 	public Live(){
 
 	}
-	public Live(Parcel in) {
+
+	private String responseCode;
+	private String responseMsg;
+	private int liveId;
+	private int userId;
+	private String nickName;
+	private String photo;
+	private String title;
+	private String describe;
+	private String img;
+	private String rtmpPublishUrl;
+	private String hlsPublishUrl;
+	private String rtmpPlayUrl;
+	private String hlsPlayUrl;
+	private String groupid;
+	private String shareUrl;
+	private int scope;
+	private int subscibeId;
+	private int subscibes;
+	private int shares;
+	private int likes;
+	private int audiences;
+	private int state;
+	private long reserved;
+	private long begin;
+	private String chatroomId;
+	private Stream stream;
+
+
+	protected Live(Parcel in) {
 		responseCode = in.readString();
 		responseMsg = in.readString();
 		liveId = in.readInt();
@@ -35,6 +63,7 @@ public  class Live implements Parcelable{
 		reserved = in.readLong();
 		begin = in.readLong();
 		chatroomId = in.readString();
+		stream = in.readParcelable(Stream.class.getClassLoader());
 	}
 
 	public static final Creator<Live> CREATOR = new Creator<Live>() {
@@ -65,36 +94,6 @@ public  class Live implements Parcelable{
 		this.responseMsg = responseMsg;
 	}
 
-	private int liveId;
-	private int userId;
-	private String nickName;
-	private String photo;
-	private String title;
-	private String describe;
-	private String img;
-	private String rtmpPublishUrl;
-	private String hlsPublishUrl;
-	private String rtmpPlayUrl;
-	private String hlsPlayUrl;
-	private String groupid;
-	private String shareUrl;
-	private int scope;
-	private int subscibeId;
-	private int subscibes;
-	private int shares;
-	private int likes;
-	private int audiences;
-	private int state;
-	private long reserved;
-	private long begin;
-	private String chatroomId;
-
-	public String getChatroomId() {
-		return chatroomId;
-	}
-	public void setChatroomId(String chatroomId) {
-		this.chatroomId = chatroomId;
-	}
 	public int getLiveId() {
 		return liveId;
 	}
@@ -246,6 +245,7 @@ public  class Live implements Parcelable{
 	public void setAudiences(int audiences) {
 		this.audiences = audiences;
 	}
+
 	public int getState() {
 		return state;
 	}
@@ -270,6 +270,21 @@ public  class Live implements Parcelable{
 		this.begin = begin;
 	}
 
+	public String getChatroomId() {
+		return chatroomId;
+	}
+
+	public void setChatroomId(String chatroomId) {
+		this.chatroomId = chatroomId;
+	}
+
+	public Stream getStream() {
+		return stream;
+	}
+
+	public void setStream(Stream stream) {
+		this.stream = stream;
+	}
 
 	@Override
 	public int describeContents() {
@@ -303,5 +318,6 @@ public  class Live implements Parcelable{
 		parcel.writeLong(reserved);
 		parcel.writeLong(begin);
 		parcel.writeString(chatroomId);
+		parcel.writeParcelable(stream, i);
 	}
 }

@@ -99,14 +99,14 @@ public class PeopleFragment extends BaseFragment implements OnClickListener,Peop
 					mlist.get(mPosition).setIsFollow(true);
 					adapter.setUser(mlist);
 //					peopleAdapter.notifyDataSetChanged();
-					imageView.setImageResource(R.drawable.ic_concerned);
+					imageView.setImageResource(R.drawable.delete);
 					Toast.makeText(getActivity(), "关注成功", Toast.LENGTH_SHORT).show();
 					break;
 				case 3:
 					mlist.get(mPosition).setIsFollow(false);
 					adapter.setUser(mlist);
 //					peopleAdapter.notifyDataSetChanged();
-					imageView.setImageResource(R.drawable.ic_concerned_no);
+					imageView.setImageResource(R.drawable.add);
 					Toast.makeText(getActivity(),"取消关注成功",Toast.LENGTH_SHORT).show();
 					break;
 				default:
@@ -149,9 +149,9 @@ public class PeopleFragment extends BaseFragment implements OnClickListener,Peop
 	private void initViews(View view) {
 		initImageLoaderOptions();
 //		peoplerSp=getActivity().getSharedPreferences("userInfo", getActivity().MODE_PRIVATE);
-		userId= (String) SharedPreferencesUtils.getParam(getActivity(), "userId", "");
-		String photo= (String) SharedPreferencesUtils.getParam(getActivity(),"photo","");
-		accessToken= (String) SharedPreferencesUtils.getParam(getActivity(),"accessToken","");
+		userId= (String) SharedPreferencesUtils.getParam(getActivity(), "userInfo","userId", "");
+		String photo= (String) SharedPreferencesUtils.getParam(getActivity(),"userInfo","photo","");
+		accessToken= (String) SharedPreferencesUtils.getParam(getActivity(),"userInfo","accessToken","");
 		ImageView imHead=(ImageView) view.findViewById(R.id.im_title_head);
 		imageLoader.displayImage(photo, imHead, options, animateFirstListener);
 		imHead.setOnClickListener(new OnClickListener() {
@@ -412,9 +412,9 @@ public class PeopleFragment extends BaseFragment implements OnClickListener,Peop
 		// 使用DisplayImageOptions.Builder()创建DisplayImageOptions
 		options = new DisplayImageOptions.Builder()
 //			.showStubImage(R.drawable.index_iv02)			// 设置图片下载期间显示的图片
-				.showImageOnLoading(R.drawable.ic_loading)
-				.showImageForEmptyUri(R.drawable.default_head)	// 设置图片Uri为空或是错误的时候显示的图片
-				.showImageOnFail(R.drawable.a)		// 设置图片加载或解码过程中发生错误显示的图片
+				.showImageOnLoading(R.drawable.default_pic)
+				.showImageForEmptyUri(R.drawable.default_pic)	// 设置图片Uri为空或是错误的时候显示的图片
+				.showImageOnFail(R.drawable.default_pic)		// 设置图片加载或解码过程中发生错误显示的图片
 				.cacheInMemory(true)						// 设置下载的图片是否缓存在内存中
 				.cacheOnDisc(true)							// 设置下载的图片是否缓存在SD卡中
 				.considerExifParams(true)

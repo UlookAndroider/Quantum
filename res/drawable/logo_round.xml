@@ -1,90 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
-    android:oneshot="false">
+    android:oneshot="true">
     <item
-        android:drawable="@drawable/logo_1"
+        android:drawable="@drawable/start_00000"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_2"
+        android:drawable="@drawable/start_00001"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_3"
+        android:drawable="@drawable/start_00002"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_4"
+        android:drawable="@drawable/start_00003"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_5"
+        android:drawable="@drawable/start_00004"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_6"
+        android:drawable="@drawable/start_00005"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_7"
+        android:drawable="@drawable/start_00006"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_8"
+        android:drawable="@drawable/start_00007"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_9"
+        android:drawable="@drawable/start_00008"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_10"
+        android:drawable="@drawable/start_00009"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_11"
+        android:drawable="@drawable/start_00010"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_12"
+        android:drawable="@drawable/start_00011"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_13"
+        android:drawable="@drawable/start_00012"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_14"
+        android:drawable="@drawable/start_00013"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_15"
+        android:drawable="@drawable/start_00014"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_16"
+        android:drawable="@drawable/start_00015"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_17"
+        android:drawable="@drawable/start_00016"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_18"
+        android:drawable="@drawable/start_00017"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_19"
+        android:drawable="@drawable/start_00018"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_20"
+        android:drawable="@drawable/start_00019"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_21"
+        android:drawable="@drawable/start_00020"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_23"
+        android:drawable="@drawable/start_00021"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_24"
+        android:drawable="@drawable/start_00022"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_25"
+        android:drawable="@drawable/start_00023"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_26"
+        android:drawable="@drawable/start_00024"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_27"
+        android:drawable="@drawable/start_00025"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_28"
+        android:drawable="@drawable/start_00026"
         android:duration="100" />
     <item
-        android:drawable="@drawable/logo_29"
+        android:drawable="@drawable/start_00027"
         android:duration="100" />
+    <item
+        android:drawable="@drawable/start_00028"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/start_00029"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/start_00030"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/start_00031"
+        android:duration="100" />
+
 
 
 </animation-list>

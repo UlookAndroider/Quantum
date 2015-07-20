@@ -18,6 +18,7 @@
             android:textColor="@color/white"
             android:textSize="22sp"
             />
+
     </LinearLayout>
 
     <ImageView
@@ -36,22 +37,20 @@
     android:orientation="horizontal">
     <TextView
         android:layout_width="0dp"
-        android:layout_weight="8"
-        android:textSize="20sp"
+        android:layout_weight="10"
+        android:textSize="16sp"
         android:textColor="@color/black"
-        android:textStyle="bold"
         android:layout_marginLeft="10dp"
         android:layout_height="wrap_content"
-        android:text="一键清除缓存"
+        android:text="实时获取直播信息"
         />
-    <TextView
+
+    <tv.liangzi.quantum.view.SwitchButton
+        android:id="@+id/wiperSwitch1"
         android:layout_width="0dp"
         android:layout_weight="2"
-        android:gravity="center"
         android:layout_height="wrap_content"
-        android:textSize="35sp"
-        android:text=">"
-        />
+     />
 
 </LinearLayout>
     <ImageView
@@ -60,7 +59,37 @@
         android:background="@color/gray_divider"
         />
     <LinearLayout
+        android:id="@+id/ll_clear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="8"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content"
+            android:text="清除缓存"
+            />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:src="@drawable/setting_btn"
+            android:layout_height="20dp"
+            />
 
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_divider"
+        />
+    <LinearLayout
+android:id="@+id/ll_rule"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,19 +101,16 @@
             android:layout_width="0dp"
             android:layout_weight="8"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textColor="@color/black"
-            android:textStyle="bold"
             android:layout_marginLeft="10dp"
             android:text="用户协议"
             />
-        <TextView
+        <ImageView
             android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text=">"
-            android:textSize="35sp"
+            android:layout_weight="0.5"
+            android:src="@drawable/setting_btn"
+            android:layout_height="20dp"
             />
 
     </LinearLayout>
@@ -102,21 +128,19 @@
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="8"
+            android:layout_weight="6"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textColor="@color/black"
-            android:textStyle="bold"
             android:text="版本信息"
             android:layout_marginLeft="10dp"
             />
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text=">"
-            android:textSize="35sp"
+            android:layout_weight="1"
+            android:text="1.0.0"
+            android:textColor="@color/black"
+            android:layout_height="20dp"
             />
 
     </LinearLayout>
@@ -126,6 +150,7 @@
         android:background="@color/gray_divider"
         />
     <LinearLayout
+        android:id="@+id/ll_about"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -136,20 +161,17 @@
             android:layout_width="0dp"
             android:layout_weight="8"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textColor="@color/black"
-            android:textStyle="bold"
             android:text="关于我们"
             android:layout_marginLeft="10dp"
             />
 
-        <TextView
+        <ImageView
             android:layout_width="0dp"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:layout_height="wrap_content"
-            android:text=">"
-            android:textSize="35sp"
+            android:layout_weight="0.5"
+            android:src="@drawable/setting_btn"
+            android:layout_height="20dp"
             />
 
     </LinearLayout>
@@ -171,20 +193,16 @@
             android:layout_weight="8"
             android:layout_height="wrap_content"
             android:text="求好评"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textColor="@color/black"
-            android:textStyle="bold"
             android:layout_marginLeft="10dp"
             />
-        <TextView
+        <ImageView
             android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="35sp"
-            android:text=">"
+            android:layout_weight="0.5"
+            android:src="@drawable/setting_btn"
+            android:layout_height="20dp"
             />
-
     </LinearLayout>
     <ImageView
         android:layout_width="match_parent"
@@ -192,6 +210,7 @@
         android:background="@color/gray_divider"
         />
     <LinearLayout
+        android:id="@+id/ll_share"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
@@ -203,18 +222,15 @@
             android:layout_weight="8"
             android:layout_height="wrap_content"
             android:text="分享给好友"
+            android:textSize="16sp"
             android:layout_marginLeft="10dp"
-            android:textSize="20sp"
             android:textColor="@color/black"
-            android:textStyle="bold"
             />
-        <TextView
+        <ImageView
             android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text=">"
-            android:textSize="35sp"
+            android:layout_weight="0.5"
+            android:src="@drawable/setting_btn"
+            android:layout_height="20dp"
             />
 
     </LinearLayout>

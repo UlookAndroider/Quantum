@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-   android:background="@drawable/titlebar"
-    style="@style/title_bar_style" >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/titlebar"
+    style="@style/title_bar_style">
 
     <ImageView
         android:id="@+id/back_img"
@@ -21,12 +22,14 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/im_title_head"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:padding="2dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:border_width="1dp"
+        app:border_color="@color/fuxk_base_divide_line_color"
         android:layout_marginRight="10dp"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="4dp"
         android:src="@drawable/headtest"
         />
 

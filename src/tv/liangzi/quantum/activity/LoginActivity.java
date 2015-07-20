@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.easemob.EMCallBack;
@@ -79,7 +78,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                     break;
 
                 case MESSAGE_FAILED:
-                	Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
+					String message= (String) msg.obj;
+                	Toast.makeText(LoginActivity.this, "登录失败"+message, Toast.LENGTH_SHORT).show();
                     break;
                 case 3:
                 	String str=(String) msg.obj;
@@ -104,18 +104,28 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	}
 
-    @Override
-    public void initViews() {
-		String userId= (String) SharedPreferencesUtils.getParam(LoginActivity.this, "userId", "");
+	@Override
+	protected void onStart() {
+		super.onStart();
+	}
 
+	@Override
+    public void initViews() {
+		String userId= (String) SharedPreferencesUtils.getParam(LoginActivity.this,"userInfo" ,"userId", "");
     	//数据本地化处理，暂时保存早sp下
 		UserSP=this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-		LinearLayout loginBtnLayout= (LinearLayout) findViewById(R.id.layout_login_btn);
-		if (userId!=null&&!userId.equals("")){
-			loginBtnLayout.setVisibility(View.GONE);
-				startActivity(new Intent(this,MainActivity.class));
-			finish();
-		}
+
+		Intent intent=getIntent();
+		boolean logined=intent.getBooleanExtra("huanxin",false);
+//		if (!logined){
+//			if (userId!=null&&!userId.equals("")){
+//				String EmAccount=MD5Util.stringToMD5(userId);
+//				Log.e("huanxin", "有用户名"+EmAccount);
+//				EMlogin(EmAccount, EmAccount);
+//				Log.e("huanxin", EmAccount);
+//
+//			}
+//		}
       ImageButton singBtn=(ImageButton) findViewById(R.id.login_weixin);
 		ImageButton tv_weibo=(ImageButton) findViewById(R.id.tv_weibo);
       tv_weibo.setOnClickListener(this);
@@ -143,33 +153,42 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					String photo = null;
 					String nickName=null;
 					String	account=null;
+
 					for (String key : keys) {
 						if (key.equals("uid")) {
 								account= String.valueOf(info.get(key));
 							formBody.add(httpKey.USER_ACCOUNT, account);
+							SharedPreferencesUtils.setParam(LoginActivity.this,"LoginInfo",httpKey.USER_ACCOUNT,account);
 						} else if (key.equals("access_token")) {
 							String token = (String) info.get(key);
 							formBody.add(httpKey.USER_PASSWORD, token);
-							mapJson.put(httpKey.USER_PASSWORD, token);
+							SharedPreferencesUtils.setParam(LoginActivity.this,"LoginInfo",httpKey.USER_PASSWORD,token);
 						} else if (key.equals("screen_name")) {
 							nickName= (String) info.get(key);
 							formBody.add(httpKey.USER_SINA_NICKNAME, nickName);
+							SharedPreferencesUtils.setParam(LoginActivity.this,"LoginInfo",httpKey.USER_SINA_NICKNAME,nickName);
 						}
 						else if (key.equals("profile_image_url")) {
 							 photo = (String) info.get(key);
 							formBody.add(httpKey.USER_PHOTO, photo);
+							SharedPreferencesUtils.setParam(LoginActivity.this,"LoginInfo",httpKey.USER_PHOTO,photo);
 						}else if (key.equals("description")) {
 							String value = (String) info.get(key);
+							SharedPreferencesUtils.setParam(LoginActivity.this,"LoginInfo",httpKey.USER_SIGN,value);
 							formBody.add(httpKey.USER_SIGN, value);
 						}else if (key.equals("location")) {
 							String value = (String) info.get(key);
 							formBody.add(httpKey.KEY_ADDR, value);
+							SharedPreferencesUtils.setParam(LoginActivity.this,"LoginInfo",httpKey.KEY_ADDR,value);
 						}
 //    	             
 					}
 					formBody.add(httpKey.KEY_TYPE, 1 + "");
+					SharedPreferencesUtils.setParam(LoginActivity.this,"LoginInfo",httpKey.KEY_TYPE,"1");
 					formBody.add(httpKey.KEY_CLIENT_TYPE, 3 + "");
-					formBody.add("gtClientId", PushReceiver.clientid.toString());
+					SharedPreferencesUtils.setParam(LoginActivity.this,"LoginInfo",httpKey.KEY_CLIENT_TYPE,"3");
+					formBody.add(httpKey.USER_GT_CLIENTID, PushReceiver.clientid.toString());
+					SharedPreferencesUtils.setParam(LoginActivity.this,"LoginInfo",httpKey.USER_GT_CLIENTID,PushReceiver.clientid.toString());
 					Log.e("gtClientId", "gtClientId="+PushReceiver.clientid.toString());
 					try {
 						post(MyAapplication.IP + "session", formBody);
@@ -177,9 +196,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					String EmAccount=MD5Util.stringToMD5(account);
-					EMlogin(EmAccount, EmAccount);
-					Log.e("TestData", sb.toString());
+//					String EmAccount=MD5Util.stringToMD5(account);
+//					Log.e("huanxin", "微博微信="+EmAccount);
+//					EMlogin(EmAccount, EmAccount);
+
 				} else {
 					Log.e("TestData", "发生错误：" + status);
 				}
@@ -249,15 +269,19 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					if (key.equals("openid")) {
 						account = String.valueOf(info.getString(key));
 						EncodingBody.add(httpKey.USER_ACCOUNT, account);
+						SharedPreferencesUtils.setParam(LoginActivity.this,"LoginInfo",httpKey.USER_ACCOUNT,account);
 					} else if (key.equals("access_token")) {
 						token = (String) info.getString(key);
 						EncodingBody.add(httpKey.USER_PASSWORD, token);
+						SharedPreferencesUtils.setParam(LoginActivity.this,"LoginInfo",httpKey.USER_PASSWORD,token);
 					} else if (key.equals("nickname")) {
 						 nickName = (String) info.getString(key);
 						EncodingBody.add(httpKey.USER_WECHAT_NICKNAME, nickName);
+						SharedPreferencesUtils.setParam(LoginActivity.this,"LoginInfo",httpKey.USER_WECHAT_NICKNAME,nickName);
 					}else if (key.equals("headimgurl")) {
 						photo = (String) info.get(key);
 						EncodingBody.add(httpKey.USER_PHOTO, photo);
+						SharedPreferencesUtils.setParam(LoginActivity.this,"LoginInfo",httpKey.USER_PHOTO,photo);
 					}else if (key.equals("country")) {
 						addr = (String) info.get(key);
 					}else if (key.equals("province")) {
@@ -265,12 +289,16 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					}else if (key.equals("city")) {
 						addr = addr+"."+(String) info.get(key);
 						EncodingBody.add(httpKey.KEY_ADDR, addr);
+						SharedPreferencesUtils.setParam(LoginActivity.this,"LoginInfo",httpKey.KEY_ADDR,addr);
 					}
 
 				}
 				EncodingBody.add(httpKey.KEY_TYPE, 2 + "");
 				EncodingBody.add(httpKey.KEY_CLIENT_TYPE, 3 + "");
-				EncodingBody.add("gtClientId", PushReceiver.clientid.toString());
+				EncodingBody.add(httpKey.USER_GT_CLIENTID, PushReceiver.clientid.toString());
+				SharedPreferencesUtils.setParam(LoginActivity.this,"LoginInfo",httpKey.KEY_TYPE,"2");
+				SharedPreferencesUtils.setParam(LoginActivity.this,"LoginInfo",httpKey.KEY_CLIENT_TYPE,"3");
+				SharedPreferencesUtils.setParam(LoginActivity.this,"LoginInfo",httpKey.USER_GT_CLIENTID, PushReceiver.clientid.toString());
 				//请求服务器接口
 				Toast.makeText(LoginActivity.this, "http://192.168.1.144:8080/LiangZiServer/sessio...", Toast.LENGTH_SHORT).show();
 				try {
@@ -312,6 +340,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     }
 
 	public void EMlogin(final String userName,String password){
+		Log.e("huanxin", "EMlogin="+userName+"---pass="+password);
 		EMChatManager.getInstance().login(userName,password,new EMCallBack() {//回调
 			@Override
 			public void onSuccess() {
@@ -320,7 +349,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 //						EMGroupManager.getInstance().loadAllGroups();
 						EMChatManager.getInstance().loadAllConversations();
 						app.setEMuserId(userName);
-						Log.d("main", "登陆聊天服务器成功！");
+						startActivity(new Intent(LoginActivity.this,MainActivity.class));
+						finish();
+						Log.e("huanxin", "登陆聊天服务器成功！");
 					}
 				});
 			}
@@ -332,7 +363,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void onError(int code, String message) {
-				Log.d("main", "登陆聊天服务器失败！");
+				Log.e("huanxin", "登陆聊天服务器失败！="+message);
 			}
 		});
 	}
@@ -369,31 +400,43 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			
 			@Override
 			public void onResponse(Response response) throws IOException {
+				PeopleDetails user = null;
+				if (response.isSuccessful()){
+					 user = gson.fromJson(response.body().charStream(), PeopleDetails.class);
+					if (user.getResponseCode().equals("201") ){
+						String EmAccount=MD5Util.stringToMD5(user.getUserId() + "");
+						EMlogin(EmAccount, EmAccount);
+						mHandler.sendEmptyMessage(MESSAGE_SUCCEED);
+						Editor editor = UserSP.edit();//获取编辑器
+						editor.putString("nickName", user.getNickName());
+						editor.putString("sinaNickName", user.getSinaNickName());
+						editor.putString("wechatNickName", user.getWechatNickName());
+						editor.putString("especialUploadToken", user.getEspecialUploadToken());
+						editor.putString("photo", user.getPhoto());
+						editor.putString("commonUploadToken", user.getCommonUploadToken());
+						editor.putString("accessToken", user.getAccessToken());
+						editor.putString("userId", user.getUserId() + "");
+						editor.putInt("liveLikes",user.getLiveLikes());
+						editor.putString("addr", user.getAddr());
+						editor.putString("focusNum", user.getFocusNum() + "");
+						editor.putString("fansNum", user.getFansNum() + "");
+						editor.putString("sign", user.getSign());
+						editor.putString("lng", user.getLng() + "");
+						editor.putString("lat", user.getLat() + "");
+						editor.commit();//提交修改
+					}else {
+						Message msg=new Message();
+						msg.what=1;
+						msg.obj=user.getResponseCode();
+						mHandler.sendMessage(msg);
 
-				PeopleDetails user = gson.fromJson(response.body().charStream(), PeopleDetails.class);
-			if (user.getResponseCode().equals("201") ){
-				String EmAccount=MD5Util.stringToMD5(user.getUserId() + "");
-				EMlogin(EmAccount, EmAccount);
-				mHandler.sendEmptyMessage(MESSAGE_SUCCEED);
-				Editor editor = UserSP.edit();//获取编辑器
-				editor.putString("nickName", user.getNickName());
-				editor.putString("sinaNickName", user.getSinaNickName());
-				editor.putString("wechatNickName", user.getWechatNickName());
-				editor.putString("especialUploadToken", user.getEspecialUploadToken());
-				editor.putString("photo", user.getPhoto());
-				editor.putString("commonUploadToken", user.getCommonUploadToken());
-				editor.putString("accessToken", user.getAccessToken());
-				editor.putString("userId", user.getUserId() + "");
-				editor.putString("addr", user.getAddr());
-				editor.putString("focusNum", user.getFocusNum() + "");
-				editor.putString("fansNum", user.getFansNum() + "");
-				editor.putString("sign", user.getSign());
-				editor.putString("lng", user.getLng() + "");
-				editor.putString("lat", user.getLat() + "");
-				editor.commit();//提交修改
-			}else {
-				mHandler.sendEmptyMessage(MESSAGE_FAILED);
-			}
+					}
+				}else{
+					String code=user.getResponseCode();
+					Log.e("login",code);
+				}
+
+
 
 
 			}

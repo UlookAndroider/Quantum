@@ -95,7 +95,7 @@
             <!--android:layout_centerVertical="true"-->
             <!--android:textColor="@color/white"-->
             <!--android:layout_alignParentRight="true"-->
-                <!--android:background="@color/red"-->
+                <!--android:background="@color/blue"-->
             <!--/>-->
             <!--<TextView-->
                 <!--android:layout_width="wrap_content"-->

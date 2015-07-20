@@ -9,12 +9,14 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/HeaderListViewLib" />
             <option value="$PROJECT_DIR$/PlDemo" />
             <option value="$PROJECT_DIR$/circleimageview" />
             <option value="$PROJECT_DIR$/cropper" />
             <option value="$PROJECT_DIR$/multi-image-selector" />
             <option value="$PROJECT_DIR$/ninjaCropLib" />
             <option value="$PROJECT_DIR$/qiniulibrary" />
+            <option value="$PROJECT_DIR$/switch_lib" />
             <option value="$PROJECT_DIR$/zrcListView" />
           </set>
         </option>

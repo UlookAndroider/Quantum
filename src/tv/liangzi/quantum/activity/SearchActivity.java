@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -66,7 +65,7 @@ public class SearchActivity extends BaseActivity implements OnClickListener, Tex
 					mlist.get(mPosition).setIsFollow(true);
 					peopleAdapter.setUser(mlist);
 //					peopleAdapter.notifyDataSetChanged();
-					imageView.setImageResource(R.drawable.ic_concerned);
+					imageView.setImageResource(R.drawable.delete);
 					Toast.makeText(SearchActivity.this, "关注成功", Toast.LENGTH_SHORT).show();
 					break;
 				case 3:

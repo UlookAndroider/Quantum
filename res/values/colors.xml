@@ -2,6 +2,7 @@
 <resources>
     
     <color name="black">#13101A</color>
+    <color name="black_gray">#2B2B2B</color>
     <color name="app_bg">#eeeeee</color>
     <color name="white">#ffffffff</color>
     <color name="tab_item_default">#fafafa</color>
@@ -10,21 +11,23 @@
     <color name="tab_text_default">#bbbbbb</color>
     <color name="background_color">#fbfbfb</color>
     <color name="title_text_color">#ffffff</color>
-    
+    <!-- 黄色 -->
+    <color name="chat_nickname_color">#ffe246</color>
     <!-- 透明色 -->
     <color name="fuxk_settle_black_mark">#1A000000</color>
     <color name="trasparent_black">#90000000</color>
     <color name="trasparent_black1">#aa000000</color>
     <color name="trasparent_black2">#dd000000</color>
-    <color name="trasparent_black3">#40000000</color>
+    <color name="trasparent_black3">#2b000000</color>
+    <color name="trasparent_black4">#88000000</color>
+    <color name="trasparent_black5">#10000000</color>
     <color name="trasparent_white">#60ffffff</color>
+    <color name="gray_white">#60ffffff</color>
     <!-- 分割线 -->
     <color name="fuxk_base_divide_line_color">#dcdcdc</color>
      <color name="G_black_light_5">#ffcccccc</color>
      <color name="red">#A30913</color>
     <color name="red_bg">#B90B0E</color>
-
-    
      <color name="transparent">#00000000</color>
      <color name="orange">#FF7502</color>
      <color name="yellow">#FAC601</color>
@@ -35,4 +38,6 @@
     <color name="gray_bg_people">#F9FAFB</color>
     <color name="gray_input">#EAEAEA</color>
     <color name="gray_bg_videoinfo">#F3F7F8</color>
+
+     <color name="spots_dialog_color">@color/red_bg</color>
 </resources>

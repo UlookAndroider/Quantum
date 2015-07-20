@@ -88,7 +88,7 @@ public class StartFragment extends BaseFragment implements SurfaceHolder.Callbac
         schedule=(TextView) view.findViewById(R.id.tv_schedule);
         now=(UIButton)view.findViewById(R.id.tv_now);
         schduleLayout= (RelativeLayout) view.findViewById(R.id.rl_send_schedule);
-		photo= (String) SharedPreferencesUtils.getParam(getActivity(),"photo","");
+		photo= (String) SharedPreferencesUtils.getParam(getActivity(),"userInfo","photo","");
             initListener(view);
     }
 
@@ -109,7 +109,14 @@ public class StartFragment extends BaseFragment implements SurfaceHolder.Callbac
 	}
 
 	@Override
+	public void onPause() {
+		releaseCamera();
+		super.onPause();
+	}
+
+	@Override
 	public void onDestroy() {
+		releaseCamera();
 		super.onDestroy();
 	}
 
@@ -141,6 +148,7 @@ public class StartFragment extends BaseFragment implements SurfaceHolder.Callbac
 				mCamera.setPreviewDisplay(holder);
 			  } catch (IOException e) {
 			      e.printStackTrace();
+				mCamera.stopPreview();
 				mCamera.release();
 				mCamera=null;
 			    }
@@ -194,7 +202,7 @@ public class StartFragment extends BaseFragment implements SurfaceHolder.Callbac
 				Intent intent2 =new Intent(getActivity(), TimePickerActivity.class);
 				intent2.putExtra("living",true);
 				startActivity(intent2);
-//                Intent intenta =new Intent(getActivity(), StartLiveActivity.class);
+//                Intent intenta =new Intent(getActivity(), WatchLiveActivity.class);
 //                .startActivity(intenta);
                 
                 break;

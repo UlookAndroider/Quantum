@@ -1,13 +1,5 @@
 package gdg.ninja.croplib;
 
-import gdg.ninja.croplib.Crop.Extra;
-import gdg.ninja.croplib.utils.CropView;
-import gdg.ninja.croplib.utils.FileUtils;
-import gdg.ninja.croplib.utils.ImageResizer;
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,6 +9,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import gdg.ninja.croplib.Crop.Extra;
+import gdg.ninja.croplib.utils.CropView;
+import gdg.ninja.croplib.utils.FileUtils;
+import gdg.ninja.croplib.utils.ImageResizer;
 
 public class CropActivity extends Activity implements OnClickListener{
 	
@@ -88,13 +89,9 @@ public class CropActivity extends Activity implements OnClickListener{
 	private void initViews(){
 		btnCrop = (TextView) findViewById(R.id.btn_create);
 		btnCancle = (TextView) findViewById(R.id.btn_cancle);
-		btnRotateLeft = (Button) findViewById(R.id.btn_left_navi);
-		btnRotateRight = (Button) findViewById(R.id.btn_right_navi);
 		mCropView = (CropView) findViewById(R.id.img_quest_hint);
 		btnCancle.setOnClickListener(this);
 		btnCrop.setOnClickListener(this);
-		btnRotateLeft.setOnClickListener(this);
-		btnRotateRight.setOnClickListener(this);
 	}
 	
 	private void finishOnFail(){

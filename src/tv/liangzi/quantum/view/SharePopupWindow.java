@@ -5,14 +5,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -233,7 +230,7 @@ public class SharePopupWindow extends PopupWindow implements  OnClickListener{
         mController.setShareContent("量子频道。http://www.liangzi.tv");
 
 
-        UMImage localImage = new UMImage(context, R.drawable.ic_concerned);
+        UMImage localImage = new UMImage(context, R.drawable.delete);
         UMImage urlImage = new UMImage(context,
                 "http://www.umeng.com/images/pic/social/integrated_3.png");
         // UMImage resImage = new UMImage(getActivity(), R.drawable.icon);
@@ -259,14 +256,14 @@ public class SharePopupWindow extends PopupWindow implements  OnClickListener{
         weixinContent.setShareContent("量子频道。http://www.liangzi.tv");
         weixinContent.setTitle("量子-微信");
         weixinContent.setTargetUrl("http://www.liangzi.tv");
-        weixinContent.setShareMedia(urlImage);
+        weixinContent.setShareMedia(localImage);
         mController.setShareMedia(weixinContent);
 
         // 设置朋友圈分享的内容
         CircleShareContent circleMedia = new CircleShareContent();
         circleMedia.setShareContent("量子频道。http://www.liangzi.tv");
         circleMedia.setTitle("量子-朋友圈");
-        circleMedia.setShareMedia(urlImage);
+        circleMedia.setShareMedia(localImage);
         // circleMedia.setShareMedia(uMusic);
         // circleMedia.setShareMedia(video);
         circleMedia.setTargetUrl("http://www.liangzi.tv");

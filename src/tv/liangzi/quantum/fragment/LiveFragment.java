@@ -218,9 +218,9 @@ public class LiveFragment extends BaseFragment implements
 
 	private void initViews(View view) {
 		initImageLoaderOptions();
-		userId= (String) SharedPreferencesUtils.getParam(getActivity(), "userId", "");
-		String photo= (String) SharedPreferencesUtils.getParam(getActivity(),"photo","");
-		accessToken= (String) SharedPreferencesUtils.getParam(getActivity(),"accessToken","");
+		userId= (String) SharedPreferencesUtils.getParam(getActivity(),"userInfo", "userId", "");
+		String photo= (String) SharedPreferencesUtils.getParam(getActivity(),"userInfo","photo","");
+		accessToken= (String) SharedPreferencesUtils.getParam(getActivity(),"userInfo","accessToken","");
 		ImageView imHead=(ImageView) view.findViewById(R.id.im_title_head);
 		imageLoader.displayImage(photo, imHead, options, animateFirstListener);
 		imHead.setOnClickListener(new OnClickListener() {
@@ -351,7 +351,7 @@ public class LiveFragment extends BaseFragment implements
 		mPosition=position;
 		viewContainer=view;
 		int Subscibes=mReaddVideos.get(mPosition).getSubscibes();
-		TextView count= (TextView) view.findViewById(R.id.tv_schedule_concerned_count);
+		TextView count= (TextView) view.findViewById(R.id.tv_concerned_count_ulook);
 		 ulook= (ImageView)view.findViewById(R.id.icon_ulooked);
 		// 准备ImageView
 //		ulook.setClickable(true);

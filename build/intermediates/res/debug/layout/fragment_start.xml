@@ -18,9 +18,9 @@
     <RelativeLayout
         android:id="@+id/rl_send_schedule"
         android:layout_width="match_parent"
-        android:layout_height="390dp"
+        android:layout_height="300dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/start_background" >
+        android:background="@color/red_bg" >
 
 
         <!--        <RelativeLayout
@@ -75,9 +75,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="23dp"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical"
             >
 
@@ -90,6 +89,11 @@
                 <!--android:layout_marginLeft="15dp"-->
                 <!--android:background="@drawable/go_living"-->
                 <!--/>-->
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ulook_text"
+                />
             <me.drakeet.library.UIButton
                 android:id="@+id/tv_now"
                 android:layout_width="match_parent"
@@ -100,7 +104,7 @@
                 android:background="@drawable/go_living"/>
             <TextView
                 android:layout_width="50dp"
-                android:layout_height="15dp"
+                android:layout_height="5dp"
                 android:visibility="invisible"
                 />
             <me.drakeet.library.UIButton
@@ -113,9 +117,21 @@
                 android:background="@drawable/schedule_living"
                 />
 
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="35dp"
+                android:visibility="invisible"
+                />
         </LinearLayout>
 
     </RelativeLayout>
+    <ImageView
+        android:layout_above="@id/rl_send_schedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/circle_ulook"
+        android:layout_centerHorizontal="true"
+        />
 
 </RelativeLayout>
 <!-- From: file:/E:/workspace/Quantum/res/layout/fragment_start.xml -->

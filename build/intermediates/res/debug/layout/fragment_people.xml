@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -8,7 +9,7 @@
     <!-- title bar -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="46dp"
         android:background="@color/red"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -16,7 +17,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="4.5"
-        android:layout_height="35dp"
+        android:layout_height="30dp"
         android:layout_marginTop="1dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="5dp"
@@ -32,7 +33,7 @@
             android:imeOptions="actionSearch"
             android:layout_marginLeft="10dp"
             android:textColor="#0e0e0e"
-            android:textSize="17sp"
+            android:textSize="14sp"
             android:singleLine="true"
             android:hint="搜索用户名称"
             android:textColorHint="#b0c6ce"
@@ -61,11 +62,12 @@
     </LinearLayout>
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/im_title_head"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:padding="2dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:border_width="1dp"
+            app:border_color="@color/fuxk_base_divide_line_color"
             android:layout_gravity="right|center_vertical"
-android:layout_marginRight="10dp"
+            android:layout_marginRight="8dp"
             android:src="@drawable/headtest"
             />
     </LinearLayout>
@@ -74,7 +76,8 @@ android:layout_marginRight="10dp"
          android:divider="@color/gray_divider"
          android:dividerHeight="1dp"
 		android:layout_height="fill_parent"
-		android:layout_width="fill_parent"    
+		android:layout_width="fill_parent"
+    android:paddingLeft="5dp"
     />
 </LinearLayout>
 <!-- From: file:/E:/workspace/Quantum/res/layout/fragment_people.xml -->

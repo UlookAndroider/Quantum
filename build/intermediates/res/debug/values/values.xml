@@ -53,9 +53,14 @@
     <!-- From: file:/E:/workspace/Quantum/res/values/colors.xml -->
     <eat-comment/>
     <color name="black">#13101A</color>
+    <color name="black_gray">#2B2B2B</color>
     <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/com.edmodo/cropper/1.0.1/res/values/values.xml -->
     <eat-comment/>
     <color name="black_translucent">#50000000</color>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <color name="blue_btn_bg_color">#AEDEF4</color>
+    <color name="blue_btn_bg_pressed_color">#96BFD2</color>
     <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values/values.xml -->
     <eat-comment/>
     <color name="bright_foreground_disabled_material_dark">#80ffffff</color>
@@ -66,6 +71,12 @@
     <color name="bright_foreground_material_light">@android:color/black</color>
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <color name="button_text_color">#FFFFFF</color>
+    <!-- From: file:/E:/workspace/Quantum/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="chat_nickname_color">#ffe246</color>
     <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/me.drakeet.library/androiduiview/1.1.2/res/values/values.xml -->
     <eat-comment/>
     <color name="color_pressed">#9c000000</color>
@@ -75,6 +86,10 @@
     <color name="dim_foreground_disabled_material_light">#80323232</color>
     <color name="dim_foreground_material_dark">#ffbebebe</color>
     <color name="dim_foreground_material_light">#ff323232</color>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <color name="error_stroke_color">#F27474</color>
+    <color name="float_transparent">#00000000</color>
     <!-- From: file:/E:/workspace/Quantum/res/values/colors.xml -->
     <eat-comment/>
     <color name="fuxk_base_divide_line_color">#dcdcdc</color>
@@ -82,9 +97,16 @@
     <color name="gray">#ffdddddd</color>
     <color name="gray_bg_people">#F9FAFB</color>
     <color name="gray_bg_videoinfo">#F3F7F8</color>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <color name="gray_btn_bg_color">#D0D0D0</color>
+    <color name="gray_btn_bg_pressed_color">#B6B6B6</color>
+    <!-- From: file:/E:/workspace/Quantum/res/values/colors.xml -->
+    <eat-comment/>
     <color name="gray_divider">#DDE1E2</color>
     <color name="gray_input">#EAEAEA</color>
     <color name="gray_place_info">#B7B7B7</color>
+    <color name="gray_white">#60ffffff</color>
     <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values/values.xml -->
     <eat-comment/>
     <color name="highlighted_text_material_dark">#6680cbc4</color>
@@ -93,10 +115,35 @@
     <color name="hint_foreground_material_light">@color/bright_foreground_disabled_material_light</color>
     <color name="link_text_material_dark">@color/material_deep_teal_200</color>
     <color name="link_text_material_light">@color/material_deep_teal_500</color>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <color name="material_blue_grey_80">#ff37474f</color>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values/values.xml -->
+    <eat-comment/>
     <color name="material_blue_grey_800">#ff37474f</color>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <color name="material_blue_grey_90">#ff263238</color>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values/values.xml -->
+    <eat-comment/>
     <color name="material_blue_grey_900">#ff263238</color>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <color name="material_blue_grey_95">#ff21272b</color>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values/values.xml -->
+    <eat-comment/>
     <color name="material_blue_grey_950">#ff21272b</color>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <color name="material_deep_teal_20">#ff80cbc4</color>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values/values.xml -->
+    <eat-comment/>
     <color name="material_deep_teal_200">#ff80cbc4</color>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <color name="material_deep_teal_50">#ff009688</color>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values/values.xml -->
+    <eat-comment/>
     <color name="material_deep_teal_500">#ff009688</color>
     <!-- From: file:/E:/workspace/Quantum/res/values/colors.xml -->
     <eat-comment/>
@@ -115,6 +162,10 @@
     <eat-comment/>
     <color name="red">#A30913</color>
     <color name="red_bg">#B90B0E</color>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <color name="red_btn_bg_color">#DD6B55</color>
+    <color name="red_btn_bg_pressed_color">#CD5B55</color>
     <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/me.drakeet.library/androiduiview/1.1.2/res/values/values.xml -->
     <eat-comment/>
     <color name="ripple_color">#ffeeeeee</color>
@@ -126,6 +177,15 @@
     <color name="secondary_text_default_material_light">#8a000000</color>
     <color name="secondary_text_disabled_material_dark">#36ffffff</color>
     <color name="secondary_text_disabled_material_light">#24000000</color>
+    <!-- From: file:/E:/workspace/Quantum/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="spots_dialog_color">@color/red_bg</color>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <color name="success_stroke_color">#A5DC86</color>
+    <color name="sweet_dialog_bg_color">#FFFFFF</color>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values/values.xml -->
+    <eat-comment/>
     <color name="switch_thumb_disabled_material_dark">#ff616161</color>
     <color name="switch_thumb_disabled_material_light">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
@@ -136,12 +196,24 @@
     <color name="tab_item_selected">#f0f1f2</color>
     <color name="tab_text_default">#bbbbbb</color>
     <color name="tab_text_selected">#f8597c</color>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <color name="text_color">#575757</color>
+    <!-- From: file:/E:/workspace/Quantum/res/values/colors.xml -->
+    <eat-comment/>
     <color name="title_text_color">#ffffff</color>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <color name="trans_success_stroke_color">#33A5DC86</color>
+    <!-- From: file:/E:/workspace/Quantum/res/values/colors.xml -->
+    <eat-comment/>
     <color name="transparent">#00000000</color>
     <color name="trasparent_black">#90000000</color>
     <color name="trasparent_black1">#aa000000</color>
     <color name="trasparent_black2">#dd000000</color>
-    <color name="trasparent_black3">#40000000</color>
+    <color name="trasparent_black3">#2b000000</color>
+    <color name="trasparent_black4">#88000000</color>
+    <color name="trasparent_black5">#10000000</color>
     <color name="trasparent_white">#60ffffff</color>
     <!-- From: file:/E:/workspace/Quantum/res/values/umeng_socialize_colors.xml -->
     <eat-comment/>
@@ -158,6 +230,9 @@
     <color name="umeng_socialize_text_title">#464f61</color>
     <color name="umeng_socialize_text_ucenter">#595959</color>
     <color name="umeng_socialize_ucenter_bg">#EEEEEE</color>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <color name="warning_stroke_color">#F8BB86</color>
     <!-- From: file:/E:/workspace/Quantum/res/values/colors.xml -->
     <eat-comment/>
     <color name="white">#ffffffff</color>
@@ -172,6 +247,7 @@
     <declare-styleable name="AppCompatTextView"><attr format="reference|boolean" name="textAllCaps"/><attr name="android:textAppearance"/></declare-styleable>
     <declare-styleable name="CircleImageView"><attr format="dimension" name="border_width"/><attr format="color" name="border_color"/><attr format="boolean" name="border_overlay"/></declare-styleable>
     <declare-styleable name="CropImageView"><attr name="guidelines"><enum name="on" value="2"/><enum name="onTouch" value="1"/><enum name="off" value="0"/></attr><attr format="boolean" name="fixAspectRatio"/><attr format="integer" name="aspectRatioX"/><attr format="integer" name="aspectRatioY"/><attr format="reference" name="imageResource"/></declare-styleable>
+    <declare-styleable name="Dialog"><attr format="reference" name="DialogTitleAppearance"/><attr format="reference|string" name="DialogTitleText"/><attr format="reference|color" name="DialogSpotColor"/><attr format="integer" name="DialogSpotCount"/></declare-styleable>
     <declare-styleable name="DrawerArrowToggle"><attr format="color" name="color"/><attr format="boolean" name="spinBars"/><attr format="dimension" name="drawableSize"/><attr format="dimension" name="gapBetweenBars"/><attr format="dimension" name="topBottomBarArrowSize"/><attr format="dimension" name="middleBarArrowSize"/><attr format="dimension" name="barSize"/><attr format="dimension" name="thickness"/></declare-styleable>
     <declare-styleable name="LinearLayoutCompat"><attr name="android:orientation"/><attr name="android:gravity"/><attr name="android:baselineAligned"/><attr name="android:baselineAlignedChildIndex"/><attr name="android:weightSum"/><attr format="boolean" name="measureWithLargestChild"/><attr name="divider"/><attr name="showDividers"><flag name="none" value="0"/><flag name="beginning" value="1"/><flag name="middle" value="2"/><flag name="end" value="4"/></attr><attr format="dimension" name="dividerPadding"/></declare-styleable>
     <declare-styleable name="LinearLayoutCompat_Layout"><attr name="android:layout_width"/><attr name="android:layout_height"/><attr name="android:layout_weight"/><attr name="android:layout_gravity"/></declare-styleable>
@@ -182,8 +258,11 @@
     <declare-styleable name="MenuView"><attr name="android:itemTextAppearance"/><attr name="android:horizontalDivider"/><attr name="android:verticalDivider"/><attr name="android:headerBackground"/><attr name="android:itemBackground"/><attr name="android:windowAnimationStyle"/><attr name="android:itemIconDisabledAlpha"/><attr format="boolean" name="preserveIconSpacing"/></declare-styleable>
     <declare-styleable name="PopupWindow"><attr format="boolean" name="overlapAnchor"/><attr name="android:popupBackground"/></declare-styleable>
     <declare-styleable name="PopupWindowBackgroundState"><attr format="boolean" name="state_above_anchor"/></declare-styleable>
+    <declare-styleable name="ProgressWheel"><attr format="boolean" name="progressIndeterminate"/><attr format="color" name="barColor"/><attr format="color" name="rimColor"/><attr format="dimension" name="rimWidth"/><attr format="float" name="spinSpeed"/><attr format="integer" name="barSpinCycleTime"/><attr format="dimension" name="circleRadius"/><attr format="boolean" name="fillRadius"/><attr format="dimension" name="barWidth"/></declare-styleable>
+    <declare-styleable name="Rotate3dAnimation"><attr format="enum" name="rollType"><enum name="x" value="0"/><enum name="y" value="1"/><enum name="z" value="2"/></attr><attr format="float" name="fromDeg"/><attr format="float" name="toDeg"/><attr format="fraction" name="pivotX"/><attr format="fraction" name="pivotY"/></declare-styleable>
     <declare-styleable name="SearchView"><attr format="reference" name="layout"/><attr format="boolean" name="iconifiedByDefault"/><attr name="android:maxWidth"/><attr format="string" name="queryHint"/><attr name="android:imeOptions"/><attr name="android:inputType"/><attr format="reference" name="closeIcon"/><attr format="reference" name="goIcon"/><attr format="reference" name="searchIcon"/><attr format="reference" name="searchHintIcon"/><attr format="reference" name="voiceIcon"/><attr format="reference" name="commitIcon"/><attr format="reference" name="suggestionRowLayout"/><attr format="reference" name="queryBackground"/><attr format="reference" name="submitBackground"/><attr name="android:focusable"/></declare-styleable>
     <declare-styleable name="Spinner"><attr format="reference" name="prompt"/><attr format="enum" name="spinnerMode"><enum name="dialog" value="0"/><enum name="dropdown" value="1"/></attr><attr name="android:dropDownSelector"/><attr name="android:popupBackground"/><attr name="android:dropDownVerticalOffset"/><attr name="android:dropDownHorizontalOffset"/><attr name="android:dropDownWidth"/><attr format="reference" name="popupPromptView"/><attr name="android:gravity"/><attr format="boolean" name="disableChildrenWhenDisabled"/><attr name="android:background"/></declare-styleable>
+    <declare-styleable name="StickyListHeadersListView"><attr format="reference" name="stickyListHeadersListViewStyle"/><attr name="android:clipToPadding"/><attr name="android:scrollbars"/><attr name="android:overScrollMode"/><attr name="android:padding"/><attr name="android:paddingLeft"/><attr name="android:paddingTop"/><attr name="android:paddingRight"/><attr name="android:paddingBottom"/><attr name="android:fadingEdgeLength"/><attr name="android:requiresFadingEdge"/><attr name="android:cacheColorHint"/><attr name="android:choiceMode"/><attr name="android:drawSelectorOnTop"/><attr name="android:fastScrollEnabled"/><attr name="android:fastScrollAlwaysVisible"/><attr name="android:listSelector"/><attr name="android:scrollingCache"/><attr name="android:scrollbarStyle"/><attr name="android:divider"/><attr name="android:dividerHeight"/><attr name="android:transcriptMode"/><attr name="android:stackFromBottom"/><attr format="boolean" name="hasStickyHeaders"/><attr format="boolean" name="isDrawingListUnderStickyHeader"/></declare-styleable>
     <declare-styleable name="SwitchCompat"><attr name="android:thumb"/><attr format="reference" name="track"/><attr name="android:textOn"/><attr name="android:textOff"/><attr format="dimension" name="thumbTextPadding"/><attr format="reference" name="switchTextAppearance"/><attr format="dimension" name="switchMinWidth"/><attr format="dimension" name="switchPadding"/><attr format="boolean" name="splitTrack"/><attr format="boolean" name="showText"/></declare-styleable>
     <declare-styleable name="TabWidget"><attr format="reference" name="bottom_labels"/></declare-styleable>
     <declare-styleable name="TextAppearance"><attr name="android:textSize"/><attr name="android:textColor"/><attr name="android:textStyle"/><attr name="android:typeface"/><attr name="textAllCaps"/></declare-styleable>
@@ -259,9 +338,15 @@
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="alert_width">290dp</dimen>
     <!-- From: file:/E:/workspace/Quantum/res/values/umeng_socialize_strings.xml -->
     <eat-comment/>
     <dimen name="alphabet_size">12dip</dimen>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="common_circle_width">3dp</dimen>
     <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values/values.xml -->
     <eat-comment/>
     <item name="dialog_fixed_height_major" type="dimen">80%</item>
@@ -281,7 +366,20 @@
     <eat-comment/>
     <dimen name="folder_cover_size">72dp</dimen>
     <dimen name="image_size">120dp</dimen>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="progress_circle_radius">34dp</dimen>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/com.github.d-max/spots-dialog/0.3/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="progress_margin">24dp</dimen>
+    <dimen name="progress_width">250dp</dimen>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/Quantum/multi-image-selector/0.4-SNAPSHOT/res/values/values.xml -->
+    <eat-comment/>
     <dimen name="space_size">2dp</dimen>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/com.github.d-max/spots-dialog/0.3/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="spot_size">6dp</dimen>
+    <dimen name="title_margin">10dp</dimen>
     <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/me.drakeet.library/androiduiview/1.1.2/res/values/values.xml -->
     <eat-comment/>
     <dimen name="ui_radius">2dp</dimen>
@@ -303,6 +401,11 @@
     <integer name="abc_config_activityDefaultDur">220</integer>
     <integer name="abc_config_activityShortDur">150</integer>
     <integer name="abc_max_action_buttons">2</integer>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <string name="LOADING">Loading...</string>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values/values.xml -->
+    <eat-comment/>
     <string name="abc_action_bar_home_description">Navigate home</string>
     <string name="abc_action_bar_home_description_format">%1$s, %2$s</string>
     <string name="abc_action_bar_home_subtitle_description_format">%1$s, %2$s, %3$s</string>
@@ -348,6 +451,11 @@
     <!-- From: file:/E:/workspace/Quantum/res/values/strings.xml -->
     <eat-comment/>
     <string name="content_edit_hint">欢迎在这儿发表宝贵的意见哦~</string>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_default_title">Here\'s a message!</string>
+    <string name="dialog_ok">OK</string>
     <!-- From: file:/E:/workspace/Quantum/res/values/strings_activity_login.xml -->
     <eat-comment/>
     <string name="error_field_required">This field is required</string>
@@ -1429,6 +1537,18 @@
         <item name="android:windowNoTitle">true</item>
 
     </style>
+    <style name="Custom" parent="android:Theme.DeviceDefault.Dialog">
+        <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="DialogTitleText">直播发起中…</item>
+        <item name="DialogSpotColor">@android:color/holo_orange_dark</item>
+        <item name="DialogSpotCount">5</item>
+    </style>
+    <style name="Custom1" parent="android:Theme.DeviceDefault.Dialog">
+        <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="DialogTitleText">预约申请中…</item>
+        <item name="DialogSpotColor">@android:color/holo_orange_dark</item>
+        <item name="DialogSpotCount">5</item>
+    </style>
     <style name="EditText.Normal" parent="@android:style/Widget.EditText">
         <item name="android:textSize">18.0dip</item>
         <item name="android:textColor">@color/black</item>
@@ -1595,6 +1715,15 @@
     <style name="RtlOverlay.Widget.AppCompat.Toolbar.Button.Navigation" parent="Base.Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="android:paddingLeft">@dimen/abc_action_bar_navigation_padding_start_material</item>
     </style>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/com.github.d-max/spots-dialog/0.3/res/values/values.xml -->
+    <eat-comment/>
+    <style name="SpotsDialogDefault" parent="android:Theme.DeviceDefault.Light.Dialog">
+        <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="DialogTitleText">Loading…</item>
+        <item name="DialogSpotCount">5</item>
+    </style>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values/values.xml -->
+    <eat-comment/>
     <style name="TextAppearance.AppCompat" parent="Base.TextAppearance.AppCompat"/>
     <style name="TextAppearance.AppCompat.Body1" parent="Base.TextAppearance.AppCompat.Body1"/>
     <style name="TextAppearance.AppCompat.Body2" parent="Base.TextAppearance.AppCompat.Body2"/>
@@ -1790,6 +1919,27 @@
     <style name="Widget.AppCompat.TextView.SpinnerItem" parent="Base.Widget.AppCompat.TextView.SpinnerItem"/>
     <style name="Widget.AppCompat.Toolbar" parent="Base.Widget.AppCompat.Toolbar"/>
     <style name="Widget.AppCompat.Toolbar.Button.Navigation" parent="RtlOverlay.Widget.AppCompat.Toolbar.Button.Navigation"/>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <style name="alert_dialog" parent="android:Theme.Dialog">
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowBackground">@color/float_transparent</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.4</item>
+    </style>
+    <style name="dialog_blue_button" parent="android:Widget.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">31dp</item>
+        <item name="android:background">@drawable/blue_button_background</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:paddingLeft">21dp</item>
+        <item name="android:paddingRight">21dp</item>
+        <item name="android:textColor">@color/button_text_color</item>
+    </style>
     <!-- From: file:/E:/workspace/Quantum/res/values/styles.xml -->
     <eat-comment/>
     <style name="setting_text_style">

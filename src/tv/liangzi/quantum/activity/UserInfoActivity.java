@@ -1,15 +1,22 @@
 package tv.liangzi.quantum.activity;
 
 import android.app.LocalActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -37,27 +44,33 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 import tv.liangzi.quantum.R;
-import tv.liangzi.quantum.adapter.LiveAdapter;
+import tv.liangzi.quantum.adapter.LiveAdaptertest;
 import tv.liangzi.quantum.base.BaseActivity;
 import tv.liangzi.quantum.bean.Live;
 import tv.liangzi.quantum.bean.LiveVideoStatus;
 import tv.liangzi.quantum.bean.PeopleDetails;
 import tv.liangzi.quantum.bean.ServiceStatus;
 import tv.liangzi.quantum.config.MyAapplication;
+import tv.liangzi.quantum.fragment.AnimFragment;
 import tv.liangzi.quantum.utils.OkHttpUtil;
 import tv.liangzi.quantum.utils.SharedPreferencesUtils;
-import tv.liangzi.quantum.view.XListView;
+import tv.liangzi.quantum.view.Rotate3dAnimation;
 
-public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItemButtonClickListener,OnClickListener,XListView.IXListViewListener{
+public class UserInfoActivity extends BaseActivity implements LiveAdaptertest.OnItemButtonClickListener,AdapterView.OnItemClickListener,
+		OnClickListener, AnimFragment.OnFragmentDismissListener,StickyListHeadersListView.OnHeaderClickListener,
+		StickyListHeadersListView.OnStickyHeaderOffsetChangedListener,
+		StickyListHeadersListView.OnStickyHeaderChangedListener{
 
-	private XListView mListView;
+	private StickyListHeadersListView mListView;
 	private String userId;
 	private String id;
 	private PeopleDetails user;
 	private ImageView im_user_dead;
 	private TextView tv_user_concerned;
 	private TextView tv_user_fans;
+	private TextView tv_user_loves;
 	private TextView nikename;
 	private TextView place;
 	private TextView tv_decrip;
@@ -68,16 +81,21 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
 	ViewPager pager = null;
 	TabHost tabHost = null;
 	TextView t1,t2,t3;
+	private int mSubid;
 
 	private int offset = 0;// 动画图片偏移量
 	private int currIndex = 0;// 当前页卡编号
 	private int bmpW;// 动画图片宽度
 	private ImageView cursor;// 动画图片
     private int mPosition;
-
+	private static int screenWidth = 0;
+	private View viewContainer;
+	private ImageView ulook;
+	private ImageView menuBtn;
+	private ImageView backBtn;
 	private  boolean otherUser;
 	private List<Live> mLiveVideos=new ArrayList<Live>();
-	private LiveAdapter mAdapter;
+	private LiveAdaptertest mAdapter;
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
 	DisplayImageOptions options;		// DisplayImageOptions是用于设置图片显示的类
 	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
@@ -94,6 +112,8 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
 					break;
 				case 2:
 					user.setIsFollow(true);
+					user.setFansNum(user.getFansNum()+1);
+					tv_user_fans.setText(String.valueOf(user.getFansNum()));
 //					peopleAdapter.notifyDataSetChanged();
 					bt_user_follow.setImageResource(R.drawable.followed);
 					Toast.makeText(UserInfoActivity.this, "关注成功", Toast.LENGTH_SHORT).show();
@@ -101,6 +121,8 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
 				case 3:
 					user.setIsFollow(false);
 					bt_user_follow.setImageResource(R.drawable.follow);
+					user.setFansNum(user.getFansNum()-1);
+					tv_user_fans.setText(String.valueOf(user.getFansNum()));
 					Toast.makeText(UserInfoActivity.this,"取消关注成功",Toast.LENGTH_SHORT).show();
 					break;
 				case 4:
@@ -133,38 +155,52 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
 	public void setContentView() {
 		// TODO Auto-generated method stub
 		setContentView(R.layout.activity_userinfo);
+		getScreenSize(UserInfoActivity.this);
 		imageLoader.init(ImageLoaderConfiguration.createDefault(UserInfoActivity.this));
 
 
 	}
-
+	public void getScreenSize(Context context) {
+		WindowManager wm = (WindowManager) context
+				.getSystemService(Context.WINDOW_SERVICE);
+		DisplayMetrics dm = new DisplayMetrics();
+		wm.getDefaultDisplay().getMetrics(dm);
+		screenWidth = dm.widthPixels;
+	}
 	@Override
 	public void initViews() {
-
+		userId= (String) SharedPreferencesUtils.getParam(this, "userInfo","userId", "");
+		accessToken= (String) SharedPreferencesUtils.getParam(this,"userInfo","accessToken","");
 		tv_user_concerned= (TextView) findViewById(R.id.tv_user_concerned);
 		tv_user_fans=(TextView)findViewById(R.id.tv_user_fens);
+		tv_user_loves= (TextView) findViewById(R.id.tv_user_loves);
 		nikename= (TextView) findViewById(R.id.tv_user_nike);
 		place=(TextView)findViewById(R.id.tv_place_id);
 		im_user_dead= (ImageView) findViewById(R.id.im_user_dead);
-
+		menuBtn=(ImageView)findViewById(R.id.setting_btn);
 		bt_user_follow= (ImageView) findViewById(R.id.bt_user_follow);
-
+		backBtn= (ImageView) findViewById(R.id.back_btn);
 //		TextView tv= (TextView) findViewById(R.id.title_tv);
 //		tv.setText("个人主页");
 //		ImageView imHead=(ImageView) findViewById(R.id.im_title_head);
 //       imHead.setVisibility(View.GONE);
+		mListView= (StickyListHeadersListView) findViewById(R.id.lv_userinfo);
+		mAdapter = new LiveAdaptertest(UserInfoActivity.this, mLiveVideos, Integer.valueOf(userId),screenWidth);
 
-		mListView=(XListView) findViewById(R.id.lv_userinfo);
-
-
-
-		mAdapter=new LiveAdapter(UserInfoActivity.this,mLiveVideos,2);
-        mAdapter.setButtonOnClickListener(this);
-		mListView.setFooterDividersEnabled(false);
-		mListView.setPullLoadEnable(false);
 		mListView.setAdapter(mAdapter);
-		userId= (String) SharedPreferencesUtils.getParam(this, "userId", "");
-		accessToken= (String) SharedPreferencesUtils.getParam(this,"accessToken","");
+		mAdapter.setButtonOnClickListener(this);
+		mListView.setOnItemClickListener(this);
+		mListView.setOnHeaderClickListener(this);
+		mListView.setOnStickyHeaderChangedListener(this);
+		mListView.setOnStickyHeaderOffsetChangedListener(this);
+//		stickyList.addHeaderView(getActivity().getLayoutInflater().inflate(R.layout.list_header, null));
+//		stickyList.addFooterView(getActivity().getLayoutInflater().inflate(R.layout.list_footer, null));
+		mListView.setEmptyView(findViewById(R.id.tv_empty));
+		mListView.setDrawingListUnderStickyHeader(true);
+		mListView.setAreHeadersSticky(true);
+//      mListView=(ZrcListView) view.findViewById(R.id.xlistview);
+
+
 		Intent intent=getIntent();
 		//来自搜索、排行榜的点击以及直播界面中的头像点击 首先判断是不是用户自己 若不是直接调用接口，如果是直接查询sp信息
 		if(intent.getParcelableExtra("userDetail")!=null){
@@ -194,18 +230,21 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
 
 	private void initDisplaySelf() {
 		otherUser=false;
-		tv_user_concerned.setText((String) SharedPreferencesUtils.getParam(this, "focusNum", ""));
-		tv_user_fans.setText((String) SharedPreferencesUtils.getParam(this, "fansNum", ""));
-		nikename.setText((String) SharedPreferencesUtils.getParam(this, "nickName", ""));
-		place.setText((String) SharedPreferencesUtils.getParam(this, "sign", ""));
-		imageLoader.displayImage((String) SharedPreferencesUtils.getParam(this, "photo", ""), im_user_dead, options, animateFirstListener);
-		bt_user_follow.setImageResource(R.drawable.followed);
+		menuBtn.setVisibility(View.VISIBLE);
+		tv_user_concerned.setText((String) SharedPreferencesUtils.getParam(this, "userInfo", "focusNum", ""));
+		tv_user_fans.setText((String) SharedPreferencesUtils.getParam(this,"userInfo", "fansNum", ""));
+		tv_user_loves.setText(String.valueOf(SharedPreferencesUtils.getParam(this,"userInfo", "liveLikes", 0)));
+		nikename.setText((String) SharedPreferencesUtils.getParam(this, "userInfo","nickName", ""));
+		place.setText((String) SharedPreferencesUtils.getParam(this, "userInfo","sign", ""));
+		imageLoader.displayImage((String) SharedPreferencesUtils.getParam(this, "userInfo","photo", ""), im_user_dead, options, animateFirstListener);
+		bt_user_follow.setVisibility(View.GONE);
 	}
 
 
 	private void initdisplay(PeopleDetails user) {
-		tv_user_concerned.setText(user.getFocusNum()+"");
-		tv_user_fans.setText(user.getFansNum()+"");
+		tv_user_concerned.setText(String.valueOf(user.getFocusNum()));
+		tv_user_fans.setText(String.valueOf(user.getFansNum()));
+		tv_user_loves.setText(String.valueOf(user.getLiveLikes()));
 		nikename.setText(user.getNickName());
 		place.setText(user.getSign());
 		imageLoader.displayImage(user.getPhoto(), im_user_dead, options, animateFirstListener);
@@ -218,7 +257,9 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
 	}
 	@Override
 	public void initListeners() {
+		menuBtn.setOnClickListener(this);
 		bt_user_follow.setOnClickListener(this);
+		backBtn.setOnClickListener(this);
 	}
 
 	@Override
@@ -241,10 +282,10 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
 		// TODO Auto-generated method stub
 		switch (arg0.getId()){
 			case R.id.bt_user_follow:
-				if (!otherUser){
-					startActivity(new Intent(this,SettingActivity.class));
-					finish();
-				}
+//				if (!otherUser){
+//					startActivity(new Intent(this,SettingActivity.class));
+//					finish();
+//				}
 		boolean isFollow=user.isFollow();
 				if (isFollow){
 					Thread deleteThread = new Thread(new DeleteThread());
@@ -254,10 +295,13 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
 					postThread.start();
 				}
 				break;
-//			case R.id.menu_btn:
-//
-//
-//				break;
+			case R.id.setting_btn:
+				Intent intent=new Intent(UserInfoActivity.this,SettingActivity.class);
+				startActivity(intent);
+				break;
+			case R.id.back_btn:
+				finish();
+				break;
 			default:
 				break;
 
@@ -265,48 +309,26 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
 		
 	}
 
-    @Override
-    public void onItemClick(View view, int position, int id, int subid) {
-        mPosition=position;
-        int Subscibes=mLiveVideos.get(mPosition).getSubscibes();
-        TextView count= (TextView) view.findViewById(R.id.tv_schedule_concerned_count);
-        ImageView ulook= (ImageView)view.findViewById(R.id.icon_ulooked);
-        if (subid == 0) {
-            //没有预约现在预约
-            count.setText(Subscibes+1+"");
-            mLiveVideos.get(mPosition).setSubscibes(Subscibes+1);
-            count.setTextColor(Color.parseColor("#B90B0E"));
-            ulook.setImageResource(R.drawable.subscribe_middle);
-            subscribeThread threadSub=new subscribeThread();
-            threadSub.setLiveId(id+"");
-            threadSub.setSubscribeNum(subid);
-            Thread subscribeTh= new Thread(threadSub);
-            subscribeTh.start();
-        }else{
-            //已经预约，现在取消预约
-            if (Subscibes>0){
-                count.setText(Subscibes-1+"");
-                mLiveVideos.get(mPosition).setSubscibes(Subscibes-1);
-            }
-            count.setTextColor(Color.WHITE);
-            ulook.setImageResource(R.drawable.unsubscribe_middle);
-            unsubscribeThread threadunSub=new unsubscribeThread();
-            threadunSub.setLiveId(id+"");
-            threadunSub.setSubscribeNum(subid);
-            Thread unsubscribeTh= new Thread(threadunSub);
-            unsubscribeTh.start();
-        }
 
-    }
 
 
 	@Override
-	public void onRefresh() {
+	public void onFragmentDismiss() {
 
 	}
 
 	@Override
-	public void onLoadMore() {
+	public void onHeaderClick(StickyListHeadersListView l, View header, int itemPosition, long headerId, boolean currentlySticky) {
+
+	}
+
+	@Override
+	public void onStickyHeaderOffsetChanged(StickyListHeadersListView l, View header, int offset) {
+
+	}
+
+	@Override
+	public void onStickyHeaderChanged(StickyListHeadersListView l, View header, int itemPosition, long headerId) {
 
 	}
 
@@ -709,6 +731,158 @@ public class UserInfoActivity extends BaseActivity implements LiveAdapter.OnItem
             }
         });
     }
+
+
+	/**
+	 * adapter中item的点击事件
+	 * @param view
+	 * @param position
+	 * @param id
+	 */
+	@Override
+	public void onItemClick(View view, int position, int id, int subid) {
+		mPosition=position;
+		viewContainer=view;
+		mSubid=subid;
+		int Subscibes=mLiveVideos.get(mPosition).getSubscibes();
+		TextView count= (TextView) view.findViewById(R.id.tv_concerned_count_ulook);
+		ulook= (ImageView)view.findViewById(R.id.icon_ulooked);
+		// 准备ImageView
+//		ulook.setClickable(true);
+//		ulook.setFocusable(true);
+//		ulook.setOnClickListener(this);
+
+		if (mSubid == 0) {
+			mLiveVideos.get(mPosition).setSubscibeId(1);
+			//没有预约现在预约
+			count.setText(Subscibes+1+"");
+			mLiveVideos.get(mPosition).setSubscibes(Subscibes+1);
+			count.setTextColor(Color.parseColor("#B90B0E"));
+
+			applyRotation(0, 0, -720,ulook);
+			subscribeThread threadSub=new subscribeThread();
+			threadSub.setLiveId(id+"");
+			threadSub.setSubscribeNum(subid);
+			Thread subscribeTh= new Thread(threadSub);
+			subscribeTh.start();
+		}else{
+			mLiveVideos.get(mPosition).setSubscibeId(0);
+			//已经预约，现在取消预约
+			if (Subscibes>0){
+				count.setText(Subscibes-1+"");
+				mLiveVideos.get(mPosition).setSubscibes(Subscibes-1);
+			}
+			count.setTextColor(Color.WHITE);
+//			ulook.setImageResource(R.drawable.unsubscribe_middle);
+			applyRotation(1, 0, -720,ulook);
+			unsubscribeThread threadunSub=new unsubscribeThread();
+			threadunSub.setLiveId(id+"");
+			threadunSub.setSubscribeNum(subid);
+			Thread unsubscribeTh= new Thread(threadunSub);
+			unsubscribeTh.start();
+		}
+
+
+
+	}
+	/**
+	 * 使用Rotate3d实现翻转
+	 * @param position 1-6对应picture1-6；-1对应list
+	 * @param start 翻转起始角度
+	 * @param end 翻转终止角度
+	 */
+	private void applyRotation(int position, float start, float end,ImageView imageView) {
+		// 计算中心点
+		final float centerX = viewContainer.getWidth() / 2.0f;
+		final float centerY = viewContainer.getHeight() / 2.0f;
+		final Rotate3dAnimation rotation =
+				new Rotate3dAnimation(start, end, centerX, centerY, 310.0f, true);
+		rotation.setDuration(200);
+		rotation.setFillAfter(true);
+		rotation.setInterpolator(new AccelerateInterpolator());
+		//设置监听
+		rotation.setAnimationListener(new DisplayNextView(position,imageView));
+
+		viewContainer.startAnimation(rotation);
+	}
+
+
+
+
+	@Override
+	public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+		if (mLiveVideos.get(position).getState()==1){
+			Intent intent=new Intent(UserInfoActivity.this,ShowLiveActivity.class);
+			intent.putExtra("Living",mLiveVideos.get(position));
+			Log.e("roomid",mLiveVideos.get(position).getChatroomId());
+			startActivity(intent);
+		}
+
+	}
+
+	/**
+	 * 用于监听前90度翻转完成
+	 */
+	private final class DisplayNextView implements Animation.AnimationListener {
+		private final int mPosition;
+		private  ImageView mImageview;
+
+		private DisplayNextView(int position,ImageView imageView) {
+			mPosition = position;
+			mImageview=imageView;
+		}
+
+		public void onAnimationStart(Animation animation) {
+		}
+		//动画结束
+		public void onAnimationEnd(Animation animation) {
+			viewContainer.post(new SwapViews(mPosition,mImageview));
+		}
+
+		public void onAnimationRepeat(Animation animation) {
+		}
+	}
+
+	/**
+	 * 用于翻转剩下的90度
+	 */
+	private final class SwapViews implements Runnable {
+		private final int mPosition;
+		private ImageView mImageView;
+		public SwapViews(int position,ImageView imageView) {
+			mPosition = position;
+			mImageView=imageView;
+		}
+
+		public void run() {
+			final float centerX = viewContainer.getWidth() / 2.0f;
+			final float centerY = viewContainer.getHeight() / 2.0f;
+			Rotate3dAnimation rotation;
+
+			if (mPosition ==1) {
+				//显示ImageView
+//				mImageView.requestFocus();
+				rotation = new Rotate3dAnimation(-720, -1440, centerX, centerY, 310.0f, false);
+				mImageView.setImageResource(R.drawable.unsubscribe_middle);
+			} else{
+				rotation = new Rotate3dAnimation(-720, -1440, centerX, centerY, 310.0f, false);
+				mImageView.setImageResource(R.drawable.subscribe_middle);
+			}
+
+			//显示ImageView
+//			mPhotosList.setVisibility(View.GONE);
+//			ulook.setVisibility(View.VISIBLE);
+//			ulook.requestFocus();
+//
+//			rotation = new Rotate3dAnimation(90, 180, centerX, centerY, 310.0f, false);
+
+			rotation.setDuration(200);
+			rotation.setFillAfter(true);
+			rotation.setInterpolator(new DecelerateInterpolator());//动画播放速度
+			//开始动画
+			viewContainer.startAnimation(rotation);
+		}
+	}
 }
 
 

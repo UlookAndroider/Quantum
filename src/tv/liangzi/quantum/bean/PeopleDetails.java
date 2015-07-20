@@ -15,7 +15,7 @@ public class PeopleDetails implements Parcelable {
     private long created;
     private String nickName;
     private String photo;
-
+    private int liveLikes;
     private String sign;
     private String wechatNickName;
     private String sinaNickName;
@@ -34,6 +34,7 @@ public class PeopleDetails implements Parcelable {
         responseCode = in.readString();
         responseMsg = in.readString();
         userId = in.readInt();
+        liveLikes=in.readInt();
         created = in.readLong();
         nickName = in.readString();
         photo = in.readString();
@@ -61,7 +62,13 @@ public class PeopleDetails implements Parcelable {
             return new PeopleDetails[size];
         }
     };
+    public int getLiveLikes() {
+        return liveLikes;
+    }
 
+    public void setLiveLikes(int liveLikes) {
+        this.liveLikes = liveLikes;
+    }
     public String getCommonUploadToken() {
         return commonUploadToken;
     }
@@ -232,5 +239,6 @@ public class PeopleDetails implements Parcelable {
         parcel.writeString(commonUploadToken);
         parcel.writeString(especialUploadToken);
         parcel.writeString(accessToken);
+        parcel.writeInt(liveLikes);
     }
 }

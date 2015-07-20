@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
 import tv.liangzi.quantum.R;
-import tv.liangzi.quantum.fragment.LiveFragment;
+import tv.liangzi.quantum.fragment.LiveFragmenttest;
 import tv.liangzi.quantum.fragment.PeopleFragment;
 import tv.liangzi.quantum.fragment.StartFragment;
 import tv.liangzi.quantum.utils.ConstantValues;
@@ -27,7 +27,7 @@ public class MainActivity extends FragmentActivity implements
 	private static final String TAG = "MainActivity";
 	private MyTabWidget mTabWidget;
 //	private ExploreFragment exploreFragment;
-	private LiveFragment liveFragment;
+	private LiveFragmenttest liveFragment;
 	private StartFragment startFragment;
 	private PeopleFragment peopleFragment;
 	private int mIndex = ConstantValues.HOME_FRAGMENT_INDEX;
@@ -70,7 +70,7 @@ public class MainActivity extends FragmentActivity implements
 		case 0:
 			if (null == liveFragment) {
 //				mHomeFragment = new ExploreFragment();
-				liveFragment = new LiveFragment();
+				liveFragment = new LiveFragmenttest();
 				transaction.add(R.id.center_layout, liveFragment);
 			} else {
 				transaction.show(liveFragment);

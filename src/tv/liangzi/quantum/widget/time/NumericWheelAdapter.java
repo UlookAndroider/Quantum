@@ -22,10 +22,10 @@ package tv.liangzi.quantum.widget.time;
  */
 public class NumericWheelAdapter implements WheelAdapter {
 	
-	/** The default min value */
+	/** The default_pic min value */
 	public static final int DEFAULT_MAX_VALUE = 9;
 
-	/** The default max value */
+	/** The default_pic max value */
 	private static final int DEFAULT_MIN_VALUE = 0;
 	
 	// Values

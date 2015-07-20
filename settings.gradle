@@ -1,3 +1,3 @@
 
-include ':zrcListView', ':multi-image-selector', ':cropper', ':circleimageview', ':', 'PlDemo', ':qiniulibrary'
+include ':zrcListView', ':multi-image-selector', ':cropper', ':circleimageview', ':', 'PlDemo', ':qiniulibrary', ':HeaderListViewLib', ':switch_lib'
 include ':ninjaCropLib'

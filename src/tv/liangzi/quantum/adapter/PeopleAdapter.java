@@ -140,7 +140,7 @@ public class PeopleAdapter extends BaseAdapter {
 			if (position%2==0){
 				convertView.setBackgroundResource(R.color.white);
 			}else {
-				convertView.setBackgroundResource(R.color.gray_bg_people);
+				convertView.setBackgroundResource(R.color.trasparent_black5);
 			}
 				holder.imageView=(CircleImageView) convertView.findViewById(R.id.im_head);
 			    holder.textView=(TextView)convertView.findViewById(R.id.tv_nikename);
@@ -152,9 +152,9 @@ public class PeopleAdapter extends BaseAdapter {
 			 holder.imageView.setImageDrawable(null);
 		}
 		if (mList.get(position).isFollow()){
-			holder.addImage.setImageResource(R.drawable.ic_concerned);
+			holder.addImage.setImageResource(R.drawable.delete);
 		}else{
-			holder.addImage.setImageResource(R.drawable.ic_concerned_no);
+			holder.addImage.setImageResource(R.drawable.add);
 		}
 		holder.addImage.setOnClickListener(new View.OnClickListener() {
 			@Override

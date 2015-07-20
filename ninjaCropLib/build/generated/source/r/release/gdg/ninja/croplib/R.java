@@ -32,10 +32,8 @@ public final class R {
         public static int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static int btn_cancle=0x7f070005;
-        public static int btn_create=0x7f070004;
-        public static int btn_left_navi=0x7f070002;
-        public static int btn_right_navi=0x7f070003;
+        public static int btn_cancle=0x7f070003;
+        public static int btn_create=0x7f070002;
         public static int img_quest_hint=0x7f070000;
         public static int layout=0x7f070001;
     }

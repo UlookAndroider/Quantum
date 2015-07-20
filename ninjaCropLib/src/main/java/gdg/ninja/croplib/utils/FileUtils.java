@@ -9,10 +9,9 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 
 @SuppressLint("NewApi")
 public class FileUtils{
@@ -207,7 +206,7 @@ public class FileUtils{
 
 		}
 		catch  (Exception  e)  {
-			System.out.println("新建文件操作出错");
+			Log.e("FileUtils", "新建文件操作出错");
 			e.printStackTrace();
 
 		}

@@ -15,20 +15,20 @@ public final class R {
 		public static final int imageResource = 0x7f01002c;
 	}
 	public static final class color {
-		public static final int black_translucent = 0x7f07000f;
+		public static final int black_translucent = 0x7f070010;
 	}
 	public static final class id {
-		public static final int CropOverlayView = 0x7f0800bf;
-		public static final int ImageView_image = 0x7f0800be;
+		public static final int CropOverlayView = 0x7f0800e4;
+		public static final int ImageView_image = 0x7f0800e3;
 		public static final int off = 0x7f08000c;
 		public static final int on = 0x7f08000a;
 		public static final int onTouch = 0x7f08000b;
 	}
 	public static final class layout {
-		public static final int crop_image_view = 0x7f03002c;
+		public static final int crop_image_view = 0x7f030030;
 	}
 	public static final class string {
-		public static final int app_name = 0x7f0b0016;
+		public static final int app_name = 0x7f0b0017;
 	}
 	public static final class style {
 		public static final int AppBaseTheme = 0x7f0c0005;

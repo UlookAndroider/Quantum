@@ -193,7 +193,7 @@ public int getItemViewType(int position) {
 				scheduleHolder.year= (TextView) livingView.findViewById(R.id.tv_living_year);
 				scheduleHolder.hour= (TextView) livingView.findViewById(R.id.tv_living_time);
 				scheduleHolder.relativeLayout=(RelativeLayout)livingView.findViewById(R.id.rl_sunscribe);
-				scheduleHolder.concernedCount2= (TextView) livingView.findViewById(R.id.tv_schedule_concerned_count);
+				scheduleHolder.concernedCount2= (TextView) livingView.findViewById(R.id.tv_concerned_count_ulook);
 				scheduleHolder.picBackground= (ImageView) livingView.findViewById(R.id.video_pic);
 				scheduleHolder.ulooked= (ImageView) livingView.findViewById(R.id.icon_ulooked);
 				scheduleHolder.userHead= (ImageView) livingView.findViewById(R.id.living_schedule_head);

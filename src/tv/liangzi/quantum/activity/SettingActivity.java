@@ -1,47 +1,37 @@
 package tv.liangzi.quantum.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.media.UMImage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import tv.liangzi.quantum.R;
-import tv.liangzi.quantum.adapter.ExploreAdapter;
 import tv.liangzi.quantum.base.BaseActivity;
 import tv.liangzi.quantum.bean.PeopleDetails;
 import tv.liangzi.quantum.bean.ServiceStatus;
 import tv.liangzi.quantum.config.MyAapplication;
 import tv.liangzi.quantum.utils.OkHttpUtil;
-import tv.liangzi.quantum.view.XListView;
+import tv.liangzi.quantum.view.SwitchButton;
 
 public class SettingActivity extends BaseActivity implements OnClickListener{
 
@@ -49,7 +39,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	private String id;
 	private PeopleDetails user;
 	private ImageView im_user_dead;
-	private TextView tv_user_concerned;
+	private LinearLayout rule;
 	private TextView tv_user_fans;
 	private TextView nikename;
 	private TextView place;
@@ -88,10 +78,53 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 
 	@Override
 	public void initViews() {
+		rule= (LinearLayout) findViewById(R.id.ll_rule);
+		LinearLayout ll_clear= (LinearLayout) findViewById(R.id.ll_clear);
+		ll_clear.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				new SweetAlertDialog(SettingActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+						.setTitleText("清除缓存")
+						.setContentText("You clicked the button!")
+						.show();
+			}
+		});
+		LinearLayout ll_about= (LinearLayout) findViewById(R.id.ll_about);
+		ll_about.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(SettingActivity.this, AboutActivity.class));
+				finish();
+			}
+		});
+		SwitchButton sb = (SwitchButton) findViewById(R.id.wiperSwitch1);
+		 sb.setOnChangeListener(new SwitchButton.OnChangeListener() {
+
+			       @Override
+			           public void onChange(SwitchButton sb, boolean state) {
+				              // TODO Auto-generated method stub
+				                Log.d("switchButton", state ? "开":"关");
+				               Toast.makeText(SettingActivity.this, state ? "开":"关", Toast.LENGTH_SHORT).show();
+				           }
+		       });
 
 
+LinearLayout llshare= (LinearLayout) findViewById(R.id.ll_share);
+		llshare.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
+// 设置分享内容
+				mController.setShareContent("ULLOK Android下载地址：http://www.liangzi.tv/");
+// 设置分享图片, 参数2为图片的url地址
+				mController.setShareMedia(new UMImage(SettingActivity.this,
+						"http://www.umeng.com/images/pic/banner_module_social.png"));
+				mController.getConfig().removePlatform(SHARE_MEDIA.RENREN, SHARE_MEDIA.DOUBAN,SHARE_MEDIA.TENCENT);
+				mController.openShare(SettingActivity.this, false);
 
 
+			}
+		});
 	}
 
 	private void initdisplay(PeopleDetails user) {
@@ -100,7 +133,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 
 	@Override
 	public void initListeners() {
-//		bt_user_follow.setOnClickListener(this);
+		rule.setOnClickListener(this);
 		// TODO Auto-generated method stub
 		
 	}
@@ -113,8 +146,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
 		switch (arg0.getId()){
-//			case R.id.bt_user_follow:
-//				break;
+			case R.id.ll_rule:
+				startActivity(new Intent(SettingActivity.this,Rulectivity.class));
+				break;
 
 		}
 		

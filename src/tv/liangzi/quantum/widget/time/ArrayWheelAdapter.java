@@ -21,7 +21,7 @@ package tv.liangzi.quantum.widget.time;
  */
 public class ArrayWheelAdapter<T> implements WheelAdapter {
 	
-	/** The default items length */
+	/** The default_pic items length */
 	public static final int DEFAULT_LENGTH = -1;
 	
 	// items

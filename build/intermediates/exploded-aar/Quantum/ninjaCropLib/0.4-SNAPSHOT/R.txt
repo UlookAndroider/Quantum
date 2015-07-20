@@ -15,10 +15,8 @@ int color trasparent_black2 0x7f04000d
 int color white 0x7f04000e
 int color yellow 0x7f04000f
 int drawable ic_launcher 0x7f020000
-int id btn_cancle 0x7f070005
-int id btn_create 0x7f070004
-int id btn_left_navi 0x7f070002
-int id btn_right_navi 0x7f070003
+int id btn_cancle 0x7f070003
+int id btn_create 0x7f070002
 int id img_quest_hint 0x7f070000
 int id layout 0x7f070001
 int layout ac_crop_image 0x7f030000

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="50dp"
     android:background="@color/white"
     android:gravity="center_vertical"
-    android:padding="8dp"
-
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"
     >
 
   <!--  <de.hdodenhof.circleimageview.CircleImageView
@@ -22,37 +22,39 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_centerVertical="true"
         android:id="@+id/im_head"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_margin="5dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:src="@drawable/defult_head"
         android:layout_alignParentLeft="true"
+        android:layout_marginLeft="3dp"
         app:border_width="2dp"
-        app:border_color="@color/red_bg"
+        app:border_color="@color/transparent"
         />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:layout_marginTop="5dp"
         android:layout_toRightOf="@id/im_head"
         >
         <TextView
             android:id="@+id/tv_nikename"
-            android:gravity="bottom"
+            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="6"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:textSize="12sp"
             android:text="风扇不摇头"
             />
         <TextView
             android:id="@+id/tv_info"
+            android:layout_marginTop="1dp"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="4"
-            android:gravity="top"
-            android:textColor="@color/gray_place_info"
+            android:gravity="bottom"
+            android:textSize="10sp"
+            android:textColor="@color/trasparent_black1"
             android:text="北京 东城区"
             />
     </LinearLayout>
@@ -63,7 +65,7 @@
         android:id="@+id/im_people_add"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:src="@drawable/ic_concerned" 
+        android:src="@drawable/delete"
         android:gravity="center_vertical"
         android:layout_marginRight="8dp"
         android:layout_alignParentRight="true"

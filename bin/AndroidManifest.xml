@@ -47,7 +47,7 @@
         </activity>
         <activity android:label="@string/title_activity_schedule" android:name=".activity.ScheduleActivity">
         </activity>
-        <activity android:configChanges="orientation|keyboardHidden|screenSize" android:name=".activity.StartLiveActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Light.NoTitleBar" android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
+        <activity android:configChanges="orientation|keyboardHidden|screenSize" android:name=".activity.WatchLiveActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Light.NoTitleBar" android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
         </activity>
         <activity android:name=".activity.LoginActivity" android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>

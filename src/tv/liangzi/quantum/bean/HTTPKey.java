@@ -2,15 +2,19 @@ package tv.liangzi.quantum.bean;
 
 public class HTTPKey {
 	public final static String USER_ACCOUNT = "account";
-	public final static String USER_ID = "userId";
-	public final static String USER_TO_USER_ID = "toUserId";
+
 	public final static String USER_PASSWORD = "password";
-	public final static String USER_GT_CLIENTID = "gtClientId";
-	public final static String USER_NICKNAME = "nickName";
 	public final static String USER_SIGN = "sign";
 	public final static String USER_WECHAT_NICKNAME = "wechatNickName";
 	public final static String USER_SINA_NICKNAME = "sinaNickName";
 	public final static String USER_PHOTO = "photo";
+	public final static String USER_GT_CLIENTID = "gtClientId";
+	public final static String KEY_TYPE = "type";
+	public final static String KEY_ADDR = "addr";
+	public final static String KEY_CLIENT_TYPE = "clientType";
+	public final static String USER_NICKNAME = "nickName";
+	public final static String USER_ID = "userId";
+	public final static String USER_TO_USER_ID = "toUserId";
 	public final static String USER_ACCESS_TOKEN = "accessToken";
 	public final static String USER_PHONE = "phone";
 	public final static String USER_FOCUS_NUM = "focusNum";
@@ -41,13 +45,12 @@ public class HTTPKey {
 	public final static String KEY_TAGS = "tags";
 	public final static String KEY_TAG = "tag";
 	public final static String KEY_TAG_ID = "tagId";
-	public final static String KEY_TYPE = "type";
-	public final static String KEY_ADDR = "addr";
+
 	public final static String KEY_LNG = "lng";
 	public final static String KEY_LAT = "lat";
 	public final static String KEY_LIMIT_TO = "limitTo";
 	public final static String KEY_CAPTCHA = "captcha";
-	public final static String KEY_CLIENT_TYPE = "clientType";
+
 	public final static String KEY_TIMELINE = "timeline";
 	public final static String KEY_BORDER_LON = "borderLon";
 	public final static String KEY_BORDER_LAT = "borderLat";
