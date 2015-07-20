@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Android_code.iml" filepath="$PROJECT_DIR$/Android_code.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Android.iml" filepath="$PROJECT_DIR$/Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/HeaderListViewLib/HeaderListViewLib.iml" filepath="$PROJECT_DIR$/HeaderListViewLib/HeaderListViewLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/PlDemo/PlDemo.iml" filepath="$PROJECT_DIR$/PlDemo/PlDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/circleimageview/circleimageview.iml" filepath="$PROJECT_DIR$/circleimageview/circleimageview.iml" />
@@ -15,4 +15,3 @@
     </modules>
   </component>
 </project>
-
