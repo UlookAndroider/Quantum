@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/Users/drakeet/AndroidStudioProjects/AndroidUIView/library/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="color_pressed">#9c000000</color>
+    <color name="ripple_color">#ffeeeeee</color>
+    <color name="transparent">#00000000</color>
+    <declare-styleable name="UIButton"><attr format="color" name="color_pressed"/><attr format="color" name="color_unpressed"/><attr format="color" name="ripple_color"/><attr format="integer" name="ripple_alpha"/><attr format="integer" name="ripple_duration"/><attr format="integer" name="alpha_pressed"/><attr format="dimension" name="radius"/><attr format="enum" name="shape_type"><enum name="round" value="0"/><enum name="rectangle" value="1"/></attr></declare-styleable>
+    <!-- From: file:/Users/drakeet/AndroidStudioProjects/AndroidUIView/library/src/main/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="ui_radius">2dp</dimen>
+    <!-- From: file:/Users/drakeet/AndroidStudioProjects/AndroidUIView/library/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">AndroidUIViewDemo</string>
+    <!-- From: file:/Users/drakeet/AndroidStudioProjects/AndroidUIView/library/src/main/res/values/buttonStyle.xml -->
+    <eat-comment/>
+    <style name="uibutton" parent="android:Widget.Button">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:textColor">#ffee591e</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceSmallInverse</item>
+        <item name="android:gravity">center</item>
+    </style>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/E:/workspace/Quantum/build/intermediates/exploded-aar/Quantum/multi-image-selector/0.4-SNAPSHOT/res/values-sw360dp-v13/values.xml -->
+    <eat-comment/>
+    <dimen name="folder_cover_size">72dp</dimen>
+    <dimen name="image_size">96dp</dimen>
+    <dimen name="space_size">2dp</dimen>
+</resources>

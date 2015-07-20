@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    >
+    <RelativeLayout
+        android:background="@color/red_bg"
+        style="@style/title_bar_style" >
+
+        <ImageView
+            android:id="@+id/back_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/back_btn"
+             />
+
+        <TextView
+            android:id="@+id/title_tv"
+            style="@style/title_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="16sp"
+            android:text="ULLOK用户服务协议"
+            />
+
+
+    </RelativeLayout>
+
+<TextView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="left"
+    android:id="@+id/tv_about"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:textSize="12sp"
+    android:textColor="#000"
+    android:singleLine="false"
+    android:scrollbars = "vertical"
+    android:text="ULOOK是一个提供24小时视频直播的内容平台。
+
+用户可以通过ULOOK随时随地发起视频直播，将身边的一切有趣画面实时地传递给所有人。
+
+也可以使用ULOOK了解更多未知的精彩视频内容，即使不在现场，也能身临其境。"
+ >
+    
+
+</TextView>
+</LinearLayout>
+<!-- From: file:/E:/workspace/Quantum/res/layout/activity_about.xml -->

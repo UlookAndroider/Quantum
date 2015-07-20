@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+
+
+    <item
+        android:drawable="@drawable/end_00000"
+        android:duration="100" />
+
+    <item
+        android:drawable="@drawable/end_00001"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00002"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00003"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00004"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00005"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00006"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00007"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00008"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00009"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00010"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00011"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00012"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00013"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00014"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00015"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00016"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00017"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00018"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00019"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00020"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00021"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00022"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00023"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00024"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00025"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00026"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00027"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00028"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00029"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00030"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00031"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00032"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00032"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00033"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00034"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00035"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00036"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00037"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00038"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00039"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00040"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00041"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00042"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00043"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00044"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00045"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00046"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/end_00047"
+        android:duration="100" />
+
+
+
+</animation-list>
+<!-- From: file:/E:/workspace/Quantum/res/anim/end_round.xml -->

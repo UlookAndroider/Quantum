@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:background="@color/white"
+    android:layout_height="28dp">
+            <ImageView
+                android:id="@+id/title_image"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/section_living" />
+
+</RelativeLayout>
+<!-- From: file:/E:/workspace/Quantum/res/layout/fragment_living_title_item.xml -->

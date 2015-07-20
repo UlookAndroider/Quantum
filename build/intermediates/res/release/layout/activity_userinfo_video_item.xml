@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+     >
+     
+    <ImageView
+        android:id="@+id/im_user_video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/video_test" />
+
+            <TextView
+                android:id="@+id/video_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/red"
+                android:gravity="center"
+                android:text=" 现 场  "
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+            
+<RelativeLayout 
+        android:id="@+id/rl_live_on"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:background="@color/trasparent_black1"
+        
+        >
+            <ImageView
+                android:padding="5dp"
+                android:id="@+id/im_live_head" 
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/headtest"
+        />
+        <TextView 
+            android:id="@+id/tv_userinfo_descrip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/im_live_head"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="用颜料泼倒画布"
+            android:layout_marginRight="10dp"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            />
+         <TextView 
+            android:id="@+id/tv_live_follow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/im_live_head"
+            android:layout_below="@id/tv_userinfo_descrip"
+            android:layout_marginLeft="10dp"
+            android:text="Bradley"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            />
+    </RelativeLayout>
+</RelativeLayout><!-- From: file:/E:/workspace/Quantum/res/layout/activity_userinfo_video_item.xml -->

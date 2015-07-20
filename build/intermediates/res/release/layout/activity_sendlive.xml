@@ -1,0 +1,166 @@
+<tv.liangzi.quantum.activity.KeyboardLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:id="@+id/rl_root"
+    android:orientation="vertical" >
+        <RelativeLayout
+            android:id="@+id/video_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal" >
+
+            <SurfaceView
+                android:id="@+id/surfaceview"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/transparent"
+                />
+
+             <ImageView
+                android:id="@+id/video_cover_default"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+
+                android:scaleType="fitXY" />
+
+
+           
+ 
+        </RelativeLayout>
+          <RelativeLayout 
+        android:id="@+id/rl_live_on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        
+        >
+            <ImageView
+                android:padding="5dp"
+                android:id="@+id/im_live_head" 
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/headtest"
+        />
+        <TextView 
+            android:id="@+id/tv_live_id"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:layout_toRightOf="@id/im_live_head"
+            android:layout_marginLeft="10dp"
+
+            android:text="Bradley"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            />
+         <TextView
+            android:id="@+id/tv_live_follow"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/im_live_head"
+            android:layout_below="@id/tv_live_id"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:text=" 关 注 "
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/GREEN"
+            android:textStyle="bold"
+             android:visibility="gone"
+            />
+    </RelativeLayout>
+
+  
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="fill_parent"
+                android:layout_height="240dip"
+                android:layout_alignParentBottom="true"
+                android:background="@color/transparent"
+                android:orientation="vertical" >
+
+               
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_disscuss"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@color/transparent" >
+
+                <ImageButton
+                    android:id="@+id/ibtn_disscuss"
+                    style="@style/EditText.Normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/btn_disscuss"
+                    android:inputType="textPhonetic"
+                    android:padding="5dp"
+                    android:singleLine="true" >
+                  
+                </ImageButton>
+ <ImageView
+                      android:id="@+id/im_live_share"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_alignParentRight="true"
+                      android:padding="5dp"
+                      android:src="@drawable/icon_live_share" />
+ 
+                  <ImageView
+                      android:id="@+id/im_live_love"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_alignBottom="@+id/et_disscuss"
+                      android:layout_toLeftOf="@id/im_live_share"
+                      android:gravity="center"
+                      android:padding="5dp"
+                      android:src="@drawable/btn_love_pressed" />
+                <ImageView
+                    android:id="@+id/im_live_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/et_disscuss"
+                    android:layout_toLeftOf="@id/im_live_love"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:src="@drawable/switch_camera_button" />
+ 
+         <EditText
+            android:id="@+id/et_remove_disscuss"
+           android:background="@drawable/otherinfo_items_bg"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:inputType="textPhonetic"
+            android:maxLength="64"
+            android:textColor="@color/black"
+            android:visibility="gone"
+            android:singleLine="true" /> 
+
+                
+
+            </RelativeLayout>
+            
+              <ListView
+                  android:id="@+id/lv_live_listview"
+                  android:layout_width="fill_parent"
+                  android:layout_height="200dip"
+                  android:layout_above="@id/rl_disscuss"
+                  android:cacheColorHint="@android:color/transparent"
+                  android:divider="@android:color/transparent"
+                  android:isScrollContainer="false"
+                  android:dividerHeight="2dp"
+                  android:listSelector="@android:color/transparent"
+                  android:paddingLeft="5dp"
+                  android:scrollbars="none" />
+            
+    
+</tv.liangzi.quantum.activity.KeyboardLayout><!-- From: file:/E:/workspace/Quantum/res/layout/activity_sendlive.xml -->

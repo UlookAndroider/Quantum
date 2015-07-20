@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/red_bg"
+    android:orientation="vertical"
+    tools:context="tv.liangzi.quantum.activity.LoginActivity">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_weight="7"
+    android:layout_height="0dp"
+    >
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/logo_ulook"
+
+        />
+</RelativeLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/layout_login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:visibility="gone"
+            android:id="@+id/login_weixin"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/login_weixin" />
+
+        <ImageButton
+            android:visibility="gone"
+            android:id="@+id/tv_weibo"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="18dp"
+            android:src="@drawable/login_weibo" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
+
+
+
+<!-- From: file:/E:/workspace/Quantum/res/layout/activity_splash.xml -->

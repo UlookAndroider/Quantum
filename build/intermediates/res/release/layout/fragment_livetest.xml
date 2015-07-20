@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+    
+    <!-- title bar -->
+    <include 
+        layout="@layout/title_bar"/>
+
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <se.emilsjolander.stickylistheaders.ExpandableStickyListHeadersListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:drawSelectorOnTop="false"
+            android:padding="4dp"
+            android:scrollbarStyle="outsideOverlay"
+            android:fastScrollEnabled="true"
+            android:overScrollMode="never"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>
+<!-- From: file:/E:/workspace/Quantum/res/layout/fragment_livetest.xml -->

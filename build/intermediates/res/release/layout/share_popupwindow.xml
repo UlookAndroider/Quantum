@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="@color/trasparent_black"
+    android:orientation="vertical"
+    >
+<RelativeLayout
+    android:id="@+id/rl_share"
+    android:layout_width="match_parent"
+    android:layout_height="245dp"
+    android:background="@color/red_bg"
+    android:layout_alignParentBottom="true"
+   >
+
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="80dp"
+    android:id="@+id/button_layout"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    >
+
+<LinearLayout
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:padding="10dp"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/sina_share_icon"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="74dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sina" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="微博"
+        android:textSize="14sp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/white"
+        />
+
+</LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/weichat_friends_share_icon"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="74dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/weichat_friends" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="微信好友"
+            android:textSize="14sp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/weichat_circle_share_icon"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="74dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/weichat_circle" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="朋友圈"
+            android:textSize="14sp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            />
+
+    </LinearLayout>
+</LinearLayout>
+<ImageView
+    android:layout_width="fill_parent"
+    android:layout_height="1dp"
+    android:layout_below="@id/button_layout"
+    android:background="@color/white"
+    />
+
+    <TextView
+        android:id="@+id/share_cancle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:text="取 消"
+        android:textStyle="normal"
+        android:textSize="18sp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
+    <ImageView
+        android:id="@+id/ulook_share"
+        android:layout_above="@id/rl_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/circle_ulook"
+        />
+    <ImageView
+        android:layout_below="@+id/ulook_share"
+        android:layout_marginTop="20dp"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/share"
+        />
+</RelativeLayout>
+<!-- From: file:/E:/workspace/Quantum/res/layout/share_popupwindow.xml -->
