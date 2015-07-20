@@ -315,7 +315,7 @@ public class ShowLiveActivity extends BaseActivity implements CameraStreamingMan
         StreamingProfile.Stream stream = new StreamingProfile.Stream(obj);
 
         StreamingProfile profile = new StreamingProfile();
-        profile.setQuality(StreamingProfile.QUALITY_MEDIUM1)
+        profile.setQuality(StreamingProfile.QUALITY_MEDIUM3)
                 .setStream(stream);
 
         CameraStreamingSetting setting = new CameraStreamingSetting();
@@ -328,7 +328,7 @@ public class ShowLiveActivity extends BaseActivity implements CameraStreamingMan
         mCameraStreamingManager = new CameraStreamingManager(this,  afl, glSurfaceView);
         mCameraStreamingManager.onPrepare(setting);
         mCameraStreamingManager.setStreamingStateListener(this);
-//        /**/videoView.setVideoPath("rtmp://live.z1.glb.pili.qiniucdn.com/liangzitest/livetest01");
+//       videoView.setVideoPath("rtmp://live.z1.glb.pili.qiniucdn.com/liangzitest/livetest01");
     }
 
 

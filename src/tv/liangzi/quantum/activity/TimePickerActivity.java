@@ -522,9 +522,9 @@ public class TimePickerActivity extends Activity implements OnClickListener
 				new UpCompletionHandler() {
 					@Override
 					public void complete(String key, ResponseInfo info, JSONObject response) {
-						upImage="http://7xix0q.com2.z0.glb.qiniucdn.com/"+String.valueOf(key);
-						Log.e("qiniu", String.valueOf(info)+".jpg");
-						Thread liveThread= new Thread(new LiveThread());
+						upImage = "http://7xix0q.com2.z0.glb.qiniucdn.com/" + String.valueOf(key);
+						Log.e("qiniu", String.valueOf(info) + ".jpg");
+						Thread liveThread = new Thread(new LiveThread());
 						liveThread.start();
 					}
 				}, null);
@@ -543,8 +543,19 @@ public class TimePickerActivity extends Activity implements OnClickListener
 				String choosePic=path.get(0).substring(path.get(0).lastIndexOf("."));
 				String fileName=filePath+File.separator+ CommonUtils.generateFileName()+choosePic;
 				File outFile=FileUtils.newFile(fileName);
+
 				Uri imgSource = Uri.fromFile(file);
 				Uri outSource = Uri.fromFile(outFile);
+
+//				int angle= ImageUtil.getExifOrientation(fileName);
+//				if(angle!=0) {  //如果照片出现了 旋转 那么 就更改旋转度数
+//					Matrix matrix = new Matrix();
+//					matrix.postRotate(angle);
+//					Bitmap photoViewBitmap = null;
+//					 photoViewBitmap = Bitmap.createBitmap(photoViewBitmap,
+//							0, 0, photoViewBitmap.getWidth(), photoViewBitmap.getHeight(), matrix, true);
+//				}
+//					ImageUtil.rotateBitmapByDegree(fileName,ImageUtil.readPictureDegree(outFile.getAbsolutePath()));
 				new Crop(imgSource).output(outSource).start(TimePickerActivity.this);
 			}
 		} else if (requestCode == RESULT_CANCELED) {
