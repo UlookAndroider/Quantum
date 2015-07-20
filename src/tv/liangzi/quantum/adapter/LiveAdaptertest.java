@@ -267,10 +267,7 @@ public class LiveAdaptertest extends BaseAdapter implements SectionIndexer,Stick
 		if(img!=null&&!img.equals("")){
 			Picasso.with(mContext).load(img).placeholder(R.drawable.ic_loading).error(R.drawable.ic_loading).into(scheduleHolder.picBackground);
 		}
-//		Picasso.with(mContext).load(photo).placeholder(R.drawable.default_head).error(R.drawable.defult_head).into(scheduleHolder.userHead);
-//		Picasso.with(mContext).load(img).placeholder(R.drawable.ic_loading).error(R.drawable.ic_loading).into(scheduleHolder.picBackground);
-//				imageLoader.displayImage(mList.get(position).getPhoto(), scheduleHolder.userHead, options, animateFirstListener);
-//			imageLoader.displayImage(mList.get(position).getImg(), scheduleHolder.picBackground, options, animateFirstListener);
+
 			scheduleHolder.theme.setText(mList.get(position).getTitle());
 			String year=DateUtil.getDateToString(mList.get(position).getReserved());
 		    String todayWeek=DateUtil.getDateToString(System.currentTimeMillis());

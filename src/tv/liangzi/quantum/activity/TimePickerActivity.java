@@ -91,8 +91,8 @@ public class TimePickerActivity extends Activity implements OnClickListener
 	 String reStr ;
 	 private me.drakeet.library.UIButton Ensure;
 	private me.drakeet.library.UIButton UnEnsure;
-	 private int selectedHour;
-	 private int selectedMin;
+	 private String selectedHour;
+	 private String selectedMin;
 	 int temp;
 	//直播主题条件
 	private EditText nameTopic;
@@ -235,7 +235,7 @@ public class TimePickerActivity extends Activity implements OnClickListener
 	Ensure.setOnClickListener(this);
 		UnEnsure.setOnClickListener(this);
 		month_pv.setData(Datas);
-		month_pv.setOnSelectListener(new tv.liangzi.quantum.widget.time.PickerDateView.onSelectListener() {
+		month_pv.setOnSelectListener(new PickerDateView.onSelectListener() {
 
 			@Override
 			public void onSelect(String text) {
@@ -258,16 +258,8 @@ public class TimePickerActivity extends Activity implements OnClickListener
 			@Override
 			public void onSelect(String text)
 			{
-				if (selectedMin<10){
-//					selectedHour=Integer.parseInt(text);
-					time.setText(selectedHour+":"+"0"+selectedMin);
-				}else{
-//					selectedHour=Integer.parseInt(text);
-					time.setText(selectedHour+":"+selectedMin);
-
-
-				}
-
+				time.setText(text+":"+selectedMin);
+				selectedHour=text;
 			}
 		});
 		minute_pv.setData(seconds);
@@ -277,17 +269,10 @@ public class TimePickerActivity extends Activity implements OnClickListener
 			@Override
 			public void onSelect(String text)
 			{
-
-				if (selectedMin<10){
-//					selectedHour=Integer.parseInt(text);
-					time.setText(selectedHour+":"+"0"+selectedMin);
-				}else{
-//					selectedHour=Integer.parseInt(text);
-					time.setText(selectedHour+":"+selectedMin);
-
+				time.setText(selectedHour+":"+text);
+					selectedMin=text;
 
 				}
-			}
 		});
 
 	}
@@ -323,12 +308,10 @@ public class TimePickerActivity extends Activity implements OnClickListener
 		//初始化 没有滑动选中日期的值
 		
 		selectDateText=getNowTime();
-		selectedHour=getNowHour();
-		selectedMin=getNowMinte();
+		selectedHour=String.valueOf(getNowHour());
+		selectedMin=String.valueOf(getNowMinte());
 		 for (int i = 0; i <= 7; i++) {
-
 				 DateFormatToString(i);
-				
 		}
 	
 		String[] months_big = { "1", "3", "5", "7", "8", "10", "12" };
@@ -400,9 +383,10 @@ public class TimePickerActivity extends Activity implements OnClickListener
 		 date=calendar.getTime();
 		 reStr = simpleDateFormat.format(date);
 		 if (position<4) {
-			 if (position==0){
-				 Datas.add("今天");
-			 }else
+//			 if (position==0){
+//				 Datas.add("今天");
+//			 }
+//			 else
 			 Datas.add(reStr);
 		}else if(position>=4&&position<7){
 			 Datas.add(temp++,reStr);
@@ -441,15 +425,15 @@ public class TimePickerActivity extends Activity implements OnClickListener
 				int min = ca.get(Calendar.MINUTE);
 				if (selectDateText.equals(getNowTime())) {
 					//day等于当前时间的 进一步判断时分
-					if (selectedHour < hour) {
+					if (Integer.valueOf(selectedHour) < hour) {
 						//小时大于当前
 						Toast.makeText(TimePickerActivity.this, "请选择正确的预约时间",
 								Toast.LENGTH_SHORT).show();
 						return;
-					} else if (selectedHour == hour) {
+					} else if (Integer.valueOf(selectedHour) == hour) {
 						//小时相同的进一步判断 分钟
-						if (selectedMin <=min) {
-							Toast.makeText(TimePickerActivity.this, "请选择正确的预约时间",
+						if (Integer.valueOf(selectedMin) <=min) {
+							Toast.makeText(TimePickerActivity.this, "请选择正确的预约时间hm",
 									Toast.LENGTH_SHORT).show();
 							return;
 						}

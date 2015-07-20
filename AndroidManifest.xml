@@ -6,7 +6,7 @@
     android:versionName="1.0">
 
     <uses-sdk
-        android:minSdkVersion="16"
+        android:minSdkVersion="17"
         android:targetSdkVersion="21" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -255,6 +255,18 @@
         <meta-data
             android:name="PUSH_GROUPID"
             android:value="" />
+        <!--<meta-data-->
+            <!--android:name="PUSH_APPID"-->
+            <!--android:value="7XizultjX9APgLWgyCWIr9" />-->
+        <!--<meta-data-->
+            <!--android:name="PUSH_APPKEY"-->
+            <!--android:value="XUWAZuZJC6ARjYVWSWDYh5" />-->
+        <!--<meta-data-->
+            <!--android:name="PUSH_APPSECRET"-->
+            <!--android:value="x2bgvvCuQyA1XYH3tMhDs1" />-->
+        <!--<meta-data-->
+            <!--android:name="PUSH_GROUPID"-->
+            <!--android:value="" />-->
 
         <!-- 配置第三方Receiver -->
         <receiver

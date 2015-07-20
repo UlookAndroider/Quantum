@@ -368,8 +368,6 @@ public class WatchLiveActivity extends BaseActivity implements
 
     }
 
-
-
     @Override
     public void initListeners() {
         // TODO Auto-generated method stub

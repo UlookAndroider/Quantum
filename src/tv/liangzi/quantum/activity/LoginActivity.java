@@ -405,8 +405,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					 user = gson.fromJson(response.body().charStream(), PeopleDetails.class);
 					if (user.getResponseCode().equals("201") ){
 						String EmAccount=MD5Util.stringToMD5(user.getUserId() + "");
-						EMlogin(EmAccount, EmAccount);
-						mHandler.sendEmptyMessage(MESSAGE_SUCCEED);
+                        mHandler.sendEmptyMessage(MESSAGE_SUCCEED);
+                        EMlogin(EmAccount, EmAccount);
 						Editor editor = UserSP.edit();//获取编辑器
 						editor.putString("nickName", user.getNickName());
 						editor.putString("sinaNickName", user.getSinaNickName());
@@ -423,8 +423,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 						editor.putString("sign", user.getSign());
 						editor.putString("lng", user.getLng() + "");
 						editor.putString("lat", user.getLat() + "");
+
 						editor.commit();//提交修改
-					}else {
+
+                    }else {
 						Message msg=new Message();
 						msg.what=1;
 						msg.obj=user.getResponseCode();
