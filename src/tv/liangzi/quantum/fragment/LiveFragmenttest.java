@@ -702,6 +702,7 @@ public class LiveFragmenttest extends BaseFragment implements LiveAdaptertest.On
 	class subscribeThread  implements Runnable
 	{
 		private String liveId;
+
 		private  int subscribeNum;
 
 		public void setSubscribeNum(int subscribeNum) {
@@ -944,5 +945,4 @@ public class LiveFragmenttest extends BaseFragment implements LiveAdaptertest.On
 		screenWidth = dm.widthPixels;
 		screenHeight = dm.heightPixels;
 	}
-
 	}

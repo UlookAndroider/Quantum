@@ -99,7 +99,7 @@ public class LiveAdaptertest extends BaseAdapter implements SectionIndexer,Stick
 				sectionHeaders[i] =ALL_PIC_RESOURCES[2];
 			}
 
-			    }
+	  }
 
 		return sectionHeaders;
 	}
@@ -313,7 +313,7 @@ public class LiveAdaptertest extends BaseAdapter implements SectionIndexer,Stick
 			 }
 
 
-
+//listview适配器
 
 	@Override
 	public int getCount() {

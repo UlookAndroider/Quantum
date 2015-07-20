@@ -26,7 +26,7 @@ public final class R {
 		public static final int yellow = 0x7f070078;
 	}
 	public static final class drawable {
-		public static final int ic_launcher = 0x7f0200b2;
+		public static final int ic_launcher = 0x7f0200b6;
 	}
 	public static final class id {
 		public static final int btn_cancle = 0x7f08005a;
