@@ -30,18 +30,18 @@
         <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\umeng_social_sdk-c33ec4887230147cfea1cfb12f3f7dec753a3c90.jar" />
     </item>
     <item
+        jar="E:\workspace\Quantum\build\intermediates\exploded-aar\Quantum\multi-image-selector\0.4-SNAPSHOT\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="f96976fcf16d0c6987b658ec9531a00c1b9926f3">
+        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\classes-f7acb44019a50ba606123287a49c43f84dbe93f9.jar" />
+    </item>
+    <item
         jar="D:\adt-bundle-windows-x86_64-20140321\sdk\extras\android\m2repository\com\android\support\support-annotations\22.1.1\support-annotations-22.1.1.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
         <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\support-annotations-22.1.1-18d070afe0760abab2fbe94782e871b39d99e336.jar" />
-    </item>
-    <item
-        jar="E:\workspace\Quantum\build\intermediates\exploded-aar\Quantum\multi-image-selector\0.4-SNAPSHOT\classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="b40d142435a95de6584ba1544460b1aa4d1d0c83">
-        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\classes-f7acb44019a50ba606123287a49c43f84dbe93f9.jar" />
     </item>
     <item
         jar="E:\workspace\Quantum\libs\mimecraft-1.1.1.jar"
@@ -184,18 +184,18 @@
         <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\pldroid-camera-streaming-1.2.0-5c2e626a75c35a09c68e621c54bb50c2c4452984.jar" />
     </item>
     <item
+        jar="E:\workspace\Quantum\build\intermediates\exploded-aar\Quantum\ninjaCropLib\0.4-SNAPSHOT\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="68d3127c6802b08cd44e9085e223a6408036cc96">
+        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\classes-4ba256105f885a768c508c7822b6b144fa8186dc.jar" />
+    </item>
+    <item
         jar="E:\workspace\Quantum\libs\SocialSDK_WeiXin_1.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="d7c2f29c05b35e8c8713be2b81c41cf18f98b64a">
         <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\SocialSDK_WeiXin_1-a95c39a518e370dd0aa220fe8d4c0b3ddd731ebb.jar" />
-    </item>
-    <item
-        jar="E:\workspace\Quantum\build\intermediates\exploded-aar\Quantum\ninjaCropLib\0.4-SNAPSHOT\classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="bf631022243b35f70e94c9dbcd22d33dd2ca8434">
-        <dex dex="E:\workspace\Quantum\build\intermediates\pre-dexed\debug\classes-4ba256105f885a768c508c7822b6b144fa8186dc.jar" />
     </item>
     <item
         jar="E:\workspace\Quantum\libs\universal-image-loader-1.9.3-with-sources.jar"

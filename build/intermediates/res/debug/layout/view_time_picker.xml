@@ -293,7 +293,7 @@
                 android:id="@+id/tv_cancle"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:background="@drawable/tv_unorder"
                 />
             <ImageView
@@ -305,7 +305,7 @@
                 android:id="@+id/tv_order"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:background="@drawable/tv_order"
                 />
 
