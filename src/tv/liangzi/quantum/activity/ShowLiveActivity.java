@@ -107,7 +107,6 @@ public class ShowLiveActivity extends BaseActivity implements CameraStreamingMan
     ShowLiveActivityAdapter adapter;
     private static TipsToast tipsToast;
     private LoadingDialog dialog;
-    public static final int MESSAGE_LISTVIEW = 0;
     private ImageView imHead;
     private TextView followImage;
     private static final int KEYBOARD_SHOW = 0X10;
@@ -116,6 +115,7 @@ public class ShowLiveActivity extends BaseActivity implements CameraStreamingMan
     private static final int ROOM_DELETE = 1;
     private static final int START_STREAM = 0X90;
     private static final int LIVE_STATE = 0X30;
+    private static final int LIVE_STATE_OK = 0X50;
     private static final int TIMER_START = 0X40;
     private String roomId;
     private TextView themeName;
@@ -172,10 +172,7 @@ public class ShowLiveActivity extends BaseActivity implements CameraStreamingMan
                     break;
 
                 case START_STREAM:
-                    Thread thread=new Thread(new getLiveThread());
-                    thread.start();
                     mCameraStreamingManager.startStreaming();
-//                    onChatroomViewCreation();
                     StartTimer();
                     break;
                 case TIMER_START:
@@ -190,7 +187,13 @@ public class ShowLiveActivity extends BaseActivity implements CameraStreamingMan
                     audienceCount.setText(--audiences+"");
                     break;
                 case LIVE_STATE:
+//                    int LiveState=msg.arg1;
+//                    if (LiveState==)
+
                     Log.e(TAG,"LIVE_STATE 查询成功");
+                    break;
+                case LIVE_STATE_OK:
+                    Log.e(TAG,"LIVE_STATE 更新成功");
                     break;
                 case 2:
 //                    user.setIsFollow(true);
@@ -265,10 +268,15 @@ public class ShowLiveActivity extends BaseActivity implements CameraStreamingMan
         accessToken=(String) SharedPreferencesUtils.getParam(ShowLiveActivity.this, "userInfo","accessToken", "");
         Intent intent = getIntent();
         living = intent.getParcelableExtra("Living");
+        state=living.getState();
+        if (state==0){
+            state=1;
+            Thread thread=new Thread(new upLiveThread());
+            thread.start();
+        }
         roomId=living.getChatroomId();
         rtmpUrl = living.getRtmpPlayUrl();
         loves=living.getLikes();
-       String rtmpPubUrl = living.getRtmpPublishUrl();
         Stream streamto=living.getStream();
         liveId = living.getLiveId()+"";
         userid = living.getUserId()+"";
@@ -278,7 +286,6 @@ public class ShowLiveActivity extends BaseActivity implements CameraStreamingMan
         shareUrl = living.getShareUrl();
 
         onChatroomViewCreation();
-
         // TODO Auto-generated method stub
         String title=living.getTitle();
         themeName.setText(title);
@@ -315,7 +322,7 @@ public class ShowLiveActivity extends BaseActivity implements CameraStreamingMan
         StreamingProfile.Stream stream = new StreamingProfile.Stream(obj);
 
         StreamingProfile profile = new StreamingProfile();
-        profile.setQuality(StreamingProfile.QUALITY_MEDIUM3)
+        profile.setQuality(StreamingProfile.QUALITY_MEDIUM2)
                 .setStream(stream);
 
         CameraStreamingSetting setting = new CameraStreamingSetting();
@@ -699,33 +706,9 @@ runOnUiThread(new Runnable() {
                             }
                         })
                         .show();
-//                new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-//                        .setTitleText("Are you sure?")
-//                        .setContentText("Won't be able to recover this file!")
-//                        .setConfirmText("Yes,delete it!")
-//                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-//                            @Override
-//                            public void onClick(SweetAlertDialog sDialog) {
-//                                sDialog.dismissWithAnimation();
-//                            }
-//                        })
-//                        .show();
-//                new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-//                        .setTitleText("直播")
-//                        .setContentText("确定要结束直播么？")
-//                        .setConfirmText("我确定!")
-//                        .show();
 //
                 break;
             case R.id.im_live_switch:
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mCameraStreamingManager.switchCamera();
-//                    }
-//                }).start();
-
-
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -1143,6 +1126,7 @@ runOnUiThread(new Runnable() {
     }
     public void StartTimer(){
         if(mTimer == null){
+            state=3;
             final Integer mTimerID=0;
             final String url= MyAapplication.IP+"live"+"/"+liveId;
             TimerTask  mTimerTask = new TimerTask(){
@@ -1215,6 +1199,7 @@ runOnUiThread(new Runnable() {
                     if (liveState.getResponseCode().equals("201")) {
                         if (liveState!=null) {
                             Message msg = new Message();
+                            msg.arg1=liveState.getState();
                             msg.what = LIVE_STATE;
                             mHandler.sendMessage(msg);
                         } else {
@@ -1288,7 +1273,7 @@ runOnUiThread(new Runnable() {
                     if (liveState.getResponseCode().equals("200")) {
                         if (liveState!=null) {
                             Message msg = new Message();
-                            msg.what = LIVE_STATE;
+                            msg.what = LIVE_STATE_OK;
                             mHandler.sendMessage(msg);
                         } else {
 //                            Message msg = new Message();

@@ -107,13 +107,15 @@ public class LiveFragmenttest extends BaseFragment implements LiveAdaptertest.On
 				case 8:
 					int state=msg.arg1;
 					Live live1= (Live) msg.obj;
+					//当前时间在预约时间之后需要更新直播状态为1然后发起直播
 					if(state==0&&live1.getReserved()<=System.currentTimeMillis()){
 						Intent  intent=new Intent(getActivity(),ShowLiveActivity.class);
 						intent.putExtra("Living",live1);
 						Log.e("roomid",live1.getChatroomId());
 						startActivity(intent);
-					}else
-					if (state==2||state==4||state==5||state==6){
+					}
+					//视频状态为2 4 5 6的时候说明直播不存在了，提示视频不存在并且刷新列表
+					else if (state==2||state==4||state==5||state==6){
 						new SweetAlertDialog(getActivity(), SweetAlertDialog.ERROR_TYPE)
 								.setTitleText("直播状态")
 								.setContentText("直播已经结束了!")
@@ -132,13 +134,13 @@ public class LiveFragmenttest extends BaseFragment implements LiveAdaptertest.On
 								} catch (IOException e) {
 									e.printStackTrace();
 								}
-//						Thread liveThread = new Thread(new LiveThread());
-//						liveThread.start();
 								refreshLayout.setRefreshing(false);
 							}
 						}, 1000);
 						return;
-					}else if(state==1||state==3){
+					}
+					//视频状态为1 3的时候 直接发起直播 showActivity直接发起直播流
+					else if(state==1||state==3){
 						Live live= (Live) msg.obj;
 						Intent  intent=new Intent(getActivity(),ShowLiveActivity.class);
 						intent.putExtra("Living",live);
@@ -336,47 +338,6 @@ public class LiveFragmenttest extends BaseFragment implements LiveAdaptertest.On
 
 		 Thread liveThread = new Thread(new LiveThread());
 		liveThread.start();
-//		mListView.refresh(); // 主动下拉刷新
-		// 设置默认偏移量，主要用于实现透明标题栏功能。（可选）
-//		float density = getResources().getDisplayMetrics().density;
-//		mListView.setFirstTopOffset((int) (50 * density));
-
-		// 设置下拉刷新的样式
-//		SimpleHeader header = new SimpleHeader(getActivity());
-//		header.setCircleColor(getResources().getColor(R.color.red_bg));
-//		header.setIsClipCanvas(false);
-//		mListView.setHeadable(header);
-
-// 设置加载更多的样式
-//		SimpleFooter footer = new SimpleFooter(getActivity());
-//		footer.setCircleColor(0xff33bbee);
-//		mListView.setFootable(footer);
-
-// 设置列表项出现动画
-//		mListView.setItemAnimForTopIn(R.anim.topitem_in);
-//		mListView.setItemAnimForBottomIn(R.anim.bottomitem_in);
-
-
-		// 下拉刷新事件回调（可选）
-//		mListView.setOnRefreshStartListener(new ZrcListView.OnStartListener() {
-//			@Override
-//			public void onStart() {
-//				mLiveVideos.clear();
-//				mReaddVideos.clear();
-//				Thread liveThread = new Thread(new LiveThread());
-//				liveThread.start();
-//			}
-//		});
-////		//加载更多回调
-//		mListView.setOnLoadMoreStartListener(new ZrcListView.OnStartListener() {
-//			@Override
-//			public void onStart() {
-//				freshen="footer";
-//			lastId =mLiveVideos.get(mLiveVideos.size()-1).getLiveId();
-//				Thread liveThread = new Thread(new LiveThread());
-//				liveThread.start();
-//			}
-//		});
 
 
       mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -390,7 +351,6 @@ public class LiveFragmenttest extends BaseFragment implements LiveAdaptertest.On
 //				  stateThread.setmPosition(position);
 //				  Thread thread=new Thread(stateThread);
 //				  thread.start();
-
 					  intent=new Intent(getActivity(),WatchLiveActivity.class);
 					  intent.putExtra("Living",mLiveVideos.get(position));
 					  Log.e("roomid",mLiveVideos.get(position).getChatroomId());

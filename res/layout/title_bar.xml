@@ -26,11 +26,9 @@
         android:layout_height="30dp"
         app:border_width="1dp"
         app:border_color="@color/fuxk_base_divide_line_color"
-        android:layout_marginRight="10dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="4dp"
+        android:layout_marginRight="8dp"
         android:src="@drawable/headtest"
-        />
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

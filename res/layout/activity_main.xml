@@ -8,14 +8,16 @@
     <FrameLayout
         android:id="@+id/center_layout"
         android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1.0" >
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
     </FrameLayout>
 
     <tv.liangzi.quantum.view.MyTabWidget
         android:id="@+id/tab_widget"
         android:layout_width="fill_parent"
-        android:layout_height="60dp"
+        android:layout_height="53dp"
+        android:layout_alignParentBottom="true"
         app:bottom_labels="@array/bottom_bar_labels" />
 
 </LinearLayout>

@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center_horizontal"
-        android:textSize="12sp" />
+        android:textSize="11sp" />
 
  <!--    <ImageView
         android:id="@+id/indicate_img"
